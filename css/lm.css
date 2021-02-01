@@ -1,0 +1,461 @@
+@font-face {
+  font-family: "Laberintos";
+  src: url("../fonts/QUENCRG_.TTF");
+}
+@font-face {
+  font-family: "Características";
+  src: url("../fonts/Council.otf");
+}
+:root {
+  --color-foreground: #000000;
+  --color-background: #fff;
+  --color-highlight: #d1d2d4;
+  --color-secondary: #b3b5b9;
+  --color-border: #545557;
+  --font-editor: "Laberintos", serif;
+  --font-input: Arial, sans-serif;
+  --font-special: "Características", serif;
+  --font-subheader: "Características", serif;
+  --font-table: sans-serif;
+}
+.lm .window-content {
+  background: var(--color-background);
+}
+
+/* Character sheet header */
+
+.lm .sheet-header {
+  flex: 0 0 155px;
+  border: none;
+  box-shadow: 0 0 6px var(--color-border);
+  color: var(--color-foreground);
+  font-size: 12px;
+  height: auto;
+  line-height: 16px;
+  padding: 1px 2px;
+  width: 100%;
+}
+.lm .sheet-header .profile-img {
+  border: 5px;
+  border-style: dashed;
+  border-radius: 20px;
+  flex: 0 0 145px;
+  height: 145px;
+  margin: 5px 5px 5px 5px;
+}
+.lm .sheet-header .header-fields h1.charname input {
+  margin: 0 0 5px 0;
+  border-style: none none solid none;
+  border-width: 3px;
+  border-radius: none;
+  background: var(--color-background);
+}
+.lm .sheet-header .header-fields .summary {
+  flex: 0 0 100%;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: none;
+}
+.lm .sheet-header .header-fields .summary li.notify input {
+  font-weight: bold;
+  animation: 0.8s ease-in 1s infinite alternate notify;
+}
+.lm .sheet-header .header-fields .summary li {
+  height: calc(100% - 8px);
+  float: left;
+  margin: 2px 0;
+  padding: 0;
+  line-height: 30px;
+  color: #4b4a44;
+  position: relative;
+}
+.lm .sheet-header .header-fields .summary li input {
+  border-style: none none solid none;
+  border-width: 2px;
+  border-radius: none;
+  background: var(--color-background);
+}
+.lm .sheet-header .header-fields .summary li label {
+  line-height: 1px;
+  position: absolute;
+  font-size: 20px;
+  font-family: var(--font-special);
+  color: #4b4a44;
+  bottom: 0;
+  left: 12px;
+}
+.lm .sheet.header .header-fields .summary li div.field-long {
+  height: calc(100% - 10px);
+  float: center;
+  flex-basis: 65px;
+  flex-grow: 0;
+  text-align: center;
+  font-size: 12px;
+}
+.lm .sheet-header .header-fields .summary li span.xp-bonus {
+  top: -15px;
+  right: 5px;
+  color: #7a7971;
+  font-size: 10px;
+  position: absolute;
+}
+
+/* Character nav tabs */
+
+.lm.sheet.actor nav.sheet-tabs {
+  position: absolute;
+  transform: rotate(90deg);
+  top: 360px;
+  right: -169px;
+  width: 320px;
+  border-top: none;
+  height: 30px;
+  z-index: -1;
+  justify-content: space-evenly;
+}
+.lm.sheet.actor nav.sheet-tabs .item {
+  padding: 2px 10px 0;
+  margin-left: 1px;
+  text-indent: 4px;
+  line-height: 1.6;
+  background: rgb(207, 205, 205);
+  border-top-right-radius: 10px;
+  border-top-left-radius: 80px;
+  box-shadow: 0 0 6px 1px rgba(121, 115, 115, 0.9);
+  font-size: 12px;
+  color: black;
+  filter: brightness(0.9);
+}
+.lm.sheet.actor nav.sheet-tabs .item.active {
+  filter: none;
+  z-index: 1;
+  font-weight: bold;
+  text-shadow: white;
+  margin-bottom: -1px;
+}
+
+/* Character Atribbute tab */
+
+.lm .sheet-body {
+  padding: 5px 0;
+  height: calc(100% - 140px);
+}
+.lm .sheet-body .headabilities {
+  font-family: var(--font-special);
+  font-size: 20px;
+  text-align: center;
+  border-style: none none solid none;
+}
+.lm .sheet-body .attribute-tab .attributes-group {
+  flex: 0 0 100px
+}
+.lm .sheet-body .attribute-tab .attributes-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  justify-content: space-evenly;
+}
+.lm .sheet-body .attribute-tab .attributes-group ul li.ability-score {
+  height: calc(100% - 20px);
+  float: center;
+  display: flex;
+  flex-direction: row;
+  flex-basis: 70px;
+  flex-grow: 0;
+  text-align: center;
+}
+.lm .sheet-body .attribute-tab .attributes-group .attribute-name {
+  font-family: var(--font-special);
+  font-size: 26px;
+  color: white;
+  background-color: black;
+  padding: 5px 5px 5px 5px;
+  margin-bottom: 4%;
+}
+.lm .sheet-body .attribute-tab .attributes-group .attribute-value {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: none;
+  box-shadow: 2px 2px #888888;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 1px 1px 1px 1px;
+  margin: 0 2px 4% 2px;
+}
+.lm .sheet-body .attribute-tab .attributes-group .attribute-value input {
+  background: var(--color-background);
+  border-style: none;
+}
+.lm .sheet-body .attribute-tab .attributes-group .attribute-value span.abilities-mod {
+  top: 2px;
+  right: 5px;
+  color: #31312f;
+  font-size: 12px;
+  position: relative;
+}
+.lm .sheet-body .middle {
+  padding-left: 10px;
+}
+.lm .sheet-body .data {
+  list-style: none;
+}
+.lm .sheet-body .container {
+  position: relative;
+}
+.lm .sheet-body .container .data-box {
+  background: black;
+  font-family: var(--font-special);
+  color: white;
+  border-radius: 10%;
+  font-size: 26px;
+  padding: 2px 4px 2px 4px;
+  text-align: center;
+  position: relative;
+  left: 25%;
+}
+.lm .sheet-body .center {
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  transform: translate(-10%, -25%);
+  font-size: 12px;
+}
+.lm .sheet-body .center2 {
+  position: absolute;
+  top: 70%;
+  left: 35%;
+  transform: translate(-10%, -25%);
+  font-size: 12px;
+}
+.lm .sheet-body .helm {
+  position: absolute;
+  top: 30%;
+  left: 15%;
+  transform: translate(-10%, -25%);
+  font-size: 16px;
+  background: grey;
+  color:black;
+  border-radius: 40% 40% 0 0%;
+}
+.lm .sheet-body .shield {
+  position: absolute;
+  top: 75%;
+  left: 55%;
+  transform: translate(-10%, -25%);
+  font-size: 16px;
+  background: black;
+  color: white;
+  border-radius: 0 0 45% 45%;
+}
+.lm .sheet-body .shield-img {
+  border: none;
+  flex: 0 0 70px;
+  height: 70px;
+}
+.lm .sheet-body .heart-img {
+  border: none;
+  padding: 0 0 0 4px;
+  flex: 0 0 70px;
+  height: 70px;
+}
+.lm .sheet-body .hd {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-10%, -25%);
+  font-size: 12px;
+  border-style: solid;
+  background:grey;
+  color:black;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 45% 45% 45% 45%;
+}
+.lm .sheet-body .hd input{
+  border-style: none;
+}
+.lm .sheet-body .headskill {
+  font-family: var(--font-special);
+  font-size: 20px;
+  text-align: center;
+  border-style: none none solid none;
+}
+.lm .sheet-body .box .skills {
+  list-style: none;
+  font-size: 10px;
+  padding-left: 2px;
+  font-weight: bold;
+}
+.lm .sheet-body .box .skills-pack {
+  position: relative;
+  display: flex;
+}
+.lm .sheet-body .box .skills .skills-pack {
+  line-height: 16px;
+  text-align: center;
+}
+.lm .sheet-body .box .skills .skills-pack .skills-check {
+  padding: 0;
+  text-align: left;
+  width: 75px;
+  flex-grow: 0;
+  background: black;
+  color: white;
+  border-radius: 10%;
+}
+.lm .sheet-body .box .skills .skills-pack .skills-mod {
+  padding: 0;
+  text-align: center;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 50%;
+  width: 16px;
+  flex-grow: 0;
+}
+.lm .sheet-body .headsaves {
+  font-family: var(--font-special);
+  font-size: 20px;
+  text-align: center;
+  border-style: none none solid none;
+}
+.lm .sheet-body .saving {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.lm .sheet-body .saving .attribute {
+  display: flex;
+  flex-direction: row;
+}
+.lm .sheet-body .saving .attribute-name {
+  width: 40px;
+  margin: 0;
+  line-height: 35px;
+}
+.lm .sheet-body .saving .attribute-name a {
+  margin: auto;
+}
+.lm .sheet-body .saving .attribute.saving-throw .attribute-name {
+  line-height: 16px;
+  width: 80px;
+  color: white;
+  background-color: var(--color-foreground);
+  border: var(--color-background);
+  text-align: center;
+  border-width: 1px;
+  border-style: solid;
+}
+.lm .sheet-body .saving .attribute.saving-throw .attribute-value {
+  line-height: 29px;
+}
+.lm .sheet-body .saving .attribute .attribute-value {
+  width: 45px;
+  flex-grow: 0;
+}
+.lm .sheet-body .saving .attribute .attribute-value input {
+  padding: 0;
+  text-align: center;
+  font-weight: bolder;
+  background: var(--color-background);
+}
+
+  /*  --Combat-- */
+.lm .sheet-body .combat {
+  padding: 0;
+}
+.lm .sheet-body .combat .thac0-data {
+  padding: 2px;
+  height: fit-content;
+}
+.lm .sheet-body .combat .thac0-data ul {
+  list-style: none;
+  text-align: center;
+  padding: 0;
+  width: 264px;
+  flex-grow: 0;
+}
+.lm .sheet-body .combat .thac0-data ul .thac0-head {
+  background:  var(--color-foreground);
+  font-family: var(--font-special);
+  font-size: 20px;
+  color: white;
+  flex-grow: 0;
+  padding: 4px;
+  border-radius: 15%;
+}
+.lm .sheet-body .combat .thac0-data ul li {
+  position: relative;
+  font-size: 14px;
+  font-weight: bold;
+  flex-grow: 0;
+  padding: 2px;
+  border-style: solid;
+  border-width: 1px;
+}
+.lm .sheet-body .combat .thac0-data ul li .value {
+  border-style: none none solid none;
+  border-width: 2px;
+}
+.lm .sheet-body .combat .thac0-data ul .thac0-ini {
+  font-size: 16px;
+  font-weight: bolder;
+  flex-grow: 0;
+  padding: 4px;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+}
+.lm .combat .mod {
+  padding: 3px;
+  width: fit-content;
+}
+.lm .combat .mod .mod-mod {
+  flex-direction: row;
+}
+.lm .combat .mod .mod-mod img {
+  border: none;
+  padding: 2px;
+  flex: 0 0 26px;
+  height: 26px;
+  text-align: left;
+}
+.lm .combat .mod .mod-mod .mod-value {
+  border: solid;
+  padding: 4px;
+  border-width: 2px;
+  border-radius: 50%;
+  position: absolute;
+  font-weight: bold;
+}
+.lm .combat .mod .mov-data a {
+  background: black;
+  color: white;
+  font-family: var(--font-special);
+}
+.lm .combat .combat-data {
+  padding: 4px;
+  text-align: center;
+  position: relative;
+  right: 2%;
+}
+.lm .combat .combat-data a {
+  font-family: var(--font-special);
+  font-size: 20px;
+  color: white;
+  background-color: black;
+  border-radius: 25% 25% 0 0;
+}
+.lm .combat .combat-data span {
+  font-size: 18px;
+  font-weight: bold;
+  border: solid;
+  border-width: 2px;
+}
+
+/*    Equipment  */
+
+.lm .items-list .item-controls .item-toggle.item-unequipped {
+  color: rgb(192, 186, 186);
+}
