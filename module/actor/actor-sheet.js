@@ -136,6 +136,13 @@ export class LmActorSheet extends ActorSheet {
       li.slideUp(200, () => this.render(false));
     });
 
+    // Delete Container Item
+    html.find('.container-delete').click(ev => {
+      const li = $(ev.currentTarget).parents(".item-titles");
+      this.actor.deleteOwnedItem(li.data("itemId"));
+      li.slideUp(200, () => this.render(false));
+    });
+
     // Toggle inventory Item
     html.find(".item-toggle").click(async (ev) => {
       const li = $(ev.currentTarget).parents(".item");
@@ -146,6 +153,34 @@ export class LmActorSheet extends ActorSheet {
           equipped: !weapons.data.data.equipped,
         },
       });
+    });
+    html.find(".item-dmg").click(async (ev) => {
+      const li = $(ev.currentTarget).parents(".item");
+      const weapons = this.actor.getOwnedItem(li.data("itemId"));
+      await this.actor.updateOwnedItem({
+        _id: li.data("itemId"),
+        data: {
+          isDamage2: !weapons.data.data.isDamage2,
+        },
+      });
+    });
+
+    // Expand inventory.
+    html.find(".item-titles .item-caret").click((ev) => {
+      let items = $(ev.currentTarget.parentElement.parentElement).children(
+        ".item-list"
+      );
+      if (items.css("display") == "none") {
+        let el = $(ev.currentTarget).find(".fas.fa-caret-right");
+        el.removeClass("fa-caret-right");
+        el.addClass("fa-caret-down");
+        items.slideDown(200);
+      } else {
+        let el = $(ev.currentTarget).find(".fas.fa-caret-down");
+        el.removeClass("fa-caret-down");
+        el.addClass("fa-caret-right");
+        items.slideUp(200);
+      }
     });
 
     // Rollable abilities.

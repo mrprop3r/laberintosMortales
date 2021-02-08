@@ -31,17 +31,16 @@ export class LmItemSheet extends ItemSheet {
   getData() {
     const data = super.getData();
 
-    /* data.containers = { 'Encima': 'in' };
+    data.containers = { 'Encima': 'on-person' };
     // Containers are not allowed in other containers.  So if this item is a container,
     // don't show any other containers.
-
-    if (this.item.data.type !== 'container') {
+    if (this.actor && this.item.data.type !== 'container') {
       this.actor.items.forEach(it => {
         if (it.type === 'container') {
-        data.containers[it.name] = it.id;
-      }
-      });
-    } */
+          data.containers[it.name] = it.name;
+        }
+      }); 
+    } 
     return data;
   }
 

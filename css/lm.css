@@ -8,7 +8,7 @@
 }
 :root {
   --color-foreground: #000000;
-  --color-background: #fff;
+  --color-background: rgb(252, 252, 252);
   --color-highlight: #d1d2d4;
   --color-secondary: #b3b5b9;
   --color-border: #545557;
@@ -20,7 +20,7 @@
 }
 .lm .window-content {
   background: var(--color-background);
-}
+} 
 
 /* Character sheet header */
 
@@ -107,9 +107,9 @@
 .lm.sheet.actor nav.sheet-tabs {
   position: absolute;
   transform: rotate(90deg);
-  top: 360px;
-  right: -169px;
-  width: 320px;
+  top: 370px;
+  right: -192px;
+  width: 370px;
   border-top: none;
   height: 30px;
   z-index: -1;
@@ -456,6 +456,59 @@
 
 /*    Equipment  */
 
-.lm .items-list .item-controls .item-toggle.item-unequipped {
+.lm.sheet.actor .sheet-body .item .item-rollable:hover .item-image {
+  background-image: url("/icons/svg/d20-grey.svg") !important;
+  cursor: pointer;
+}
+.lm.sheet.actor .sheet-body .item .item-rollable .item-image:hover {
+  background-image: url("/icons/svg/d20-black.svg") !important;
+}
+.lm.sheet.actor .sheet-body .item .item-name .item-namep {
+  font-weight: bold;
+}
+.lm.sheet.actor .sheet-body .item .item-name {
+  text-indent: 8px;
+  text-align: left;
+  overflow: hidden;
+  height: 30px;
+  margin: 0;
+  line-height: 30px;
+  flex-basis: 90px;
+}
+.lm.sheet.actor .sheet-body .item .item-name .item-image {
+  flex-basis: 30px;
+  flex-grow: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.lm.sheet.actor .sheet-body .item .item-dice {
+  padding: 2px;
+  border: solid;
+  border-radius: 50%;
+  border-width: 1px;
+  font-size: 10px;
+}
+.lm.sheet.actor .sheet-body .item .item-range {
+  padding: 2px;
+  border: solid;
+  border-radius: 5%;
+  border-width: 1px;
+  font-size: 10px;
+}
+.lm.sheet.actor .sheet-body .item .item-control.item-dmg.item-damage2 {
   color: rgb(192, 186, 186);
+}
+.lm .inventory .item-controls .item-toggle.item-unequipped {
+  color: rgb(192, 186, 186);
+}
+.lm.sheet.actor .sheet-body .inventory {
+  padding: 0;
+}
+.lm.sheet.actor .sheet-body .inventory .item-titles {
+  text-align: center;
+  padding: 4px 0;
+  background: #000000;
+  color: white;
+  border-style: solid solid none solid;
+  border-color: #e2e2e2;
 }

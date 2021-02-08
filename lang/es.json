@@ -79,7 +79,16 @@
 
     "LM.Add": "Añadir",
     "LM.weaponsname": "Armas",
+    "LM.armorsname": "Armaduras",
+    "LM.gearsname": "Objetos",
+    "LM.treasurename": "Tesoro",
     "LM.items.equip": "Equipado",
     "LM.toomuchhands": "¡Tienes las dos manos ocupadas!",
-    "LM.items.qualities": "Cualidades"
+    "LM.items.qualities": "Cualidades",
+    "LM.items.isDamage2": "Daño Alternativo",
+    "LM.items.damage": "Daño",
+    "LM.items.ammunition.type": "Munición",
+    "LM.items.range": "Alcances",
+    "LM.items.ac": "CA",
+    "LM.items.carried": "Encima"
 }
