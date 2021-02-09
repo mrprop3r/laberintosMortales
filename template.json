@@ -1,0 +1,212 @@
+{
+  "Actor": {
+    "types": ["character", "monster", "container"],
+    "templates": {
+      "base": {
+        "retainer": {
+          "enabled": false,
+          "occupation": "",
+          "loyalty": 0,
+          "wage": ""
+        },
+        "hp": {
+          "hd": "1d4",
+          "value": 4,
+          "max": 4
+        },
+        "ac": {
+          "value": 9,
+          "min": 10,
+          "max": 0
+        },
+        "thac0": {
+          "value": 20,
+          "mod": {
+            "melee": 0,
+            "missile": 0
+          }
+        },
+        "saves": {
+          "death": {
+            "value": 0
+          },
+          "wand": {
+            "value": 0
+          },
+          "paralysis": {
+            "value": 0
+          },
+          "breath": {
+            "value": 0
+          },
+          "spell": {
+            "value": 0
+          }
+        },
+        "movement": {
+          "base": 120
+        },
+        "initiative": {
+          "value": 0,
+          "mod": 0
+        },
+        "surprise": {
+          "value": 2,
+          "mod": 0
+        }
+      }
+    },
+    "character": {
+      "templates": ["base"],
+      "biography": "",
+      "description": {
+        "aligment": "",
+        "title": "",
+        "level": {
+          "value": 0,
+          "xp":0,
+          "xpnext": 100,
+          "bonus": 0
+        }
+      },
+      "class": {
+        "value": "lvl0"
+      },
+      "abilities": {
+        "str": {
+          "value": 10
+        },
+        "dex": {
+          "value": 10
+        },
+        "con": {
+          "value": 10
+        },
+        "int": {
+          "value": 10
+        },
+        "wis": {
+          "value": 10
+        },
+        "cha": {
+          "value": 10
+        }
+      },
+      "skills": {
+        "acr": {
+          "value": 0
+        },
+        "arch":{
+          "value": 0
+        },
+        "sea": {
+          "value": 0
+        },
+        "he": {
+          "value": 0
+        },
+        "bd": {
+          "value": 0
+        },
+        "gh": {
+          "value": 0
+        },
+        "lan": {
+          "value": 0
+        },
+        "man": {
+          "value": 0
+        },
+        "st": {
+          "value": 0
+        },
+        "sur": {
+          "value": 0
+        }
+      },
+      "encumbrance": {
+        "max": 2300
+      }
+    },
+    "monster": {
+      "templates": ["base"],
+      "biography": ""
+    },
+    "container": {
+      "templates": ["base"],
+      "biography": ""
+    }
+  },
+  "Item": {
+    "types": ["item", "weapon", "armor", "container", "consumable", "feature", "spell", "class", "occupation"],
+    "templates": {
+        "common": {
+            "description": ""
+        },
+        "equipment": {
+            "quantity": 1,
+            "cost": 0,
+            "weight": 1,
+            "equipped": false,
+            "packed": false,
+            "fast": false,
+            "treasure": false,
+            "carried": "in",
+            "hands": 0
+        }
+    },
+    "item": {
+        "templates": ["common", "equipment"]
+    },
+    "weapon": {
+        "templates": ["common", "equipment"],
+        "save": "",
+        "damage": "1d6",
+        "damage2": "1d6",
+        "bonus": 0,
+        "tags": [],
+        "slow": false,
+        "melee": true,
+        "throw": false,
+        "missile": false,
+        "range": {
+          "short": 0,
+          "medium": 10,
+          "long": 20,
+          "anmunition": {
+            "type": "",
+            "quantity": 0
+          }
+        },
+        "counter": {
+          "value": 0,
+          "max": 0
+        }
+    },
+    "armor": {
+        "templates": ["common", "equipment"]
+    },
+    "container": {
+        "templates": ["common", "equipment"],
+        "capacity": {
+          "max": 1,
+          "value": 0
+        }
+    },
+    "consumable": {
+        "templates": ["common", "equipment"]
+    },
+    "feature": {
+        "templates": ["common"]
+    },
+    "spell": {
+        "templates": ["common"]
+    },
+    "class": {
+        "templates": ["common"]
+    },
+    "occupation": {
+        "templates": ["common"]
+    }
+  }
+}
