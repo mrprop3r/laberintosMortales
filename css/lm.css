@@ -6,6 +6,14 @@
   font-family: "Características";
   src: url("../fonts/Council.otf");
 }
+@keyframes notify {
+  from {
+    text-shadow: none;
+  }
+  to {
+    text-shadow: -1px -1px 4px #4b4a44, 1px -1px 4px #4b4a44, -1px 1px 4px #4b4a44, 1px 1px 4px #4b4a44;
+  }
+}
 :root {
   --color-foreground: #000000;
   --color-background: rgb(252, 252, 252);
@@ -29,7 +37,7 @@
   border: none;
   box-shadow: 0 0 6px var(--color-border);
   color: var(--color-foreground);
-  font-size: 12px;
+  font-size: 14px;
   height: auto;
   line-height: 16px;
   padding: 1px 2px;
@@ -46,7 +54,7 @@
 .lm .sheet-header .header-fields h1.charname input {
   margin: 0 0 5px 0;
   border-style: none none solid none;
-  border-width: 3px;
+  border-width: 2px;
   border-radius: none;
   background: var(--color-background);
 }
@@ -71,10 +79,19 @@
   color: #4b4a44;
   position: relative;
 }
+.lm .sheet-header .header-fields .summary li span.header-data {
+  border-style: none none solid none;
+  border-width: 2px;
+  border-radius: none;
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 5px;
+}
 .lm .sheet-header .header-fields .summary li input {
   border-style: none none solid none;
   border-width: 2px;
   border-radius: none;
+  text-align: center;
   background: var(--color-background);
 }
 .lm .sheet-header .header-fields .summary li label {
@@ -84,7 +101,7 @@
   font-family: var(--font-special);
   color: #4b4a44;
   bottom: 0;
-  left: 12px;
+  left: 10px;
 }
 .lm .sheet.header .header-fields .summary li div.field-long {
   height: calc(100% - 10px);
@@ -512,3 +529,15 @@
   border-style: solid solid none solid;
   border-color: #e2e2e2;
 }
+
+/* Description tab */
+
+.lm.sheet.actor .sheet-body .custom-select select {
+  display: none; /*hide original SELECT element:*/
+}
+
+.lm.sheet.actor .sheet-body .select-selected {
+  background-color: black;
+}
+
+

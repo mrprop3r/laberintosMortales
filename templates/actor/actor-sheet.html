@@ -5,7 +5,7 @@
           <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
           <ul class="summary flexrow">
             <li>
-              <input type="text" name="data.description.class.value" value="{{data.description.class.value}}" data-dtype="String"/>
+              <span class="header-data"><a>{{localize (concat "LM."data.class.label)}}</a></span>
               <label>{{localize 'LM.description.class'}}</label>
             </li>
             <li>
@@ -365,17 +365,6 @@
       </div>
       {{!-- Owned Features Tab --}}
       <div class="tab features" data-group="primary" data-tab="features">
-        <div>
-          <div>
-            <select name="data.class.value">
-              {{#select data.class.value}}
-              {{#each config.actorClasses as |label class|}}
-              <option value="{{class}}">{{label}}</option>
-              {{/each}}
-              {{/select}}
-            </select>
-          </div>
-        </div>
            <ol class="items-list">
               <li class="item flexrow item-header">
                 <div class="item-image"></div>
@@ -561,6 +550,19 @@
                   {{/each}}
               {{/each}}
           </ol>
+      </div>
+      {{!-- Description Tab --}}
+      <div class="tab description" data-group="primary" data-tab="description">
+        <div>
+          <label>{{localize 'LM.description.class'}}</label>
+          <select name="data.class.value">
+            {{#select data.class.value}}
+            {{#each config.actorClass as |label class|}}
+            <option value="{{class}}">{{localize (concat "LM."label)}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
       </div>
   </section>
 </form>

@@ -1,11 +1,27 @@
 export const LM = {
+    actorClass : {
+        lvl0: "Level0",
+        ftr: "Fighter",
+        cl: "Cleric"
+    },
+    classDetails : {
+        lvl0: {
+            hd: "1d4"
+        },
+        ftr: {
+            hd: "1d8"
+        },
+        cl: {
+            hd: "1d6"
+        }
+    },
     abilities: {
-        str: "LM.scores.str.long",
-        int: "LM.scores.int.long",
-        dex: "LM.scores.dex.long",
-        wis: "LM.scores.wis.long",
-        con: "LM.scores.con.long",
-        cha: "LM.scores.cha.long",
+        str: "LM.abilities.str.long",
+        int: "LM.abilities.int.long",
+        dex: "LM.abilities.dex.long",
+        wis: "LM.abilities.wis.long",
+        con: "LM.abilities.con.long",
+        cha: "LM.abilities.cha.long",
     },
     maxhands : 2,
     saves_short: {

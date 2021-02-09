@@ -39,7 +39,13 @@ export class LmActor extends Actor {
   _prepareCharacterData(actorData) {
     const data = actorData.data;
 
-    
+    // Select class
+    data.class.label = CONFIG.LM.actorClass[data.class.value];
+    const classInfo = CONFIG.LM.classDetails[data.class.value];
+
+    // Set Hit Die from class.
+    data.hp.hd = classInfo.hd
+
     // Compute modifiers 
     const standard = {
       0: -3,

@@ -1,7 +1,10 @@
 {
+    "LM.description.class": "Clase",
+    "LM.Level0": "0 nivel",
+    "LM.Fighter": "Guerrero",
+    "LM.Cleric": "Clérigo",
     "LM.retainer.occupation": "Ocupación",
     
-    "LM.description.class": "Clase",
     "LM.description.aligment": "Alineamiento",
     "LM.description.title": "Título",
     "LM.description.level.value": "Nivel",
