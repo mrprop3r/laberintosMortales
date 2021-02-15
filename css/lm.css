@@ -29,6 +29,59 @@
 .lm .window-content {
   background: var(--color-background);
 } 
+.lm input:focus {
+  box-shadow: none;
+}
+.lm a:hover {
+  text-shadow: 2px 2px 8px #817f7f;
+}
+
+/* Chat message */
+
+#chat-log .chat-message {
+  background: var(--color-background);
+  border: solid;
+  border-color: var(--color-foreground);
+  border-width: 3px;
+  padding: 0;
+}
+#chat-log .chat-message .message-header {
+  background: black;
+  color: white;
+}
+#chat-log .chat-message .message-header h4 {
+  font-size: 16px;
+  text-shadow: 2px 2px 8px #817f7f;
+}
+#chat-log .chat-message .message-header .flavor-text {
+  font-size: 14px;
+  color: #b9b8b8;
+}
+#chat-log .chat-message .message-content .dice-roll .dice-result .dice-formula {
+  background: var(--color-background);
+  border: none;
+  text-shadow: 2px 2px 4px #000000;
+}
+#chat-log .chat-message .message-content .dice-roll .dice-result .dice-total {
+  background: rgb(226, 224, 224);
+  border: solid none none none;
+  font-weight: bolder;
+}
+.objetive {
+  color: rgb(186, 190, 186);
+  font-weight: bold;
+  font-weight: 16px;
+}
+.success {
+  color: #0A0;
+  font-weight: bold;
+  font-weight: 16px;
+}
+.failed {
+  color: rgb(252, 135, 1);
+  font-weight: bolder;
+  font-weight: 16px;
+}
 
 /* Character sheet header */
 
@@ -37,11 +90,14 @@
   border: none;
   box-shadow: 0 0 6px var(--color-border);
   color: var(--color-foreground);
-  font-size: 14px;
+  font-size: 12px;
   height: auto;
-  line-height: 16px;
+  line-height: 5px;
   padding: 1px 2px;
   width: 100%;
+}
+.lm .sheet-header .header-fields {
+  height: 100%;
 }
 .lm .sheet-header .profile-img {
   border: 5px;
@@ -52,71 +108,88 @@
   margin: 5px 5px 5px 5px;
 }
 .lm .sheet-header .header-fields h1.charname input {
-  margin: 0 0 5px 0;
+  margin: 0 0 2px 0;
   border-style: none none solid none;
   border-width: 2px;
   border-radius: none;
   background: var(--color-background);
 }
+.lm .sheet-header .header-fields h1.charname input:focus {
+  outline: none;
+  box-shadow: none;
+  background-color: #f1f2f5;
+} 
 .lm .sheet-header .header-fields .summary {
-  flex: 0 0 100%;
-  height: 44px;
   margin: 0;
-  padding: 0;
+  padding: 0 2px 0 2px;
   list-style: none;
-  border-top: none;
+  width: 100%;
+  height: 48px;
 }
-.lm .sheet-header .header-fields .summary li.notify input {
-  font-weight: bold;
-  animation: 0.8s ease-in 1s infinite alternate notify;
+.lm .sheet-header .header-fields .summary .small {
+  width: 80px;
+  flex-grow: 0;
 }
 .lm .sheet-header .header-fields .summary li {
-  height: calc(100% - 8px);
-  float: left;
-  margin: 2px 0;
-  padding: 0;
-  line-height: 30px;
-  color: #4b4a44;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 0 5px 0 0;
 }
-.lm .sheet-header .header-fields .summary li span.header-data {
+.lm .sheet-header .header-fields .summary .header-data {
   border-style: none none solid none;
   border-width: 2px;
-  border-radius: none;
-  text-align: center;
-  padding-left: 5px;
-  padding-right: 5px;
+  text-shadow: #9c9c9c;
+  padding: 16px 0px 4px 0px;
 }
-.lm .sheet-header .header-fields .summary li input {
+.lm .sheet-header .header-fields .summary .header-input {
   border-style: none none solid none;
   border-width: 2px;
-  border-radius: none;
-  text-align: center;
+  text-shadow: #9c9c9c;
+  padding: 16px 0px 4px 0px;
   background: var(--color-background);
 }
 .lm .sheet-header .header-fields .summary li label {
-  line-height: 1px;
-  position: absolute;
-  font-size: 20px;
   font-family: var(--font-special);
-  color: #4b4a44;
-  bottom: 0;
-  left: 10px;
+  font-size: 18px;
+  padding-top: 4px;
 }
-.lm .sheet.header .header-fields .summary li div.field-long {
-  height: calc(100% - 10px);
-  float: center;
-  flex-basis: 65px;
+.lm .sheet-header .header-fields .summary li.notify span {
+  font-weight: bold;
+  animation: 0.8s ease-in 1s infinite alternate notify;
+}
+.lm .sheet-header .header-fields .summary .field-long {
+  flex-basis: 14px;
   flex-grow: 0;
-  text-align: center;
   font-size: 12px;
+  border-style: none none solid none;
+  border-width: 2px;
+  text-shadow: #9c9c9c;
 }
-.lm .sheet-header .header-fields .summary li span.xp-bonus {
-  top: -15px;
-  right: 5px;
+.lm .sheet-header .header-fields .summary .field-long input {
+  background: var(--color-background);
+  border-style: none;
+  padding-top: 10px;
+}
+.lm .sheet-header .header-fields .summary .field-long .next-level {
+  font-weight: bold;
+  padding-top: 16px;
+}
+.lm .sheet-header .header-fields .summary .field-long .xp-bonus {
   color: #7a7971;
   font-size: 10px;
+  position: relative;
+  top: 3px;
+  right: 4px;
+}
+.lm .sheet-header .header-fields .summary .moral-check {
+  color: #a1a099;
   position: absolute;
+  top: 148px;
+  right: 175px;
+}
+.lm .sheet-header .header-fields .summary .moral-check:hover {
+  color: black;
 }
 
 /* Character nav tabs */
@@ -234,17 +307,29 @@
 }
 .lm .sheet-body .center {
   position: absolute;
-  top: 50%;
-  left: 25%;
+  top: 42%;
+  left: 37%;
   transform: translate(-10%, -25%);
-  font-size: 12px;
+  font-size: 16px;
+  font-weight: bolder;
+}
+.lm .sheet-body .center input {
+  border-style: none;
+  background: rgba(255, 255, 255, 0);
+  font-weight: bolder;
 }
 .lm .sheet-body .center2 {
   position: absolute;
   top: 70%;
-  left: 35%;
+  left: 37%;
   transform: translate(-10%, -25%);
-  font-size: 12px;
+  font-size: 16px;
+  font-weight: bolder;
+}
+.lm .sheet-body .center2 input {
+  border-style: none;
+  background:rgba(255, 255, 255, 0);
+  font-weight: bolder;
 }
 .lm .sheet-body .helm {
   position: absolute;
@@ -277,20 +362,26 @@
   flex: 0 0 70px;
   height: 70px;
 }
-.lm .sheet-body .hd {
+.lm .sheet-body .hd-hp {
   position: absolute;
-  top: 25%;
-  left: 50%;
+  top: 48%;
+  left: 64%;
   transform: translate(-10%, -25%);
   font-size: 12px;
   border-style: solid;
-  background:grey;
+  border-width: 2px;
+  background:rgb(192, 192, 192);
   color:black;
   text-align: center;
   font-weight: bold;
   border-radius: 45% 45% 45% 45%;
 }
-.lm .sheet-body .hd input{
+.lm .sheet-body .hd-hp .hd-roll:hover {
+  font-weight: bolder;
+  cursor: pointer;
+  text-shadow: #f1f2f5;
+}
+.lm .sheet-body .hd-hp input{
   border-style: none;
 }
 .lm .sheet-body .headskill {
@@ -402,7 +493,7 @@
   padding: 4px;
   border-radius: 15%;
 }
-.lm .sheet-body .combat .thac0-data ul li {
+.lm .sheet-body .combat .thac0-data ul li.thac0 {
   position: relative;
   font-size: 14px;
   font-weight: bold;
@@ -423,6 +514,24 @@
   border-radius: 50%;
   border-style: solid;
   border-width: 2px;
+}
+.lm .sheet-body .combat .thac0-data ul .thac0-des {
+  width: 100%;
+  border-style: solid;
+}
+.lm .sheet-body .combat .thac0-data ul .thac0-des li {
+  float: left;
+  width: 22px;
+}
+.lm .sheet-body .combat .thac0-data ul .thac0-des li.brd {
+  border-right: solid;
+  border-width: 1px;
+}
+.lm .sheet-body .combat .thac0-data ul .thac0-des li.brd .value {
+  font-weight: bolder;
+}
+.lm .sheet-body .combat .thac0-data ul .thac0-des li .value {
+  font-weight: bolder;
 }
 .lm .combat .mod {
   padding: 3px;
@@ -532,12 +641,40 @@
 
 /* Description tab */
 
-.lm.sheet.actor .sheet-body .custom-select select {
-  display: none; /*hide original SELECT element:*/
+.lm.sheet.actor .sheet-body .class-description {
+  border: none;
+  box-shadow: 0 0 6px var(--color-border);
+  font-size: 12px;
+  height: auto;
+  line-height: 16px;
+  padding: 1px 2px;
+  width: 100%;
+}
+.lm.sheet.actor .sheet-body .class-description .class-group {
+  text-align: left;
+  padding: 0;
+}
+.lm.sheet.actor .sheet-body .class-description .item-control.retainer.noretainer {
+  color: rgb(192, 186, 186);
+}
+.lm.sheet.actor .sheet-body .class-description .class-img {
+  flex: 0 0 25px;
+  height: 25px;
+  border: none;
+}
+.lm.sheet.actor .sheet-body .class-description label {
+  font-weight: bolder;
+}
+.lm.sheet.actor .sheet-body .class-description input {
+  background-color: black;
+  color: white;
+  width: 26px;
+  text-align: center;
+}
+.lm.sheet.actor .sheet-body .class-description select{
+  background-color: black;
+  color: white;
 }
 
-.lm.sheet.actor .sheet-body .select-selected {
-  background-color: black;
-}
 
 
