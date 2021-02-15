@@ -6,13 +6,25 @@ export const LM = {
     },
     classDetails : {
         lvl0: {
-            hd: "1d4"
+            img: "/systems/lm/assets/class/swordman.svg",
+            hd: "1d4",
+            title: [ "Aspirante", "Hombre de Armas", "Luchador", "Maestro de Espadas", "Héroe", "Bravucón", "Mirmidón", "Campeón", "Héroe Épico", "Señor de la Guerra", "Señor de la Guerra", "Señor de la Guerra", "Señor de la Guerra", "Señor de la Guerra", "Jefe Supremo" ],
+            thac0: [ 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6 ],
+            xpn: [ 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 ],
         },
         ftr: {
-            hd: "1d8"
+            img: "/systems/lm/assets/class/brutal-helm.svg",
+            hd: "1d8",
+            title: [ "Aspirante", "Hombre de Armas", "Luchador", "Maestro de Espadas", "Héroe", "Bravucón", "Mirmidón", "Campeón", "Héroe Épico", "Señor de la Guerra", "Señor de la Guerra", "Señor de la Guerra", "Señor de la Guerra", "Señor de la Guerra", "Jefe Supremo" ],
+            thac0: [ 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6 ],
+            xpn: [ 100, 2035, 4065, 8125, 16251, 32501, 65001, 130001, 250001, 370001, 490001, 610001, 730001, 850001, 850001 ],
         },
         cl: {
-            hd: "1d6"
+            img: "/systems/lm/assets/class/holy-symbol.svg",
+            hd: "1d6",
+            title: [ "Aspirante", "Acólito", "Adepto", "Sacerdote", "Curandero", "Vicario", "Rector", "Prelado", "Obispo", "Patriarca", "Patriarca 10º", "Patriarca 11º", "Patriarca 12º", "Patriarca 13º", "Teócrata" ],
+            thac0: [ 20, 19, 19, 18, 18, 17, 17, 16, 16, 15, 15, 14, 14, 13, 13 ],
+            xpn: [ 100, 1565, 3125, 6251, 12501, 25001, 50001, 100001, 200001, 300001, 400001, 500001, 600001, 700001, 700001 ],
         }
     },
     abilities: {
@@ -45,6 +57,12 @@ export const LM = {
         heavy: "LM.armor.heavy",
         shield: "LM.armor.shield",
         helm: "LM.armor.helm",
+    },
+    magicUser : {
+        magicUser: "LM.user.magicUser",
+        divineUser: "LM.user.divineUser",
+        bladeUser: "LM.user.bladeUser",
+        elfUser: "LM.user.elfUser",
     },
     languages: [
         "Común",

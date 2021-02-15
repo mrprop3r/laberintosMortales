@@ -70,6 +70,16 @@ Hooks.once("ready", async function() {
   Hooks.on("hotbarDrop", (bar, data, slot) => createLmMacro(data, slot));
 });
 
+Hooks.on('createOwnedItem', (actor, item) => {
+  //console.log(actor);
+  //console.log(item);
+  let occupations = actor.data.items.filter(i => i.type == "occupation");
+  console.log(occupations);
+  if(item.type == "occupation" && occupations.length>1){
+      actor.deleteOwnedItem(occupations[0]._id);
+  }
+});
+
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */
 /* -------------------------------------------- */
