@@ -1,0 +1,20 @@
+{
+    "LM.attributes.class": "Clase",
+    
+    
+    
+    
+    
+    "LM.abilities.str.long": "Fuerza",
+    "LM.abilities.str.short": "FUE",
+    "LM.abilities.wis.long": "Sabiduría",
+    "LM.abilities.wis.short": "SAB",
+    "LM.abilities.int.long": "Inteligencia",
+    "LM.abilities.int.short": "INT",
+    "LM.abilities.dex.long": "Destreza",
+    "LM.abilities.dex.short": "DES",
+    "LM.abilities.con.long": "Constitución",
+    "LM.abilities.con.short": "CON",
+    "LM.abilities.cha.long": "Carisma",
+    "LM.abilities.cha.short": "CAR"
+}
