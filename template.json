@@ -9,6 +9,7 @@
           "moral": 0,
           "wage": ""
         },
+        "magicUser": false,
         "hp": {
           "hd": "1d4",
           "value": 4,
@@ -149,6 +150,7 @@
             "packed": false,
             "fast": false,
             "treasure": false,
+            "identified": true,
             "carried": "in",
             "hands": 0
         }
@@ -169,6 +171,7 @@
         "melee": true,
         "throw": false,
         "missile": false,
+        "twoHanded": false,
         "range": {
           "short": 0,
           "medium": 10,
@@ -188,7 +191,8 @@
         "ac": 9,
         "type": "light",
         "damage": "1d3",
-        "wc": 0
+        "wc": 0,
+        "splintered": false
     },
     "container": {
         "templates": ["common", "equipment"],
