@@ -15,15 +15,6 @@ export class LmItem extends Item {
     const data = itemData.data;
   }
 
-  plusQ(ev, add = 1) {
-    ev.preventDefault();
-      const data = this.data.data;
-      let curQuantity = data.quantity;
-      const newQuantity = Math.max(curQuantity + add);
-      this.object.update( {data: {quantity: newQuantity}});
-  }
-
-
   pushTag(values) {
     const data = this.data.data;
     let update = [];

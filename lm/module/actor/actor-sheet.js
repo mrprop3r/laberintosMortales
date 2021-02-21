@@ -192,7 +192,15 @@ export class LmActorSheet extends ActorSheet {
       item.data.quantity = item.data.quantity - amount;
       this.actor.updateEmbeddedEntity('OwnedItem', item);
     });
-    
+
+    // Subtract 1 from Anmunition
+    html.find('.spendAnmo').click(clickEvent => {
+      const shownItem = itemForClickEvent(clickEvent);
+      const item = duplicate(this.actor.getEmbeddedEntity("OwnedItem", shownItem.data("itemId")));
+      let amount = (event.ctrlKey || event.metaKey) ? 10 : 1;
+      item.data.range.anmunition.quantity = item.data.range.anmunition.quantity - amount;
+      this.actor.updateEmbeddedEntity('OwnedItem', item);
+    });
 
     // Toggle retainer
     html.find(".retainer").click(async (ev) => {
@@ -226,6 +234,15 @@ export class LmActorSheet extends ActorSheet {
     html.find('.skills-pack').click(this._onSkillsCheck.bind(this));
     html.find('.hd-roll').click(this._onHdRoll.bind(this));
     html.find('.saving-throw').click(this._onSavingThrow.bind(this));
+    html.find('.thac0-roll').click(this._onThac0Roll.bind(this));
+   
+    //inventory weapon rolls
+    html.find('.dmg.roll').click(ev =>
+      {
+        const li = $(ev.currentTarget).parents(".item");
+        const item = this.actor.getOwnedItem(li.data("itemId"));
+        this._onDmgRoll(item, ev.currentTarget);
+    });
 
     // Occupation show.
     html.find('.occupation').click( ev => {
@@ -353,6 +370,33 @@ export class LmActorSheet extends ActorSheet {
       flavor: text
     });
   }
+  _onDmgRoll(item, eventTarget)
+  {
+    let data = this.actor.data.data;
+    let bdmg = "";
+    let text = game.i18n.localize('LM.items.damage2');
+    if (item.data.data.melee || item.data.data.throw) 
+    {
+      bdmg = "+" + data.abilities.str.mod;
+    }
+    else {
+      bdmg = "+" + 0;
+    }
+    if(eventTarget.title === text)
+    {
+      let r = new Roll(item.data.data.damage2 + bdmg);
+      r.roll();
+      let messageHeader = "<b>" + item.name + "</b> damage";
+      r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
+    }
+    else {
+      let r = new Roll(item.data.data.damage + bdmg);
+      r.roll();
+      let messageHeader = "<b>" + item.name + "</b> damage";
+      r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
+    }
+  }
+
 
   _onSavingThrow(event) {
     event.preventDefault();
@@ -367,6 +411,61 @@ export class LmActorSheet extends ActorSheet {
     result.toMessage({
       speaker: ChatMessage.getSpeaker({actor: this.actor}),
       flavor: `${saveName} >= ${data.saves[dataset.save].value} ${success} `
+    });
+  }
+
+  _onThac0Roll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let data = this.actor.data.data;
+    const meleemod = data.thac0.mod.melee;
+    const missilemod = data.thac0.mod.missile;
+    const thac0 = data.thac0.value;
+    return new Promise(resolve => {
+      new Dialog({
+         title: game.i18n.localize('LM.attack'),
+         content: `<form>
+         <div class="form-group">
+           <label>Modificador ataque</label>
+           <input type='text' name='inputField'></input>
+         </div>
+        </form>`,
+         buttons: {
+            melee: {
+              icon: '<i class="fas fa-dice-d20"></i>',
+              label: game.i18n.localize('LM.melee.attack'),
+              callback: (html) => {
+                let attackmod = html.find('input[name=\'inputField\']');
+                let mod = "+" + attackmod.val();
+                let melee = "+" + meleemod;
+                let result = new Roll("d20" + mod + melee, data).roll();
+                let hitac = thac0 - result.total;
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: `Ataque de melé da a CA:` + hitac,
+                });
+             }
+            },
+            missile: {
+              icon: '<i class="fas fa-dice-d20"></i>',
+              label: game.i18n.localize('LM.missile.attack'),
+              callback: (html) => {
+                let attackmod = html.find('input[name=\'inputField\']');
+                let mod = "+" + attackmod.val();
+                let missile = "+" + missilemod
+                let result = new Roll("d20" + mod + missile, data).roll();
+                let hitac = thac0 - result.total;
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: `Ataque de distancia da a CA:` + hitac,
+                });
+              }
+            }
+         },
+         default: "roll",
+         close: () => resolve(null)
+        }).render(true);
     });
   }
 }

@@ -268,7 +268,7 @@
           <div class="thac0-data">
             <ul class="thac0-ac flexrow">
               <li class="thac0-head">
-                <a>{{ localize "LM.combat.thac0"}}</a>
+                <a class="thac0-roll" data-value={{data.thac0.value}}>{{ localize "LM.combat.thac0"}}</a>
                 <span>{{ localize "LM.combat.ac"}}</span> 
               </li>
               <li class="thac0-ini">
@@ -353,17 +353,22 @@
                       </h4>
                     </a>
                 </div>
-                <div>
-                  <a class="dmg roll"
-                      title='{{localize "LM.items.damage"}}'><i class="fas fa-dice"></i>
-                  </a>
+                <div class="item-info">
+                  <span class="head">{{ localize "LM.items.wc"}}</span>
+                  <span>{{ item.data.wc }}</span>
                   {{#if item.data.isDamage2 }}
+                  <a class="dmg roll"
+                  title='{{localize "LM.items.damage2"}}'><i class="fas fa-dice"></i>
+                  </a>
                   <span class="item-dice">{{item.data.damage2}}</span>
                   {{else}}
+                  <a class="dmg roll"
+                  title='{{localize "LM.items.damage"}}'><i class="fas fa-dice"></i>
+                  </a>
                   <span class="item-dice">{{item.data.damage}}</span>
                   {{/if}}
                 </div>
-                <div>
+                <div class="item-info">
                   <a class="item-control item-dmg {{#unless item.data.isDamage2}}item-damage2{{/unless}}"
                       title='{{localize "LM.items.isDamage2"}}'>
                       <i class="fas fa-heartbeat"></i>
@@ -373,18 +378,18 @@
                       <i class="fas fa-hand-rock"></i>
                   </a>
                   {{#if item.data.missile }}
-                  <a class="item-dmgroll"
-                      title='{{localize "LM.items.ammunition.type"}}'><i class="fas fa-arrow-circle-right"></i>
+                  <a class="spendAnmo"
+                      title='{{localize "LM.items.anmunition.type"}}'><i class="fas fa-arrow-circle-right"></i>
                   </a>
-                  <span class="item-dice">{{item.data.range.ammo}}</span>
+                  <span class="item-dice">{{item.data.range.anmunition.quantity}}</span>
                   <span class="item-range" title='{{localize "LM.items.range"}}'>
                   {{item.data.range.short}}/{{item.data.range.medium}}/{{item.data.range.long}}</span>
                   {{/if}}
                   {{#if item.data.throw }}
-                  <a class="item-dmgroll"
-                  title='{{localize "LM.items.ammunition.type"}}'><i class="fas fa-arrow-circle-right"></i>
+                  <a class="spendAnmo"
+                  title='{{localize "LM.items.anmunition.type"}}'><i class="fas fa-arrow-circle-right"></i>
                   </a>
-                  <span>{{item.data.ammo}}</span>
+                  <span class="item-dice">{{item.data.range.anmunition.quantity}}</span>
                   <span class="item-range" title='{{localize "LM.items.range"}}'>
                   {{item.data.range.short}}/{{item.data.range.medium}}/{{item.data.range.long}}</span>
                   {{/if}}

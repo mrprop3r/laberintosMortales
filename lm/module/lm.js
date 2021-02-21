@@ -65,6 +65,10 @@ Hooks.once('init', async function() {
   Handlebars.registerHelper("or", function (a, b, c) {
     return a === b || a === c;
   });
+  Handlebars.registerHelper("ors", function (a, b) {
+    return a || b;
+  });
+
 
 
 });

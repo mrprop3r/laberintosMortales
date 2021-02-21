@@ -137,7 +137,7 @@
     }
   },
   "Item": {
-    "types": ["item", "weapon", "armor", "container", "consumable", "feature", "spell", "class", "occupation"],
+    "types": ["item", "weapon", "armor", "container", "consumable", "feature", "spell", "occupation"],
     "templates": {
         "common": {
             "description": ""
@@ -206,7 +206,12 @@
         "use": []
     },
     "feature": {
-        "templates": ["common"]
+        "templates": ["common"],
+        "roll": "",
+        "rollType": "result",
+        "rollTarget": 0,
+        "blindroll": false,
+        "save": ""
     },
     "spell": {
         "templates": ["common"],
@@ -220,14 +225,9 @@
         "cast": 0,
         "save": ""
     },
-    "class": {
-        "templates": ["common"]
-    },
     "occupation": {
         "templates": ["common"],
-        "equipmentIni": [],
-        "coins": "2d6*10",
-        "skills": []
+        "coins": "2d6*10"
     }
   }
 }

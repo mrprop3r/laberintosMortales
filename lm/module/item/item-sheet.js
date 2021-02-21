@@ -9,7 +9,7 @@ export class LmItemSheet extends ItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["lm", "sheet", "item"],
       width: 520,
-      height: 432,
+      height: 478,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
     });
   }
@@ -80,15 +80,18 @@ export class LmItemSheet extends ItemSheet {
       this.object.update({data: {missile: !this.object.data.data.missile}});
     });
 
+    html.find('a.throw-toggle').click(() => {
+      this.object.update({data: {throw: !this.object.data.data.throw}});
+    });
+
     html.find('a.item-toggle.treasure').click(() => {
       this.object.update({data: {treasure: !this.object.data.data.treasure}});
     });
     html.find('a.item-toggle.splintered').click(() => {
       this.object.update({data: {splintered: !this.object.data.data.splintered}});
     });
-
-    html.find('.plus').click((ev) => {
-      this.object.plusQ(ev,1);
+    html.find('a.item-toggle.slow').click(() => {
+      this.object.update({data: {slow: !this.object.data.data.slow}});
     });
     super.activateListeners(html);
   }

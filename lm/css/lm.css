@@ -29,6 +29,9 @@
 .lm .window-content {
   background: var(--color-background);
 } 
+.lm .window-content .resizable {
+  overflow: auto;
+}
 .lm input:focus {
   box-shadow: none;
 }
@@ -55,20 +58,21 @@
 }
 #chat-log .chat-message .message-header .flavor-text {
   font-size: 14px;
-  color: #cfcece;
+  background: #95d172;
+  color: #000000;
 }
 #chat-log .chat-message .message-content .dice-roll .dice-result .dice-formula {
-  background: var(--color-background);
+  background: rgb(35, 182, 30);
   border: none;
   text-shadow: 2px 2px 4px #000000;
 }
 #chat-log .chat-message .message-content .dice-roll .dice-result .dice-total {
-  background: rgb(226, 224, 224);
+  background: var(--color-background);
   border: solid none none none;
   font-weight: bolder;
 }
 .objetive {
-  color: rgb(186, 190, 186);
+  color: rgb(38, 59, 38);
   font-weight: bold;
   font-weight: 16px;
 }
@@ -83,6 +87,19 @@
   font-weight: 16px;
 }
 
+/*   Dialog  */
+.dialog .dialog-buttons button {
+  background: rgb(83, 160, 73);
+  color: black;
+}
+.dialog .dialog-buttons button.default {
+  background: rgb(40, 197, 47);
+  color: black;
+}
+.dialog .window-content {
+  background: #78aa5b;
+  font-weight: bold;
+}
 /* Character sheet header */
 
 .lm.sheet.actor .sheet-header {
@@ -606,7 +623,7 @@
   font-weight: bold;
 }
 
-/*    Equipment  */
+/*    Weapons   */
 
 .lm.sheet.actor .sheet-body .item .item-rollable:hover .item-image {
   background-image: url("/icons/svg/d20-grey.svg") !important;
@@ -626,6 +643,13 @@
   margin: 0;
   line-height: 30px;
   flex-basis: 90px;
+}
+.lm.sheet.actor .sheet-body .item .item-info {
+  padding-top: 6px;
+}
+.lm.sheet.actor .sheet-body .item .head {
+  font-weight: bold;
+  text-align: right;
 }
 .lm.sheet.actor .sheet-body .item .item-name .item-image {
   flex-basis: 30px;
@@ -797,7 +821,7 @@
 }
 .lm.sheet.item .sheet-body .stats .item-info label {
   font-weight: bold;
-  width: 50px;
+  width: 55px;
   padding-top: 5px;
 }
 .lm.sheet.item .sheet-body .stats .item-info select {
@@ -813,8 +837,40 @@
 .lm.sheet.item .sheet-body .stats .item-info input {
   text-align: center;
   margin-bottom: 4px;
-  width: 30px;
-  align-items: right;
+  width: 35px;
+  position: relative;
+  left: 10px;
+}
+.lm.sheet.item .sheet-body .stats .item-multi {
+  border-style: none none ridge none;
+  border-width: 2px;
+  margin: 2px;
+  width: 100px;
+}
+.lm.sheet.item .sheet-body .stats .item-multi .item-range {
+  display: flex;
+  text-align: center;
+}
+.lm.sheet.item .sheet-body .stats .item-multi .item-range input {
+  margin-bottom: 4px;
+}
+.lm.sheet.item .sheet-body .stats .item-multi .item-damages {
+  display: flex;
+}
+.lm.sheet.item .sheet-body .stats .item-multi .item-damages input {
+  margin-bottom: 4px;
+}
+.lm.sheet.item .sheet-body .stats .item-multi label{
+  font-weight: bold;
+}
+.lm.sheet.item .sheet-body .stats .ranges-icons{
+  text-align: center;
+}
+.lm.sheet.item .sheet-body .stats .ranges-icons a {
+  color: #969696;
+}
+.lm.sheet.item .sheet-body .stats .ranges-icons a.active {
+  color: #000000;
 }
 .lm.sheet.item .sheet-body .stats .item-info.splintered.nosplintered {
   color: rgb(192, 186, 186);
@@ -825,8 +881,33 @@
 .lm.sheet.item .sheet-body .stats .item-info .quantity {
   padding-top: 5px;
 }
-.lm.sheet.item .sheet-body .stats .item-info .toggle-data{
+.lm.sheet.item .sheet-body .stats .item-info .item-toggle {
+  position: relative;
+  left: 20px;
 }
 .lm.sheet.item .sheet-body .editor {
-  height: 250px; 
+  height: 300px; 
+}
+.lm.sheet.item .sheet.body .editor .editor-content {
+  padding: 0 5px;
+}
+.lm.sheet.item .sheet.body .editor .editor-edit {
+  background: #000000;
+}
+.lm .sheet-body .tab,
+.lm .sheet-body .tab .editor {
+  height: 100%;
+}
+
+.lm .tox .tox-editor-container {
+  background: #fff;
+}
+
+.lm .tox .tox-edit-area {
+  padding: 0 8px;
+}
+.lm .sheet-tabs {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
 }
