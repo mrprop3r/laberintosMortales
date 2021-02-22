@@ -10,7 +10,7 @@ export class LmActorSheet extends ActorSheet {
       classes: ["lm", "sheet", "actor"],
       template: "systems/lm/templates/actor/actor-sheet.html",
       width: 500,
-      height: 662,
+      height: 680,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "attributtes" }]
     });
   }

@@ -18,7 +18,7 @@
   --color-foreground: #000000;
   --color-background: rgb(252, 252, 252);
   --color-highlight: #d1d2d4;
-  --color-secondary: #78aa5b;
+  --color-secondary: #acdb91;
   --color-border: #545557;
   --font-editor: "Laberintos", serif;
   --font-input: Arial, sans-serif;
@@ -29,9 +29,6 @@
 .lm .window-content {
   background: var(--color-background);
 } 
-.lm .window-content .resizable {
-  overflow: auto;
-}
 .lm input:focus {
   box-shadow: none;
 }
@@ -42,7 +39,7 @@
 /* Chat message */
 
 #chat-log .chat-message {
-  background: var(--color-secondary);
+  background: var(--color-highlight);
   border: solid;
   border-color: var(--color-foreground);
   border-width: 3px;
@@ -53,16 +50,19 @@
   color: white;
 }
 #chat-log .chat-message .message-header h4 {
-  font-size: 16px;
+  font-size: 20px;
   text-shadow: 2px 2px 8px #817f7f;
+  font-family: var(--font-special);
+  font-weight: normal;
 }
 #chat-log .chat-message .message-header .flavor-text {
   font-size: 14px;
-  background: #95d172;
+  background: var(--color-highlight);
   color: #000000;
+  font-weight: bold;
 }
 #chat-log .chat-message .message-content .dice-roll .dice-result .dice-formula {
-  background: rgb(35, 182, 30);
+  background: var(--color-background);
   border: none;
   text-shadow: 2px 2px 4px #000000;
 }
@@ -89,15 +89,15 @@
 
 /*   Dialog  */
 .dialog .dialog-buttons button {
-  background: rgb(83, 160, 73);
-  color: black;
+  background: var(--color-foreground);
+  color: white;
 }
 .dialog .dialog-buttons button.default {
-  background: rgb(40, 197, 47);
-  color: black;
+  background: rgb(46, 49, 46);
+  color: white;
 }
 .dialog .window-content {
-  background: #78aa5b;
+  background: var(--color-background);
   font-weight: bold;
 }
 /* Character sheet header */
@@ -777,6 +777,22 @@
 .lm.sheet.item .sheet-header .header-fields .header-data .form-group input {
   width: 40px;
 }
+.lm.sheet.item .sheet-header .header-fields .header-data .form-occupation label {
+  text-align: center;
+  position: relative;
+  top: 14px;
+  right: 5px;
+}
+.lm.sheet.item .sheet-header .header-fields .header-data .form-occupation .form-coins input {
+  display: flex;
+  width: 50px;
+  color: white;
+  background-color: var(--color-foreground);
+  border-radius: 10%;
+  position: relative;
+  top: 20px;
+  right: 2px;
+}
 .lm.sheet.item .sheet-header .tag-list {
   margin: 0;
   height: 26px;
@@ -890,24 +906,4 @@
 }
 .lm.sheet.item .sheet.body .editor .editor-content {
   padding: 0 5px;
-}
-.lm.sheet.item .sheet.body .editor .editor-edit {
-  background: #000000;
-}
-.lm .sheet-body .tab,
-.lm .sheet-body .tab .editor {
-  height: 100%;
-}
-
-.lm .tox .tox-editor-container {
-  background: #fff;
-}
-
-.lm .tox .tox-edit-area {
-  padding: 0 8px;
-}
-.lm .sheet-tabs {
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
 }
