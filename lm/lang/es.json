@@ -133,6 +133,7 @@
     "LM.Add": "Añadir",
     "LM.weaponsname": "Armas",
     "LM.attack": "Ataque",
+    "LM.attack.dmg": "Daño",
     "LM.mod.attack": "Modificador al ataque",
     "LM.melee.attack": "Melé",
     "LM.missile.attack": "Distancia",

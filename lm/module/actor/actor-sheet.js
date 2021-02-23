@@ -10,7 +10,7 @@ export class LmActorSheet extends ActorSheet {
       classes: ["lm", "sheet", "actor"],
       template: "systems/lm/templates/actor/actor-sheet.html",
       width: 500,
-      height: 680,
+      height: 664,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "attributtes" }]
     });
   }
@@ -30,6 +30,7 @@ export class LmActorSheet extends ActorSheet {
     if (this.actor.data.type == 'character') {
       this._prepareCharacterItems(data);
     }
+
 
     return data;
   }
@@ -103,6 +104,7 @@ export class LmActorSheet extends ActorSheet {
       }
     }
 
+
     // Assign and return
     actorData.gear = gear;
     actorData.weapons = weapons;
@@ -112,6 +114,14 @@ export class LmActorSheet extends ActorSheet {
     actorData.features = features;
     actorData.occupations = occupations;
     actorData.spells = spells;
+
+    this.actor.items.forEach(it => {
+      if (it.type === 'container') {
+          actorData.containers[it._id] = it;
+      }
+    });
+
+
   }
 
   
@@ -149,7 +159,7 @@ export class LmActorSheet extends ActorSheet {
     // Delete Container Item
     html.find('.container-delete').click(ev => {
       const li = $(ev.currentTarget).parents(".item-titles");
-      this.actor.deleteOwnedItem(li.data("itemId"));
+      this.actor.deleteOwnedItem(li.data("containerId"));
       li.slideUp(200, () => this.render(false));
     });
 
@@ -235,13 +245,19 @@ export class LmActorSheet extends ActorSheet {
     html.find('.hd-roll').click(this._onHdRoll.bind(this));
     html.find('.saving-throw').click(this._onSavingThrow.bind(this));
     html.find('.thac0-roll').click(this._onThac0Roll.bind(this));
-   
+    
     //inventory weapon rolls
     html.find('.dmg.roll').click(ev =>
       {
         const li = $(ev.currentTarget).parents(".item");
         const item = this.actor.getOwnedItem(li.data("itemId"));
         this._onDmgRoll(item, ev.currentTarget);
+    });
+    html.find('.item-image.weapon').click(ev =>
+      {
+        const li = $(ev.currentTarget).parents(".item");
+        const item = this.actor.getOwnedItem(li.data("itemId"));
+        this._onWeaponRoll(item, ev.currentTarget);
     });
 
     // Occupation show.
@@ -252,6 +268,13 @@ export class LmActorSheet extends ActorSheet {
           item.sheet.render(true);
       }
      });
+    // In Hands show.
+    html.find('.inhand').click(ev => {
+        const li = $(ev.currentTarget).parents(".item");
+        const item = this.actor.getOwnedItem(li.data("itemId"));
+        item.sheet.render(true);
+      });
+
     // Drag events for macros.
     if (this.actor.owner) {
       let handler = ev => this._onDragItemStart(ev);
@@ -386,13 +409,13 @@ export class LmActorSheet extends ActorSheet {
     {
       let r = new Roll(item.data.data.damage2 + bdmg);
       r.roll();
-      let messageHeader = "<b>" + item.name + "</b> damage";
+      let messageHeader = "<b>" + item.name + `</b><b class="failed"> daño</b>`;
       r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
     }
     else {
       let r = new Roll(item.data.data.damage + bdmg);
       r.roll();
-      let messageHeader = "<b>" + item.name + "</b> damage";
+      let messageHeader = "<b>" + item.name + `</b><b class="failed"> daño</b>`;
       r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
     }
   }
@@ -468,4 +491,59 @@ export class LmActorSheet extends ActorSheet {
         }).render(true);
     });
   }
+  _onWeaponRoll(item) {
+    
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let data = this.actor.data.data;
+    const meleemod = data.thac0.mod.melee;
+    const missilemod = data.thac0.mod.missile;
+    const thac0 = data.thac0.value;
+    return new Promise(resolve => {
+      new Dialog({
+         title: game.i18n.localize('LM.attack'),
+         content: `<form>
+         <div class="form-group">
+           <label>Modificador ataque</label>
+           <input type='text' name='inputField'></input>
+         </div>
+        </form>`,
+         buttons: {
+            melee: {
+              icon: '<i class="fas fa-dice-d20"></i>',
+              label: game.i18n.localize('LM.melee.attack'),
+              callback: (html) => {
+                let attackmod = html.find('input[name=\'inputField\']');
+                let mod = "+" + attackmod.val();
+                let melee = "+" + meleemod;
+                let result = new Roll("d20" + mod + melee, data).roll();
+                let hitac = thac0 - result.total;
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: item.name + `Ataque de melé da a CA:` + hitac,
+                });
+             }
+            },
+            missile: {
+              icon: '<i class="fas fa-dice-d20"></i>',
+              label: game.i18n.localize('LM.missile.attack'),
+              callback: (html) => {
+                let attackmod = html.find('input[name=\'inputField\']');
+                let mod = "+" + attackmod.val();
+                let missile = "+" + missilemod
+                let result = new Roll("d20" + mod + missile, data).roll();
+                let hitac = thac0 - result.total;
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: item.name + `Ataque de distancia da a CA:` + hitac,
+                });
+              }
+            }
+         },
+         default: "roll",
+         close: () => resolve(null)
+        }).render(true);
+    });
+  }
+
 }
