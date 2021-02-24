@@ -58,6 +58,7 @@
     "character": {
       "templates": ["base"],
       "biography": "",
+      "notes": "",
       "description": {
         "aligment": "",
         "title": "",
@@ -111,7 +112,9 @@
           "value": 0
         },
         "lan": {
-          "value": 0
+          "value": 0,
+          "ini": [],
+          "learn": []
         },
         "man": {
           "value": 0

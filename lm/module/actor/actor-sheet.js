@@ -35,6 +35,14 @@ export class LmActorSheet extends ActorSheet {
     return data;
   }
 
+  activateEditor(target, editorOptions, initialContent) {
+    // remove some controls to the editor as the space is lacking
+    if (target == "data.biography") {
+      editorOptions.toolbar = "styleselect bullist hr table removeFormat save";
+    }
+    super.activateEditor(target, editorOptions, initialContent);
+  }
+
   /**
    * Organize and classify Items for Character sheets.
    *

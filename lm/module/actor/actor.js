@@ -52,6 +52,28 @@ export class LmActor extends Actor {
     data.description.title = classInfo.title[data.description.level.value];
     // Set xp next level
     data.description.level.xpnext = classInfo.xpn[data.description.level.value];
+    // Set class requeriments
+    data.abilities.requeriment = game.i18n.localize(`${classInfo.requeriment}`);
+    // Set class principal abilities
+    data.abilities.principal = game.i18n.localize(`${classInfo.principalAbility}`);
+    // Set class weapons use
+    if ( data.class.value === "cl") {
+      switch (data.description.aligment) {
+        case "legal":
+          data.skills.weapons = game.i18n.localize(`${classInfo.weaponsUse.legal}`);
+          break;
+        case "chaotic":
+          data.skills.weapons = game.i18n.localize(`${classInfo.weaponsUse.chaotic}`);
+          break;
+        default:
+          data.skills.weapons = game.i18n.localize(`${classInfo.weaponsUse.neutral}`);
+      }
+    } else {
+      data.skills.weapons = game.i18n.localize(`${classInfo.weaponsUse}`);
+    }
+    data.skills.styles = game.i18n.localize(`${classInfo.weaponStyle}`);
+    // Set class armors use
+    data.skills.armors = game.i18n.localize(`${classInfo.armorUse}`);
     // Compute modifiers 
     const standard = {
       0: -3,
@@ -286,7 +308,7 @@ export class LmActor extends Actor {
     data.saves.spell.value = classInfo.saves.spell[data.description.level.value];
 
     // Compute magicUser
-    data.magicUser = classInfo.magic;
+    data.magicUser = classInfo.magic.yes;
     
     /* Compute freeHands */    
     let total = 0;

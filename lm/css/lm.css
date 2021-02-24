@@ -714,43 +714,85 @@
   border-color: #e2e2e2;
 }
 
+/*    Features tab    */
+
+.lm.sheet.actor .sheet-body .tab.features .combat-box {
+  background: rgb(211, 208, 208);
+  font-size: 12px;
+  border: groove;
+  box-shadow: rgb(90, 90, 90);
+}
+.lm.sheet.actor .sheet-body .tab.features .combat-box label {
+  font-weight: bold;
+}
+
+
 /* Description tab */
 
-.lm.sheet.actor .sheet-body .class-description {
+.lm.sheet.actor .sheet-body .class {
+  width: 100%;
+}
+.lm.sheet.actor .sheet-body .class .class-description {
   border: none;
   box-shadow: 0 0 6px var(--color-border);
   font-size: 12px;
-  height: auto;
   line-height: 16px;
   padding: 1px 2px;
-  width: 100%;
+  width: 195px;
+  height: 160px;
+  flex: 0 0 195px;
 }
-.lm.sheet.actor .sheet-body .class-description .class-group {
+.lm.sheet.actor .sheet-body .class .class-description .class-group {
   text-align: left;
-  padding: 0;
+  padding-left: 4px;
 }
-.lm.sheet.actor .sheet-body .class-description .item-control.retainer.noretainer {
+.lm.sheet.actor .sheet-body .class .class-description .item-control.retainer.noretainer {
   color: rgb(192, 186, 186);
 }
-.lm.sheet.actor .sheet-body .class-description .class-img {
+.lm.sheet.actor .sheet-body .class .class-description .class-img {
   flex: 0 0 25px;
   height: 25px;
   border: none;
 }
-.lm.sheet.actor .sheet-body .class-description label {
+.lm.sheet.actor .sheet-body .class .class-description label {
   font-weight: bolder;
 }
-.lm.sheet.actor .sheet-body .class-description input {
+.lm.sheet.actor .sheet-body .class .class-description input {
   background-color: black;
   color: white;
   width: 26px;
   text-align: center;
 }
-.lm.sheet.actor .sheet-body .class-description select{
+.lm.sheet.actor .sheet-body .class .class-description select{
   background-color: black;
   color: white;
   font-size: 10px;
 }
+.lm.sheet.actor .sheet-body .class .biography {
+  box-shadow: 0 0 4px var(--color-border);
+  height: 160px;
+  padding: 1px 2px;
+  line-height: 16px;
+  margin-left: 4px;
+}
+.lm.sheet.actor .sheet-body .class .biography .headname {
+  font-family: var(--font-special);
+  font-size: 20px;
+  text-align: center;
+}
+.lm.sheet.actor .sheet-body .class .biography .editor {
+  height: 160px;
+}
+.lm.sheet.actor .sheet-body .class .biography .editor .tox .tox-tbtn {
+  height: 24px;
+}
+.lm.sheet.actor .sheet-body .inventory.notes {
+  margin: 2px;
+}
+.lm.sheet.actor .sheet-body .inventory.notes .editor {
+  height: 150px;
+}
+
 
 /*    Item sheet  */
 /*      header        */

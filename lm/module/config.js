@@ -18,9 +18,20 @@ export const LM = {
     classDetails : {
         lvl0: {
             img: "/systems/lm/assets/class/swordman.svg",
+            requeriment: "LM.requeriment.level0",
+            principalAbility: "LM.principalAbility.level0",
             hd: "1d4",
+            weaponsUse: "LM.weaponUse.level0",
+            weaponStyle: "LM.weaponStyle.level0",
+            armorUse: "LM.armorUse.level0",
+            skillsPoints : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+            backstab: {
+                yes: false,
+            },
             title: [ "Aspirante", "Hombre de Armas", "Luchador", "Maestro de Espadas", "Héroe", "Bravucón", "Mirmidón", "Campeón", "Héroe Épico", "Señor de la Guerra", "Señor de la Guerra", "Señor de la Guerra", "Señor de la Guerra", "Señor de la Guerra", "Jefe Supremo" ],
             thac0: [ 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6 ],
+            dmgBonusm: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+            dmgBonusp: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
             xpn: [ 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 ],
             saves: {
                 death: [ 15, 14, 13, 13, 12, 11, 11, 10, 9, 9, 8, 7, 7, 6, 5 ],
@@ -29,29 +40,29 @@ export const LM = {
                 breath: [17, 16, 15, 15, 14, 13, 13, 12, 11, 11, 10, 9, 9, 8, 7 ],
                 spell: [18, 17, 16, 16, 15, 14, 14, 13, 12, 12, 11, 10, 10, 9, 8 ]
             },
-            magic: false,
+            magic: {
+                yes: false,
+            }
         },
         ass: {
             img: "/systems/lm/assets/class/bloody-sword.svg",
-            requeriment: "Ninguno",
-            principalAbility: {
-                str: "FUE",
-                dex: "DES",
-            },
+            requeriment: "LM.requeriment.level0",
+            principalAbility: "LM.principalAbility.assasin",
             hd: "1d6",
-            weaponsUse: "Todas",
-            armorUse: "Todas",
+            weaponsUse: "LM.weaponUse.level0",
+            weaponStyle: "LM.weaponStyle.assasin",
+            armorUse: "LM.armorUse.level0",
             skillsPoints : [ 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ],
             backstab: {
-                value: true,
+                yes: true,
                 level: 1,
-                hitbonus: [ 0, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
-                dmgbonusback: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+                hitBonus: [ 0, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+                dmgBonusback: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
             },
             title: [ "Aspirante", "Thug", "Ejecutor", "Torturador", "Exterminador", "Destructor", "Verdugo", "Canalla", "Asesino", "Maestro Asesino", "Maestro Asesino", "Maestro Asesino", "Maestro Asesino", "Maestro Asesino", "Padrino de Asesinos" ],
             thac0: [ 20, 19, 18, 18, 17, 16, 16, 15, 14, 14, 13, 12, 12, 11, 10 ],
-            dmgbonusm: [ 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5],
-            dmgbonusp: [ 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5],
+            dmgBonusm: [ 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5 ],
+            dmgBonusp: [ 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5 ],
             xpn: [ 100, 1701, 3401, 6801, 14001, 28001, 55001, 110001, 230001, 3500001, 470001, 590001, 710001, 830001, 830001 ],
             saves: {
                 death: [ 15, 14, 13, 13, 12, 11, 11, 10, 9, 9, 8, 7, 7, 6, 5 ],
@@ -60,30 +71,30 @@ export const LM = {
                 breath: [17, 16, 15, 15, 14, 13, 13, 12, 11, 11, 10, 9, 9, 8, 7 ],
                 spell: [18, 17, 16, 16, 15, 14, 14, 13, 12, 12, 11, 10, 10, 9, 8 ]
             },
-            magic: false,
+            turnUndead: {
+                yes: false,
+            },
+            magic: {
+                yes: false,
+            }
         },
         bar: {
             img: "/systems/lm/assets/class/shouting.svg",
             hd: "1d6",
-            requeriment: "Ninguno",
-            principalAbility: {
-                dex: "DES",
-                cha: "CAR",
-            },
+            requeriment: "LM.requeriment.level0",
+            principalAbility: "LM.principalAbility.bard",
             hd: "1d6",
-            weaponsUse: "Todas",
-            armorUse: "Hasta Tachonado",
+            weaponsUse: "LM.weaponUse.level0",
+            weaponStyle: "LM.weaponStyle.bard",
+            armorUse: "LM.armorUse.bard",
             skillsPoints : [ 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
             backstab: {
-                value: false,
-                level: 0,
-                hitbonus: [ 0, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
-                dmgbonusback: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+                yes: false,
             },
             title: [ "Recitador", "Versificador", "Archivista", "Analista", "Cronista", "Panegirista", "Poeta", "Rapsodista", "Bardo", "Bardo", "Bardo", "Bardo", "Bardo", "Bardo", "Maestro Bardo" ],
             thac0: [ 20, 19, 19, 18, 18, 17, 17, 16, 16, 15, 15, 14, 14, 13, 13 ],
-            dmgbonusm: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-            dmgbonusp: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+            dmgBonusm: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+            dmgBonusp: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
             xpn: [ 100, 1401, 2801, 5601, 11201, 22401, 45001, 90001, 190001, 2900001, 390001, 490001, 590001, 690001, 690001 ],
             saves: {
                 death: [ 15, 13, 13, 12, 12, 11, 11, 10, 10, 9, 9, 8, 8, 7, 7 ],
@@ -92,49 +103,84 @@ export const LM = {
                 breath: [17, 16, 16, 15, 15, 14, 14, 13, 13, 12, 12, 11, 11, 10, 10 ],
                 spell: [18, 15, 15, 14, 14, 13, 13, 12, 12, 11, 11, 10, 10, 9, 9 ]
             },
-            magic: false,
+            turnUndead: {
+                yes: false,
+            },
+            magic: {
+                yes: false,
+            }
         },
         bld: {
             img: "/systems/lm/assets/class/dervish-swords.svg",
-            requeriment: "Ninguno",
-            principalAbility: {
-                str: "FUE",
-                dex: "DES",
-            },
+            requeriment: "LM.requeriment.level0",
+            principalAbility: "LM.principalAbility.bladedancer",
             hd: "1d6",
-            weaponsUse: "Todas",
-            armorUse: "Todas",
-            skillsPoints : [ 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ],
+            weaponsUse: "LM.weaponUse.bladedancer",
+            weaponStyle: "LM.weaponStyle.bladedancer",
+            armorUse: "LM.armorUse.bladedancer",
+            skillsPoints : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
             backstab: {
-                value: false,
-                level: 0,
-                hitbonus: [ 0, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
-                dmgbonusback: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+                yes: false,
             },
-            title: [ "Aspirante", "Thug", "Ejecutor", "Torturador", "Exterminador", "Destructor", "Verdugo", "Canalla", "Asesino", "Maestro Asesino", "Maestro Asesino", "Maestro Asesino", "Maestro Asesino", "Maestro Asesino", "Padrino de Asesinos" ],
-            thac0: [ 20, 19, 18, 18, 17, 16, 16, 15, 14, 14, 13, 12, 12, 11, 10 ],
-            dmgbonusm: [ 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5],
-            dmgbonusp: [ 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5],
-            xpn: [ 100, 1701, 3401, 6801, 14001, 28001, 55001, 110001, 230001, 3500001, 470001, 590001, 710001, 830001, 830001 ],
+            title: [ "Iniciada-filo", "Hija-filo", "Cantarina-filo", "Tejedora-filo", "Hermana-filo", "Adepta-filo", "Danzarina-filo", "Sacerdotisa-filo", "Dama-filo", "Dama-filo", "Dama-filo", "Dama-filo", "Dama-filo", "Dama-filo", "Dama-todo filo" ],
+            thac0: [ 20, 19, 19, 18, 18, 17, 17, 16, 16, 15, 15, 14, 14, 13, 13 ],
+            dmgBonusm: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+            dmgBonusp: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+            iniBonus: {
+                yes: true,
+                value: 1
+            },
+            acBonus: {
+                yes: true,
+                value: [ 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3 ]
+            },
+            xpn: [ 100, 1565, 3125, 6251, 12501, 25001, 50001, 100001, 200001, 3000001, 400001, 500001, 600001, 700001, 700001 ],
             saves: {
-                death: [ 15, 14, 13, 13, 12, 11, 11, 10, 9, 9, 8, 7, 7, 6, 5 ],
-                wand: [17, 16, 15, 15, 14, 13, 13, 12, 11, 11, 10, 9, 9, 8, 7 ],
-                paralysis: [16, 15, 14, 14, 13, 12, 12, 11, 10, 10, 9, 9, 8, 7, 6 ],
-                breath: [17, 16, 15, 15, 14, 13, 13, 12, 11, 11, 10, 9, 9, 8, 7 ],
-                spell: [18, 17, 16, 16, 15, 14, 14, 13, 12, 12, 11, 10, 10, 9, 8 ]
+                death: [ 15, 10, 10, 9, 9, 8, 8, 7, 7, 6, 6, 5, 5, 4, 4 ],
+                wand: [17, 13, 13, 12, 12, 11, 11, 10, 10, 9, 9, 8, 8, 7, 7 ],
+                paralysis: [16, 13, 13, 12, 12, 11, 11, 10, 10, 9, 9, 8, 8, 7, 7 ],
+                breath: [17, 16, 16, 15, 15, 14, 14, 13, 13, 12, 12, 11, 11, 10, 10 ],
+                spell: [18, 15, 15, 14, 14, 13, 13, 12, 12, 11, 11, 10, 10, 9, 9 ]
             },
-            magic: true,
+            god: {
+                yes: true,
+                worship: "",
+                turnUndead: {
+                    "1": [ 20, 9, 7, 5, 3, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1 ],
+                    "2": [ 20, 11, 9, 7, 5, 3, 2, 2, 1, 1, 1, 1, 1, 1, 1 ],
+                    "3": [ 20, 12, 11, 9, 7, 5, 3, 2, 2, 1, 1, 1, 1, 1, 1 ],
+                    "4": [ 20, 20, 12, 11, 9, 7, 5, 3, 2, 2, 1, 1, 1, 1, 1 ],
+                    "5": [ 20, 20, 20, 12, 11, 9, 7, 5, 3, 2, 2, 1, 1, 1, 1 ],
+                    "6": [ 20, 20, 20, 20, 12, 11, 9, 7, 5, 3, 2, 2, 1, 1, 1 ],
+                    "7": [ 20, 20, 20, 20, 20, 12, 11, 9, 7, 5, 3, 2, 2, 1, 1 ],
+                    "8": [ 20, 20, 20, 20, 20, 20, 12, 11, 9, 7, 5, 3, 2, 2, 1 ],
+                    "9": [ 20, 20, 20, 20, 20, 20, 20, 12, 11, 9, 7, 5, 3, 2, 2 ],
+                    "10+": [ 20, 20, 20, 20, 20, 20, 20, 20, 12, 11, 9, 7, 5, 3, 2 ],
+                }
+            },
+            magic: {
+                yes: true,
+                spellsLevel: {
+                    1: [ 0, 2, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6 ],
+                    2: [ 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5 ],
+                    3: [ 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5 ],
+                    4: [ 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 5 ],
+                    5: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 4 ],
+                }
+            }
         },
         cl: {
             img: "/systems/lm/assets/class/holy-symbol.svg",
-            requeriment: "Ninguno",
-            principalAbility: {
-                str: "FUE",
-                dex: "DES",
-            },
+            requeriment: "LM.requeriment.level0",
+            principalAbility: "LM.principalAbility.cleric",
             hd: "1d6",
-            weaponsUse: "Todas",
-            armorUse: "Todas",
+            weaponsUse: {
+                legal: "LM.weaponUse.clericL",
+                neutral: "LM.weaponUse.clericN",
+                chaotic: "LM.weaponUse.clericC",
+            },
+            weaponStyle: "LM.weaponStyle.level0",
+            armorUse: "LM.armorUse.level0",
             skillsPoints : [ 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ],
             backstab: {
                 value: false,
@@ -152,18 +198,40 @@ export const LM = {
                 breath: [17, 16, 16, 15, 15, 14, 14, 13, 13, 12, 12, 11, 11, 10, 10 ],
                 spell: [18, 15, 15, 14, 14, 13, 13, 12, 12, 11, 11, 10, 10, 9, 9 ]
             },
-            magic: true,
+            turnUndead: {
+                yes: true,
+                value: {
+                    "1": [ 20, 9, 7, 5, 3, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1 ],
+                    "2": [ 20, 11, 9, 7, 5, 3, 2, 2, 1, 1, 1, 1, 1, 1, 1 ],
+                    "3": [ 20, 12, 11, 9, 7, 5, 3, 2, 2, 1, 1, 1, 1, 1, 1 ],
+                    "4": [ 20, 20, 12, 11, 9, 7, 5, 3, 2, 2, 1, 1, 1, 1, 1 ],
+                    "5": [ 20, 20, 20, 12, 11, 9, 7, 5, 3, 2, 2, 1, 1, 1, 1 ],
+                    "6": [ 20, 20, 20, 20, 12, 11, 9, 7, 5, 3, 2, 2, 1, 1, 1 ],
+                    "7": [ 20, 20, 20, 20, 20, 12, 11, 9, 7, 5, 3, 2, 2, 1, 1 ],
+                    "8": [ 20, 20, 20, 20, 20, 20, 12, 11, 9, 7, 5, 3, 2, 2, 1 ],
+                    "9": [ 20, 20, 20, 20, 20, 20, 20, 12, 11, 9, 7, 5, 3, 2, 2 ],
+                    "10+": [ 20, 20, 20, 20, 20, 20, 20, 20, 12, 11, 9, 7, 5, 3, 2 ],
+                }
+            },
+            magic: {
+                yes: true,
+                spellsLevel: {
+                    1: [ 0, 2, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6 ],
+                    2: [ 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5 ],
+                    3: [ 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5 ],
+                    4: [ 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 5 ],
+                    5: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 4 ],
+                }
+            }
         },
         elfn: {
             img: "/systems/lm/assets/class/elf-helmet.svg",
-            requeriment: "Ninguno",
-            principalAbility: {
-                str: "FUE",
-                dex: "DES",
-            },
+            requeriment: "LM.requeriment.level0",
+            principalAbility: "LM.principalAbility.nightblade",
             hd: "1d6",
-            weaponsUse: "Todas",
-            armorUse: "Todas",
+            weaponsUse: "LM.weaponUse.nightblade",
+            weaponStyle: "LM.weaponStyle.nightblade",
+            armorUse: "LM.armorUse.nightblade",
             skillsPoints : [ 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ],
             backstab: {
                 value: false,
@@ -183,18 +251,25 @@ export const LM = {
                 breath: [17, 16, 15, 15, 14, 13, 13, 12, 11, 11, 10, 9, 9, 8, 7 ],
                 spell: [18, 17, 16, 16, 15, 14, 14, 13, 12, 12, 11, 10, 10, 9, 8 ]
             },
-            magic: true,
+            magic: {
+                yes: true,
+                spellsLevel: {
+                    1: [ 0, 2, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6 ],
+                    2: [ 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5 ],
+                    3: [ 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5 ],
+                    4: [ 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 5 ],
+                    5: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 4 ],
+                }
+            }
         },
         elf: {
             img: "/systems/lm/assets/class/elf-ear.svg",
-            requeriment: "Ninguno",
-            principalAbility: {
-                str: "FUE",
-                dex: "DES",
-            },
+            requeriment: "LM.requeriment.elf",
+            principalAbility: "LM.principalAbility.elf",
             hd: "1d6",
-            weaponsUse: "Todas",
-            armorUse: "Todas",
+            weaponsUse: "LM.weaponUse.level0",
+            weaponStyle: "LM.weaponStyle.elf",
+            armorUse: "LM.armorUse.level0",
             skillsPoints : [ 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ],
             backstab: {
                 value: false,
@@ -214,18 +289,25 @@ export const LM = {
                 breath: [17, 16, 15, 15, 14, 13, 13, 12, 11, 11, 10, 9, 9, 8, 7 ],
                 spell: [18, 17, 16, 16, 15, 14, 14, 13, 12, 12, 11, 10, 10, 9, 8 ]
             },
-            magic: true,
+            magic: {
+                yes: true,
+                spellsLevel: {
+                    1: [ 0, 2, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6 ],
+                    2: [ 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5 ],
+                    3: [ 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5 ],
+                    4: [ 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 5 ],
+                    5: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 4 ],
+                }
+            }
         },
         dw: {
             img: "/systems/lm/assets/class/dwarf-helmet.svg",
-            requeriment: "Ninguno",
-            principalAbility: {
-                str: "FUE",
-                dex: "DES",
-            },
+            requeriment: "LM.requeriment.dwarf",
+            principalAbility: "LM.principalAbility.dwarf",
             hd: "1d8",
-            weaponsUse: "Todas",
-            armorUse: "Todas",
+            weaponsUse: "LM.weaponUse.dwarf",
+            weaponStyle: "LM.weaponStyle.dwarf",
+            armorUse: "LM.armorUse.level0",
             skillsPoints : [ 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ],
             backstab: {
                 value: false,
@@ -245,18 +327,18 @@ export const LM = {
                 breath: [17, 16, 15, 15, 14, 13, 13, 12, 11, 11, 10, 9, 9, 8, 7 ],
                 spell: [18, 17, 16, 16, 15, 14, 14, 13, 12, 12, 11, 10, 10, 9, 8 ]
             },
-            magic: false,
+            magic: {
+                yes: false,
+            }
         },
         dwp: {
             img: "/systems/lm/assets/class/dwarf-face.svg",
-            requeriment: "Ninguno",
-            principalAbility: {
-                str: "FUE",
-                dex: "DES",
-            },
+            requeriment: "LM.requeriment.dwarf",
+            principalAbility: "LM.principalAbility.dwarfpriest",
             hd: "1d6",
-            weaponsUse: "Todas",
-            armorUse: "Todas",
+            weaponsUse: "LM.weaponUse.dwarfpriest",
+            weaponStyle: "LM.weaponStyle.dwarfpriest",
+            armorUse: "LM.armorUse.level0",
             skillsPoints : [ 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ],
             backstab: {
                 value: false,
@@ -276,18 +358,25 @@ export const LM = {
                 breath: [17, 16, 15, 15, 14, 13, 13, 12, 11, 11, 10, 9, 9, 8, 7 ],
                 spell: [18, 17, 16, 16, 15, 14, 14, 13, 12, 12, 11, 10, 10, 9, 8 ]
             },
-            magic: true,
+            magic: {
+                yes: true,
+                spellsLevel: {
+                    1: [ 0, 2, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6 ],
+                    2: [ 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5 ],
+                    3: [ 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5 ],
+                    4: [ 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 5 ],
+                    5: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 4 ],
+                }
+            }
         },
         ran: {
             img: "/systems/lm/assets/class/maple-leaf.svg",
-            requeriment: "Ninguno",
-            principalAbility: {
-                str: "FUE",
-                dex: "DES",
-            },
+            requeriment: "LM.requeriment.level0",
+            principalAbility: "LM.principalAbility.ranger",
             hd: "1d6",
-            weaponsUse: "Todas",
-            armorUse: "Todas",
+            weaponsUse: "LM.weaponUse.ranger",
+            weaponStyle: "LM.weaponStyle.ranger",
+            armorUse: "LM.armorUse.ranger",
             skillsPoints : [ 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ],
             backstab: {
                 value: false,
@@ -307,18 +396,18 @@ export const LM = {
                 breath: [17, 16, 15, 15, 14, 13, 13, 12, 11, 11, 10, 9, 9, 8, 7 ],
                 spell: [18, 17, 16, 16, 15, 14, 14, 13, 12, 12, 11, 10, 10, 9, 8 ]
             },
-            magic: false,
+            magic: {
+                yes:false,
+            }
         },
         ftr: {
             img: "/systems/lm/assets/class/brutal-helm.svg",
-            requeriment: "Ninguno",
-            principalAbility: {
-                str: "FUE",
-                dex: "DES",
-            },
+            requeriment: "LM.requeriment.level0",
+            principalAbility: "LM.principalAbility.fighter",
             hd: "1d8",
-            weaponsUse: "Todas",
-            armorUse: "Todas",
+            weaponsUse: "LM.weaponUse.level0",
+            weaponStyle: "LM.weaponStyle.level0",
+            armorUse: "LM.armorUse.level0",
             skillsPoints : [ 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ],
             backstab: {
                 value: false,
@@ -336,18 +425,18 @@ export const LM = {
                 breath: [17, 16, 15, 15, 14, 13, 13, 12, 11, 11, 10, 9, 9, 8, 7 ],
                 spell: [18, 17, 16, 16, 15, 14, 14, 13, 12, 12, 11, 10, 10, 9, 8 ]
             },
-            magic: false,
+            magic: {
+                yes: false,
+            }
         },
         hal: {
             img: "/systems/lm/assets/class/hobbit-door.svg",
-            requeriment: "Ninguno",
-            principalAbility: {
-                str: "FUE",
-                dex: "DES",
-            },
+            requeriment: "LM.requeriment.level0",
+            principalAbility: "LM.principalAbility.halfling",
             hd: "1d6",
-            weaponsUse: "Todas",
-            armorUse: "Todas",
+            weaponsUse: "LM.weaponUse.halfling",
+            weaponStyle: "LM.weaponStyle.halfling",
+            armorUse: "LM.armorUse.level0",
             skillsPoints : [ 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ],
             backstab: {
                 value: false,
@@ -367,18 +456,18 @@ export const LM = {
                 breath: [17, 16, 15, 15, 14, 13, 13, 12, 11, 11, 10, 9, 9, 8, 7 ],
                 spell: [18, 17, 16, 16, 15, 14, 14, 13, 12, 12, 11, 10, 10, 9, 8 ]
             },
-            magic: false,
+            magic: {
+                yes: false,
+            }
         },
         th: {
             img: "/systems/lm/assets/class/key-lock.svg",
-            requeriment: "Ninguno",
-            principalAbility: {
-                str: "FUE",
-                dex: "DES",
-            },
+            requeriment: "LM.requeriment.level0",
+            principalAbility: "LM.principalAbility.thieft",
             hd: "1d6",
-            weaponsUse: "Todas",
-            armorUse: "Todas",
+            weaponsUse: "LM.weaponUse.thieft",
+            weaponStyle: "LM.weaponStyle.thieft",
+            armorUse: "LM.armorUse.thieft",
             skillsPoints : [ 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ],
             backstab: {
                 value: true,
@@ -398,18 +487,18 @@ export const LM = {
                 breath: [17, 16, 15, 15, 14, 13, 13, 12, 11, 11, 10, 9, 9, 8, 7 ],
                 spell: [18, 17, 16, 16, 15, 14, 14, 13, 12, 12, 11, 10, 10, 9, 8 ]
             },
-            magic: false,
+            magic: {
+                yes: false,
+            }
         },
         mag: {
             img: "/systems/lm/assets/class/magic-palm.svg",
-            requeriment: "Ninguno",
-            principalAbility: {
-                str: "FUE",
-                dex: "DES",
-            },
+            requeriment: "LM.requeriment.level0",
+            principalAbility: "LM.principalAbility.mage",
             hd: "1d6",
-            weaponsUse: "Todas",
-            armorUse: "Todas",
+            weaponsUse: "LM.weaponUse.mage",
+            weaponStyle: "LM.weaponStyle.mage",
+            armorUse: "LM.armorUse.mage",
             skillsPoints : [ 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ],
             backstab: {
                 value: false,
@@ -429,7 +518,16 @@ export const LM = {
                 breath: [17, 16, 15, 15, 14, 13, 13, 12, 11, 11, 10, 9, 9, 8, 7 ],
                 spell: [18, 17, 16, 16, 15, 14, 14, 13, 12, 12, 11, 10, 10, 9, 8 ]
             },
-            magic: true,
+            magic: {
+                yes: true,
+                spellsLevel: {
+                    1: [ 0, 2, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6 ],
+                    2: [ 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5 ],
+                    3: [ 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5 ],
+                    4: [ 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 4, 5 ],
+                    5: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 4 ],
+                }
+            }
         },
     },
     abilities: {

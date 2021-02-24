@@ -403,7 +403,21 @@
       </div>
       {{!-- Owned Features Tab --}}
       <div class="tab features" data-group="primary" data-tab="features">
-           <ol class="items-list">
+        <div class="combat-box">
+          <div>
+            <label>►{{ localize "LM.class.weaponUse"}}:</label>
+            <span>{{data.skills.weapons}}.</span>
+          </div>
+          <div>
+            <label>►{{ localize "LM.class.weaponStyle"}}:</label>
+            <span>{{data.skills.styles}}.</span>
+          </div>
+          <div>
+            <label>►{{ localize "LM.class.armorUse"}}:</label>
+            <span>{{data.skills.armors}}.</span>
+          </div>
+        </div>
+        <ol class="items-list">
               <li class="item flexrow item-header">
                 <div class="item-image"></div>
                 <div class="item-name">Name</div>
@@ -581,9 +595,10 @@
       {{/if}}
       {{!-- Description Tab --}}
       <div class="tab description" data-group="primary" data-tab="description">
-        <div class="class-description">
-          <h3 class="headabilities">{{ localize "LM.data.class" }}</h3>
-            <div class="class-group">
+        <div class="class flexrow">
+          <div class="class-description">
+            <h3 class="headabilities">{{ localize "LM.data.class" }}</h3>
+              <div class="class-group">
               <img class="class-img" title="{{localize 'LM.description.class'}}" src="{{data.class.img}}" alt="{{ localize 'LM.description.class' }}" >
               <a class="retainer {{# if data.retainer.enabled}}active{{/if}}"
                 title='{{localize "LM.data.retainer"}}'>
@@ -596,6 +611,15 @@
               {{/each}}
               {{/select}}
               </select>
+              <label>{{localize 'LM.description.aligment'}}:</label>
+              <select name="data.description.aligment">
+                {{#select data.description.aligment}}
+                <option value="legal" selected>{{ localize 'LM.aligment.legal' }}</option>
+                <option value="neutral">{{ localize 'LM.aligment.neutral' }}</option>
+                <option value="chaotic">{{ localize 'LM.aligment.chaotic' }}</option>
+                {{/select}}
+              </select>
+              <div class="class-group">
               <label>{{localize 'LM.description.level.value'}}:</label>
               <select name="data.description.level.value">
               {{#select data.description.level.value}}
@@ -619,17 +643,31 @@
               <label>{{localize 'LM.level.bonus'}}:</label>
               <input name="data.description.level.bonus" type="text" value="{{data.description.level.bonus}}"
                 placeholder="0" />
-              <label>{{localize 'LM.description.aligment'}}:</label>
-              <select name="data.description.aligment">
-                {{#select data.description.aligment}}
-                <option value="legal" selected>{{ localize 'LM.aligment.legal' }}</option>
-                <option value="neutral">{{ localize 'LM.aligment.neutral' }}</option>
-                <option value="chaotic">{{ localize 'LM.aligment.chaotic' }}</option>
-                {{/select}}
-              </select>
-            </div>
+              </div>
+              </div>
+              <div class="class-group">
+              <label>{{localize 'LM.class.requeriment'}}:</label>
+              <span>{{data.abilities.requeriment}}</span>
+              </div>
+              <div class="class-group">
+              <label>{{localize 'LM.class.principalAbility'}}:</label>
+              <span>{{data.abilities.principal}}</span>
+              </div>
+          </div>
+          <div class="biography">
+            <div class="headname">{{localize "LM.actor.description"}}</div>
+            {{editor content=data.biography target="data.biography"
+              button=true owner=owner editable=editable}}
+          </div>
         </div>
-      </div>
+        <div class="inventory notes">
+          <div class="headabilities">{{localize "LM.actor.notes"}}</div>
+          <div class="resizable" data-editor-size="140">
+            {{editor content=data.notes target="data.notes"
+            button=true owner=owner editable=editable}}
+          </div>
+        </div>
+    </div>
   </section>
 </form>
 
