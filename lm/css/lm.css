@@ -725,6 +725,16 @@
 .lm.sheet.actor .sheet-body .tab.features .combat-box label {
   font-weight: bold;
 }
+.lm.sheet.actor .sheet-body .tab.features .backstab-box img {
+  border: none;
+  flex: 0 0 20px;
+  height: 20px;
+}
+.lm.sheet.actor .sheet-body .tab.features .turn-box img {
+  border: none;
+  flex: 0 0 20px;
+  height: 20px;
+}
 
 
 /* Description tab */
@@ -744,7 +754,7 @@
 }
 .lm.sheet.actor .sheet-body .class .class-description .class-group {
   text-align: left;
-  padding-left: 4px;
+  padding-left: 2px;
 }
 .lm.sheet.actor .sheet-body .class .class-description .item-control.retainer.noretainer {
   color: rgb(192, 186, 186);

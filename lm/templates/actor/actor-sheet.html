@@ -417,6 +417,51 @@
             <span>{{data.skills.armors}}.</span>
           </div>
         </div>
+        <div class="skills-box flexrow">
+          <div>
+          <span>{{localize "LM.skills.bonus"}}</span>
+          <span>{{data.skills.skillsPoints}}</span>
+          </div>
+            <span>{{localize "LM.skills.acr"}}</span>
+            <input name="data.skills.acr.value" type="text" value="{{data.skills.acr.value}}" data-dtype="Number"/>
+            <span>{{localize "LM.skills.arch"}}</span>
+            <input name="data.skills.arch.value" type="text" value="{{data.skills.arch.value}}" data-dtype="Number"/>
+            <span>{{localize "LM.skills.sea"}}</span>
+            <input name="data.skills.sea.value" type="text" value="{{data.skills.sea.value}}" data-dtype="Number"/>
+            <span>{{localize "LM.skills.he"}}</span>
+            <input name="data.skills.he.value" type="text" value="{{data.skills.he.value}}" data-dtype="Number"/>
+            <span>{{localize "LM.skills.bd"}}</span>
+            <input name="data.skills.bd.value" type="text" value="{{data.skills.bd.value}}" data-dtype="Number"/>
+            <span>{{localize "LM.skills.gh"}}</span>
+            <input name="data.skills.gh.value" type="text" value="{{data.skills.gh.value}}" data-dtype="Number"/>
+            <span>{{localize "LM.skills.lan"}}</span>
+            <input name="data.skills.lan.value" type="text" value="{{data.skills.lan.value}}" data-dtype="Number"/>
+            <span>{{localize "LM.skills.man"}}</span>
+            <input name="data.skills.man.value" type="text" value="{{data.skills.man.value}}" data-dtype="Number"/>
+            <span>{{localize "LM.skills.st"}}</span>
+            <input name="data.skills.st.value" type="text" value="{{data.skills.st.value}}" data-dtype="Number"/>
+            <span>{{localize "LM.skills.sur"}}</span>
+            <input name="data.skills.sur.value" type="text" value="{{data.skills.sur.value}}" data-dtype="Number"/>
+          </div>
+          <div class="languages-box">
+            <label>{{ localize "LM.lan.lan" }}:</label>
+            <span>{{ data.skills.lan.literacy }},{{ data.skills.lan.spoken }}</span>
+            {{#each data.skills.lan.ini as | language |}}
+            <span>{{ localize language }}</span>
+            {{/each}}
+          </div>
+          {{#if data.skills.back.yes  }}
+          <div class="backstab-box">
+            <a><img title="{{localize 'LM.skills.back'}}" src="/systems/lm/assets/skills/backstab.svg"></a>
+            <input name="data.skills.back.value" type="text" value="{{data.skills.back.value}}" data-dtype="Number"/>
+          </div>
+          {{/if}}
+          {{#if data.skills.turn.yes  }}
+          <div class="turn-box">
+            <a><img title="{{localize 'LM.skills.turn'}}" src="/systems/lm/assets/skills/turn.svg"></a>
+            <input name="data.skills.turn.value" type="text" value="{{data.skills.turn.value}}" data-dtype="Number"/>
+          </div>
+          {{/if}}
         <ol class="items-list">
               <li class="item flexrow item-header">
                 <div class="item-image"></div>
@@ -620,29 +665,29 @@
                 {{/select}}
               </select>
               <div class="class-group">
-              <label>{{localize 'LM.description.level.value'}}:</label>
-              <select name="data.description.level.value">
-              {{#select data.description.level.value}}
-                <option value="0">{{ localize 'LM.level.name0' }}</option>
-                <option value="1">{{ localize 'LM.level.name1' }}</option>
-                <option value="2">{{ localize 'LM.level.name2' }}</option>
-                <option value="3">{{ localize 'LM.level.name3' }}</option>
-                <option value="4">{{ localize 'LM.level.name4' }}</option>
-                <option value="5">{{ localize 'LM.level.name5' }}</option>
-                <option value="6">{{ localize 'LM.level.name6' }}</option>
-                <option value="7">{{ localize 'LM.level.name7' }}</option>
-                <option value="8">{{ localize 'LM.level.name8' }}</option>
-                <option value="9">{{ localize 'LM.level.name9' }}</option>
-                <option value="10">{{ localize 'LM.level.name10' }}</option>
-                <option value="11">{{ localize 'LM.level.name11' }}</option>
-                <option value="12">{{ localize 'LM.level.name12' }}</option>
-                <option value="13">{{ localize 'LM.level.name13' }}</option>
-                <option value="14">{{ localize 'LM.level.name14' }}</option>
-              {{/select}}
-              </select>
-              <label>{{localize 'LM.level.bonus'}}:</label>
-              <input name="data.description.level.bonus" type="text" value="{{data.description.level.bonus}}"
-                placeholder="0" />
+                <label>{{localize 'LM.description.level.value'}}:</label>
+                <select name="data.description.level.value">
+                {{#select data.description.level.value}}
+                  <option value="0">{{ localize 'LM.level.name0' }}</option>
+                  <option value="1">{{ localize 'LM.level.name1' }}</option>
+                  <option value="2">{{ localize 'LM.level.name2' }}</option>
+                  <option value="3">{{ localize 'LM.level.name3' }}</option>
+                  <option value="4">{{ localize 'LM.level.name4' }}</option>
+                  <option value="5">{{ localize 'LM.level.name5' }}</option>
+                  <option value="6">{{ localize 'LM.level.name6' }}</option>
+                  <option value="7">{{ localize 'LM.level.name7' }}</option>
+                  <option value="8">{{ localize 'LM.level.name8' }}</option>
+                  <option value="9">{{ localize 'LM.level.name9' }}</option>
+                  <option value="10">{{ localize 'LM.level.name10' }}</option>
+                  <option value="11">{{ localize 'LM.level.name11' }}</option>
+                  <option value="12">{{ localize 'LM.level.name12' }}</option>
+                  <option value="13">{{ localize 'LM.level.name13' }}</option>
+                  <option value="14">{{ localize 'LM.level.name14' }}</option>
+                {{/select}}
+                </select>
+                <label>{{localize 'LM.level.bonus'}}:</label>
+                <input name="data.description.level.bonus" type="text" value="{{data.description.level.bonus}}"
+                  placeholder="0" />
               </div>
               </div>
               <div class="class-group">

@@ -74,6 +74,8 @@ export class LmActor extends Actor {
     data.skills.styles = game.i18n.localize(`${classInfo.weaponStyle}`);
     // Set class armors use
     data.skills.armors = game.i18n.localize(`${classInfo.armorUse}`);
+    // Set class skills points
+    data.skills.skillsPoints = classInfo.skillsPoints[data.description.level.value];
     // Compute modifiers 
     const standard = {
       0: -3,
@@ -197,6 +199,31 @@ export class LmActor extends Actor {
       data.abilities.dex.value
     );
 
+    /*  Compute languages   */
+    const literacy = {
+      0: "",
+      3: "LM.illiterate",
+      6: "LM.literacyBasic",
+      9: "LM.literate",
+    };
+    data.skills.lan.literacy = game.i18n.localize(`${LmActor._valueFromTable(
+      literacy,
+      data.abilities.int.value
+    )}`);
+    const spoken = {
+      0: "LM.nativeBroken",
+      4: "LM.native",
+      13: "LM.nativePlus1",
+      16: "LM.nativePlus2",
+      18: "LM.nativePlus3",
+    };
+    data.skills.lan.spoken = game.i18n.localize(`${LmActor._valueFromTable(
+      spoken,
+      data.abilities.int.value
+    )}`);
+    data.skills.lan.ini = classInfo.languagesKnow.slice(),
+    data.skills.lan.aligment = "LM.lan." + data.description.aligment,
+    data.skills.lan.ini.push(data.skills.lan.aligment),
     /* Calculate skills */
 
     /* Acrobatics */
@@ -277,6 +304,11 @@ export class LmActor extends Actor {
     if (data.skills.sur.mod2 > data.skills.sur.mod1) {
       data.skills.sur.mod = data.skills.sur.mod2 + data.skills.sur.value
     };
+
+    /*  Backstab skill  */
+    data.skills.back.yes = classInfo.backstab.value;
+    /*  Turn skill  */  
+    data.skills.turn.yes = classInfo.god.yes; 
     // Compute combat movement
     data.movement.encounter = data.movement.base / 3;
     

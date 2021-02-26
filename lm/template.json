@@ -124,6 +124,16 @@
         },
         "sur": {
           "value": 0
+        },
+        "back": {
+          "value": 0,
+          "yes": false,
+          "hit": 0,
+          "dmg": 1
+        },
+        "turn": {
+          "value": 0,
+          "yes": false
         }
       },
       "encumbrance": {
