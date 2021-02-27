@@ -132,7 +132,76 @@ export class LmActorSheet extends ActorSheet {
 
   }
 
-  
+  async _chooseLang() {
+    let choices = CONFIG.LM.languages;
+
+    let templateData = { choices: choices },
+      dlg = await renderTemplate(
+        "/systems/lm/templates/dialog/lang-create.html",
+        templateData
+      );
+    //Create Dialog window
+    return new Promise((resolve) => {
+      new Dialog({
+        title: "",
+        content: dlg,
+        buttons: {
+          ok: {
+            label: game.i18n.localize("LM.Ok"),
+            icon: '<i class="fas fa-check"></i>',
+            callback: (html) => {
+              resolve({
+                choice: html.find('select[name="choice"]').val(),
+              });
+            },
+          },
+          cancel: {
+            icon: '<i class="fas fa-times"></i>',
+            label: game.i18n.localize("LM.Cancel"),
+          },
+        },
+        default: "ok",
+      }).render(true);
+    });
+  }
+
+  _pushLang() {
+    const data = this.actor.data.data;
+    this._chooseLang().then((dialogInput) => {
+      const name = CONFIG.LM.languages[dialogInput.choice];
+      let newData = [];
+      data.skills.lan.learn.push(name);
+      newData = data.skills.lan.learn;
+      console.log(newData)
+      return this.actor.update({ 
+        data: {
+          skills: {
+            lan: {
+              learn: newData,
+            } 
+          },
+        },
+      })
+    });
+  }
+  _popLang() {
+    const data = this.actor.data.data;
+    let newData = [];
+    data.skills.lan.learn.pop();
+    newData = data.skills.lan.learn;
+    console.log(newData)
+    return this.actor.update({ 
+        data: {
+          skills: {
+            lan: {
+              learn: newData,
+            } 
+          },
+        },
+      })
+    
+  }
+
 
   /* -------------------------------------------- */
 
@@ -292,6 +361,16 @@ export class LmActorSheet extends ActorSheet {
         li.addEventListener("dragstart", handler, false);
       });
     }
+    // Add Delete languages.
+    html.find(".item-push").click((ev) => {
+      ev.preventDefault();
+      this._pushLang();
+    });
+    html.find(".item-pop").click((ev) => {
+      ev.preventDefault();
+      this._popLang();
+    });
+
   }
 
   /**

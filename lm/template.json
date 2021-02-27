@@ -126,7 +126,7 @@
           "value": 0
         },
         "back": {
-          "value": 0,
+          "value": 1,
           "yes": false,
           "hit": 0,
           "dmg": 1

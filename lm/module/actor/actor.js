@@ -307,6 +307,10 @@ export class LmActor extends Actor {
 
     /*  Backstab skill  */
     data.skills.back.yes = classInfo.backstab.value;
+    if (data.skills.back.yes){
+      data.skills.back.hit = classInfo.backstab.hitBonus[data.skills.back.value];
+      data.skills.back.dmg = classInfo.backstab.dmgBonusback[data.skills.back.value];
+    }
     /*  Turn skill  */  
     data.skills.turn.yes = classInfo.god.yes; 
     // Compute combat movement

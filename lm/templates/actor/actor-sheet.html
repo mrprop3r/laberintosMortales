@@ -417,43 +417,55 @@
             <span>{{data.skills.armors}}.</span>
           </div>
         </div>
-        <div class="skills-box flexrow">
-          <div>
-          <span>{{localize "LM.skills.bonus"}}</span>
-          <span>{{data.skills.skillsPoints}}</span>
-          </div>
-            <span>{{localize "LM.skills.acr"}}</span>
-            <input name="data.skills.acr.value" type="text" value="{{data.skills.acr.value}}" data-dtype="Number"/>
-            <span>{{localize "LM.skills.arch"}}</span>
-            <input name="data.skills.arch.value" type="text" value="{{data.skills.arch.value}}" data-dtype="Number"/>
-            <span>{{localize "LM.skills.sea"}}</span>
-            <input name="data.skills.sea.value" type="text" value="{{data.skills.sea.value}}" data-dtype="Number"/>
-            <span>{{localize "LM.skills.he"}}</span>
-            <input name="data.skills.he.value" type="text" value="{{data.skills.he.value}}" data-dtype="Number"/>
-            <span>{{localize "LM.skills.bd"}}</span>
-            <input name="data.skills.bd.value" type="text" value="{{data.skills.bd.value}}" data-dtype="Number"/>
-            <span>{{localize "LM.skills.gh"}}</span>
-            <input name="data.skills.gh.value" type="text" value="{{data.skills.gh.value}}" data-dtype="Number"/>
-            <span>{{localize "LM.skills.lan"}}</span>
-            <input name="data.skills.lan.value" type="text" value="{{data.skills.lan.value}}" data-dtype="Number"/>
-            <span>{{localize "LM.skills.man"}}</span>
-            <input name="data.skills.man.value" type="text" value="{{data.skills.man.value}}" data-dtype="Number"/>
-            <span>{{localize "LM.skills.st"}}</span>
-            <input name="data.skills.st.value" type="text" value="{{data.skills.st.value}}" data-dtype="Number"/>
-            <span>{{localize "LM.skills.sur"}}</span>
-            <input name="data.skills.sur.value" type="text" value="{{data.skills.sur.value}}" data-dtype="Number"/>
-          </div>
-          <div class="languages-box">
-            <label>{{ localize "LM.lan.lan" }}:</label>
-            <span>{{ data.skills.lan.literacy }},{{ data.skills.lan.spoken }}</span>
-            {{#each data.skills.lan.ini as | language |}}
-            <span>{{ localize language }}</span>
-            {{/each}}
+        <div class="languages">
+          <label>{{ localize "LM.lan.lan" }}:</label>
+          <span><b>({{ data.skills.lan.literacy }},{{ data.skills.lan.spoken }})</b></span>
+          {{#each data.skills.lan.ini as | language |}}
+          <span class="list" data-skills-lan="{{language}}">{{ localize language }}</span>
+          {{/each}}
+          {{#each data.skills.lan.learn as | lanlearn |}}
+          <span class="list" data-skills-lan="{{lanlearn}}">{{ localize lanlearn }}</span>
+          {{/each}}
+          <a class="item-control item-push" data-array="languages" title="{{localize 'LM.Add'}}"><i
+                    class="fa fa-plus"></i></a>
+          <a class="item-control item-pop" data-array="languages" title="{{localize 'LM.Del'}}"><i
+                    class="fa fa-trash"></i></a>
+        </div>
+        <div class="skills-box">
+            <div class="skills-head">
+              <span class="title">{{localize "LM.skills.bonus"}}</span>
+              <span class="data">{{data.skills.skillsPoints}}</span>
+            </div>
+            <div class="skills-list">
+              <span>{{localize "LM.skills.acr"}}</span>
+              <input name="data.skills.acr.value" type="text" value="{{data.skills.acr.value}}" data-dtype="Number"/>
+              <span>{{localize "LM.skills.arch"}}</span>
+              <input name="data.skills.arch.value" type="text" value="{{data.skills.arch.value}}" data-dtype="Number"/>
+              <span>{{localize "LM.skills.sea"}}</span>
+              <input name="data.skills.sea.value" type="text" value="{{data.skills.sea.value}}" data-dtype="Number"/>
+              <span>{{localize "LM.skills.he"}}</span>
+              <input name="data.skills.he.value" type="text" value="{{data.skills.he.value}}" data-dtype="Number"/>
+              <span>{{localize "LM.skills.bd"}}</span>
+              <input name="data.skills.bd.value" type="text" value="{{data.skills.bd.value}}" data-dtype="Number"/>
+            </div>
+            <div class="skills-list">
+              <span>{{localize "LM.skills.gh"}}</span>
+              <input name="data.skills.gh.value" type="text" value="{{data.skills.gh.value}}" data-dtype="Number"/>
+              <span>{{localize "LM.skills.lan"}}</span>
+              <input name="data.skills.lan.value" type="text" value="{{data.skills.lan.value}}" data-dtype="Number"/>
+              <span>{{localize "LM.skills.man"}}</span>
+              <input name="data.skills.man.value" type="text" value="{{data.skills.man.value}}" data-dtype="Number"/>
+              <span>{{localize "LM.skills.st"}}</span>
+              <input name="data.skills.st.value" type="text" value="{{data.skills.st.value}}" data-dtype="Number"/>
+              <span>{{localize "LM.skills.sur"}}</span>
+              <input name="data.skills.sur.value" type="text" value="{{data.skills.sur.value}}" data-dtype="Number"/>
+            </div>
           </div>
           {{#if data.skills.back.yes  }}
           <div class="backstab-box">
             <a><img title="{{localize 'LM.skills.back'}}" src="/systems/lm/assets/skills/backstab.svg"></a>
             <input name="data.skills.back.value" type="text" value="{{data.skills.back.value}}" data-dtype="Number"/>
+            <span>{{data.skills.back.hit}}{{data.skills.back.dmg}}</span>
           </div>
           {{/if}}
           {{#if data.skills.turn.yes  }}

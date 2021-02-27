@@ -393,7 +393,7 @@
   top: 48%;
   left: 64%;
   transform: translate(-10%, -25%);
-  font-size: 12px;
+  font-size: 14px;
   border-style: solid;
   border-width: 2px;
   background:rgb(192, 192, 192);
@@ -401,6 +401,7 @@
   text-align: center;
   font-weight: bold;
   border-radius: 45% 45% 45% 45%;
+  width: 36px;
 }
 .lm .sheet-body .hd-hp .hd-roll:hover {
   font-weight: bolder;
@@ -724,6 +725,66 @@
 }
 .lm.sheet.actor .sheet-body .tab.features .combat-box label {
   font-weight: bold;
+}
+.lm.sheet.actor .sheet-body .tab.features .languages {
+  margin-top: 2px;
+  padding-left: 4px;
+  border: solid 1px;
+  box-shadow: 0 0 6px var(--color-border);
+}
+.lm.sheet.actor .sheet-body .tab.features .languages label {
+  font-size: 20px;
+  font-family: var(--font-special);
+}
+.lm.sheet.actor .sheet-body .tab.features .languages .list {
+  font-size: 12px;
+}
+.lm.sheet.actor .sheet-body .tab.features .skills-box {
+  border: solid 2px;
+  margin-top: 4px;
+}
+.lm.sheet.actor .sheet-body .tab.features .skills-box .skills-head {
+  padding-top: 4px;
+  width: 100%;
+  height: 26px;
+  background: var(--color-foreground);
+}
+.lm.sheet.actor .sheet-body .tab.features .skills-box .skills-head .title {
+  color: white;
+  text-align: center;
+}
+.lm.sheet.actor .sheet-body .tab.features .skills-box .skills-head .data {
+  background: var(--color-background);
+  padding: 2px;
+  border-radius: 25%;
+}
+.lm.sheet.actor .sheet-body .tab.features .skills-box .skills-list {
+  display: flex;
+  background: var(--color-background);
+  font-size: 12px;
+}
+.lm.sheet.actor .sheet-body .tab.features .skills-box .skills-list span {
+  margin-top: 2px;
+  padding-top: 4px;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: grey;
+  width: 76px;
+}
+.lm.sheet.actor .sheet-body .tab.features .skills-box .skills-list input {
+  margin-top: 2px;
+  padding-top: 2px;
+  width: 24px;
+  border: none;
+  box-shadow: none;
+  text-align: center;
+  text-decoration: underline;
+  background: var(--color-background);
+}
+.lm.sheet.actor .sheet-body .tab.features .skills-box .skills-list input:focus {
+  outline: none;
+  box-shadow: none;
+  background-color: var(--color-background);
 }
 .lm.sheet.actor .sheet-body .tab.features .backstab-box img {
   border: none;
