@@ -470,11 +470,70 @@
           {{/if}}
           {{#if data.skills.turn.yes  }}
           <div class="turn-box">
-            <a><img title="{{localize 'LM.skills.turn'}}" src="/systems/lm/assets/skills/turn.svg"></a>
-            <input name="data.skills.turn.value" type="text" value="{{data.skills.turn.value}}" data-dtype="Number"/>
+            <div class="turn-head">
+                <img title="{{localize 'LM.skills.turn'}}" src="/systems/lm/assets/skills/turn-skull.svg">
+                <label>{{localize "LM.skills.turn"}}</label>
+                <label title="{{ localize 'LM.used.turn' }}">#</label>
+                <span>{{data.skills.turn.used}}</span>
+                <a title="{{localize 'LM.used.refresh'}}" 
+                class="turn refresh"><i class="fa fa-reply"></i></a>
+                <label>{{ localize 'LM.bonus.turn' }}</label>
+                <span>{{data.skills.turn.value}}</span>
+                <a title="{{localize 'LM.righteous.turn'}}" 
+                  class="righteous {{# if data.skills.turn.righteous}}norighteous{{/if}}"><i class="fas fa-star"></i></a>
+                <span>{{data.skills.turn.rightMod}}</span>
+            </div>
+            <div>
+              <ul class="flexrow">
+                <li class="turned flexcol">
+                  <label>{{ localize "LM.monsterHd.turn" }}</label>
+                  <a class="turn roll"><img title="{{localize 'LM.need.turn'}}" src="/systems/lm/assets/skills/turn.svg"></a>
+                </li>
+                <li class="flexcol">
+                  <span><b>1</b></span>
+                  <span>{{data.skills.turn.value1}}</span>
+                </li>
+                <li class="flexcol">
+                  <span><b>2</b></span>
+                  <span>{{data.skills.turn.value2}}</span>
+                </li>
+                <li class="flexcol">
+                  <span><b>3</b></span>
+                  <span>{{data.skills.turn.value3}}</span>
+                </li>
+                <li class="flexcol">
+                  <span><b>4</b></span>
+                  <span>{{data.skills.turn.value4}}</span>
+                </li>
+                <li class="flexcol">
+                  <span><b>5</b></span>
+                  <span>{{data.skills.turn.value5}}</span>
+                </li>
+                <li class="flexcol">
+                  <span><b>6</b></span>
+                  <span>{{data.skills.turn.value6}}</span>
+                </li>
+                <li class="flexcol">
+                  <span><b>7</b></span>
+                  <span>{{data.skills.turn.value7}}</span>
+                </li>
+                <li class="flexcol">
+                  <span><b>8</b></span>
+                  <span>{{data.skills.turn.value8}}</span>
+                </li>
+                <li class="flexcol">
+                  <span><b>9</b></span>
+                  <span>{{data.skills.turn.value9}}</span>
+                </li>
+                <li class="flexcol">
+                  <span><b>10+</b></span>
+                  <span>{{data.skills.turn.value10}}</span>
+                </li>
+              </ul>
+            </div>
           </div>
           {{/if}}
-        <ol class="items-list">
+          <ol class="items-list">
               <li class="item flexrow item-header">
                 <div class="item-image"></div>
                 <div class="item-name">Name</div>

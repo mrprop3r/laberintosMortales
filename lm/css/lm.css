@@ -791,12 +791,63 @@
   flex: 0 0 20px;
   height: 20px;
 }
+.lm.sheet.actor .sheet-body .tab.features .turn-box {
+  margin-top: 2px;
+  border: solid 2px;
+}
+.lm.sheet.actor .sheet-body .tab.features .turn-box .turn-head {
+  background: var(--color-foreground);
+}
+.lm.sheet.actor .sheet-body .tab.features .turn-box .turn-head label {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  bottom: 8px;
+}
+.lm.sheet.actor .sheet-body .tab.features .turn-box .turn-head span {
+  background: var(--color-background);
+  font-weight: bold;
+  padding: 4px 4px 4px 4px;
+  position: relative;
+  bottom: 8px;
+  border-radius: 25%;
+}
+.lm.sheet.actor .sheet-body .tab.features .turn-box .turn-head a {
+  position: relative;
+  bottom: 8px;
+}
 .lm.sheet.actor .sheet-body .tab.features .turn-box img {
+  flex: 0 0 30px;
+  height: 30px;
+}
+.lm.sheet.actor .sheet-body .tab.features .turn-box .turn.roll img {
   border: none;
   flex: 0 0 20px;
   height: 20px;
 }
-
+.lm.sheet.actor .sheet-body .tab.features .turn-box .righteous {
+  color: rgb(170, 164, 164);
+}
+.lm.sheet.actor .sheet-body .tab.features .turn-box .righteous.norighteous {
+  color: rgb(255, 255, 255);
+}
+.lm.sheet.actor .sheet-body .tab.features .turn-box .turn.refresh {
+  color: rgb(255, 255, 255);
+}
+.lm.sheet.actor .sheet-body .tab.features .turn-box ul {
+  list-style: none;
+  padding: 5px;
+  height: 55px;
+}
+.lm.sheet.actor .sheet-body .tab.features .turn-box ul .turned {
+  width: 64px;
+  text-align: center;
+}
+.lm.sheet.actor .sheet-body .tab.features .turn-box ul li label {
+  font-weight: bold;
+  font-size: 12px;
+}
 
 /* Description tab */
 

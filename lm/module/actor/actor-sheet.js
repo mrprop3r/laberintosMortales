@@ -296,6 +296,14 @@ export class LmActorSheet extends ActorSheet {
       this._render();
     });
 
+    // Toggle righteous turn
+    html.find(".righteous").click(async (ev) => {
+      const rightValue = this.actor.data.data.skills.turn.righteous;
+      this.actor.update({ "data.skills.turn.righteous": !rightValue });
+      this._render();
+    });
+    
+
     // Expand inventory.
     html.find(".item-titles .item-caret").click((ev) => {
       let items = $(ev.currentTarget.parentElement.parentElement).children(
@@ -322,6 +330,23 @@ export class LmActorSheet extends ActorSheet {
     html.find('.hd-roll').click(this._onHdRoll.bind(this));
     html.find('.saving-throw').click(this._onSavingThrow.bind(this));
     html.find('.thac0-roll').click(this._onThac0Roll.bind(this));
+    html.find('.turn.roll').click(this._onTurnRoll.bind(this));
+
+    // Refresh turn undead
+    html.find(".turn.refresh").click(async (ev) => {
+      const newValue = 0;
+      this.actor.update({ 
+        data: {
+          skills: {
+            turn: {
+              used: newValue,
+            } 
+          },
+        },
+      })
+      this._render();
+    });
+
     
     //inventory weapon rolls
     html.find('.dmg.roll').click(ev =>
@@ -631,6 +656,43 @@ export class LmActorSheet extends ActorSheet {
          close: () => resolve(null)
         }).render(true);
     });
+  }
+
+  _onTurnRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let bonus = this.actor.data.data.skills.turn.value;
+    let malus = this.actor.data.data.skills.turn.used;
+    let hd = this.actor.data.data.skills.turn.rightMod
+    let tb = "+" + bonus;
+    let tm = "-" + malus;
+    let hb = "+" + hd
+    let roll = new Roll("2d6" + tb + tm, this.actor.data.data);
+    let roll2 = new Roll("2d6" + hb, this.actor.data.data);
+    let result = roll.roll();
+    let result2 = roll2.roll();
+    let newData = this.actor.data.data.skills.turn.used + 1;
+    this.actor.update({ 
+      data: {
+        skills: {
+          turn: {
+            used: newData,
+          } 
+        },
+      },
+    })
+    let flavor2 = game.i18n.localize('LM.monsterHd.turn');
+    let flavor = game.i18n.localize('LM.skills.turn');
+    result.toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor:  flavor
+    });
+    result2.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor:  flavor2
+  });
+
   }
 
 }

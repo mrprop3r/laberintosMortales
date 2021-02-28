@@ -135,6 +135,10 @@ export class LmActor extends Actor {
       capped,
       data.abilities.con.value
     );
+    data.skills.turn.value = LmActor._valueFromTable(
+      capped,
+      data.abilities.cha.value
+    );
     data.abilities.cha.retain = data.abilities.cha.mod + 4;
     data.abilities.cha.loyalty = data.abilities.cha.mod +7;
 
@@ -312,7 +316,27 @@ export class LmActor extends Actor {
       data.skills.back.dmg = classInfo.backstab.dmgBonusback[data.skills.back.value];
     }
     /*  Turn skill  */  
-    data.skills.turn.yes = classInfo.god.yes; 
+    data.skills.turn.yes = classInfo.turn.yes; 
+    if (data.skills.turn.yes) {
+      data.skills.turn.value1 = classInfo.turn.turnUndead.dg1[data.description.level.value];
+      data.skills.turn.value2 = classInfo.turn.turnUndead.dg2[data.description.level.value];
+      data.skills.turn.value3 = classInfo.turn.turnUndead.dg3[data.description.level.value];
+      data.skills.turn.value4 = classInfo.turn.turnUndead.dg4[data.description.level.value];
+      data.skills.turn.value5 = classInfo.turn.turnUndead.dg5[data.description.level.value];
+      data.skills.turn.value6 = classInfo.turn.turnUndead.dg6[data.description.level.value];
+      data.skills.turn.value7 = classInfo.turn.turnUndead.dg7[data.description.level.value];
+      data.skills.turn.value8 = classInfo.turn.turnUndead.dg8[data.description.level.value];
+      data.skills.turn.value9 = classInfo.turn.turnUndead.dg9[data.description.level.value];
+      data.skills.turn.value10 = classInfo.turn.turnUndead.dg10[data.description.level.value];
+    }
+    if (data.skills.turn.righteous) {
+    data.skills.turn.rightMod = LmActor._valueFromTable(
+      standard,
+      data.abilities.wis.value
+    );
+    } else {
+      data.skills.turn.rightMod = 0;
+    }
     // Compute combat movement
     data.movement.encounter = data.movement.base / 3;
     

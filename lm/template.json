@@ -132,8 +132,9 @@
           "dmg": 1
         },
         "turn": {
-          "value": 0,
-          "yes": false
+          "yes": false,
+          "righteous": false,
+          "used": 0
         }
       },
       "encumbrance": {
