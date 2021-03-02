@@ -1,0 +1,41 @@
+<div class="lm chat-card item-chat" data-actor-id="{{actor._id}}" data-item-id="{{item._id}}"
+    {{#if tokenId}}data-token-id="{{tokenId}}" {{/if}}>
+    <header class="card-header flexrow">
+        <img src="{{item.img}}" title="{{item.name}}" width="26" height="26" />
+        <h3 class="item-name"><a>{{item.name}}</a></h3>
+    </header>
+
+    <div class="card-content">
+        {{{data.description}}}
+    </div>
+
+    <div class="card-buttons">
+        {{#if hasAttack}}<button data-action="attack">{{ localize "LM.Attack" }}</button>{{/if}}
+
+        {{#if hasDamage}}
+        <button data-action="damage">
+            {{#if isHealing}}
+            {{ localize "LM.healing" }}
+            {{else}}
+            {{localize "LM.attack.dmg" }}
+            {{/if}}
+        </button>
+        {{/if}}
+
+        {{#if data.save}}
+        <button data-action="save" data-save="{{data.save}}" disabled>
+            {{lookup config.saves_long data.save}} - {{localize "LM.spell.save"}}
+        </button>
+        {{/if}}
+
+        {{#if data.roll}}
+        <button data-action="formula">{{ localize "LM.items.roll"}} {{data.roll}} {{#if data.blindroll}}({{localize 'LM.items.blindRoll'}}){{/if}}</button>
+        {{/if}}
+    </div>
+
+    <footer class="card-footer">
+        {{#each data.properties}}
+        <span>{{this}}</span>
+        {{/each}}
+    </footer>
+</div>

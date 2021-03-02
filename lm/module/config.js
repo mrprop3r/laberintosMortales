@@ -588,6 +588,11 @@ export const LM = {
         breath: "LM.saves.breath.long",
         spell: "LM.saves.spell.long",
     },
+    roll_type: {
+        result: "=",
+        above: "≥",
+        below: "≤"
+      },
     armor : {
         unarmored: "Unarmored",
         light: "Light",

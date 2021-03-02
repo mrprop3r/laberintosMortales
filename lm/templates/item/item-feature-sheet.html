@@ -4,26 +4,51 @@
         <div class="header-fields">
             <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
         </div>
-        Habilidad
     </header>
-
-    {{!-- Sheet Tab Navigation --}}
-    <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="description">Description</a>
-        <a class="item" data-tab="attributes">Attributes</a>
-    </nav>
-
     {{!-- Sheet Body --}}
     <section class="sheet-body">
-
-        {{!-- Description Tab --}}
-        <div class="tab" data-group="primary" data-tab="description">
-            {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+        <div class="flexrow">
+                <div class="stats">
+                  <div class="item-info">
+                    <label>{{ localize "LM.items.roll"}}</label>
+                      <input type="text" name="data.roll" value="{{data.roll}}" data-dtype="String" />
+                  </div>
+                  <div class="item-info">
+                    <label>{{ localize "LM.items.rollType"}}</label>
+                    <select name="data.rolltype">
+                        {{#select data.rollType}}
+                        {{#each config.roll_type as |t a|}}
+                        <option value="{{a}}">{{t}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </div>
+                <div class="item-info">
+                    <label>{{ localize "LM.items.objective"}}</label>
+                      <input type="text" name="data.rollTarget" value="{{data.rollTarget}}" data-dtype="Number" />
+                </div>
+                <div class="item-info">
+                    <label>{{localize 'LM.items.blindRoll'}}</label>
+                      <input type="checkbox" name="data.blindroll" value="{{data.blindroll}}" {{checked data.blindroll}}  data-dtype="Number"/>
+                </div>
+                <div class="item-info">
+                    <label>{{localize 'LM.spell.save'}}</label>
+                      <select name="data.save">
+                        {{#select data.save}}
+                        <option value=""></option>
+                        {{#each config.savesShort as |save a|}}
+                        <option value="{{a}}">{{save}}</option>
+                        {{/each}}
+                        {{/select}}
+                      </select>
+                </div>
+              </div>
+                  <div class="description">
+                      {{editor content=data.description target="data.description" button=true
+                      owner=owner editable=editable}}        
+                  </div>
+              </div>
         </div>
-
-        {{!-- Attributes Tab --}}
-        <div class="tab attributes" data-group="primary" data-tab="attributes">
-            {{!-- As you add new fields, add them in here! --}}
-        </div>
-    </section>
-</form>
+        </section>
+    </form>
+    

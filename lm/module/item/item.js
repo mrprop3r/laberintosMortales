@@ -15,6 +15,11 @@ export class LmItem extends Item {
     const data = itemData.data;
   }
 
+  static chatListeners(html) {
+    html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
+    html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
+  }
+
   pushTag(values) {
     const data = this.data.data;
     let update = [];
@@ -71,6 +76,35 @@ export class LmItem extends Item {
     return this.update({ data: newData });
   }
 
+  getChatData(htmlOptions) {
+    const data = duplicate(this.data.data);
+
+    // Rich text description
+    data.description = TextEditor.enrichHTML(data.description, htmlOptions);
+
+    // Item properties
+    const props = [];
+    const labels = this.labels;
+
+    if (this.data.type == "weapon") {
+      data.tags.forEach(t => props.push(t.value));
+    }
+    if (this.data.type == "spell") {
+      props.push(`${data.class} ${data.lvl}`, data.range, data.duration);
+    }
+    if (data.hasOwnProperty("equipped")) {
+      props.push(data.equipped ? "Equipped" : "Not Equipped");
+    }
+    if (data.hasOwnProperty("fast")) {
+      props.push(data.fast ? "Fast" : "Not Fast");
+    }
+
+    // Filter properties and return
+    data.properties = props.filter((p) => !!p);
+    return data;
+  }
+
+
   /**
    * Handle clickable rolls.
    * @param {Event} event   The originating click event
@@ -90,4 +124,70 @@ export class LmItem extends Item {
       flavor: label
     });
   }
+
+    /**
+   * Show the item to Chat, creating a chat card which contains follow up attack or damage roll options
+   * @return {Promise}
+   */
+  async show() {
+    // Basic template rendering data
+    const token = this.actor.token;
+    const templateData = {
+      actor: this.actor,
+      tokenId: token ? `${token.scene._id}.${token.id}` : null,
+      item: this.data,
+      data: this.getChatData(),
+      labels: this.labels,
+      isHealing: this.isHealing,
+      hasDamage: this.hasDamage,
+      isSpell: this.data.type === "spell",
+      hasSave: this.hasSave,
+      config: CONFIG.LM,
+    };
+
+    // Render the chat card template
+    const template = `systems/lm/templates/chat/item-chat.html`;
+    const html = await renderTemplate(template, templateData);
+
+    // Basic chat message data
+    const chatData = {
+      user: game.user._id,
+      type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+      content: html,
+      speaker: {
+        actor: this.actor._id,
+        token: this.actor.token,
+        alias: this.actor.name,
+      },
+    };
+
+    // Toggle default roll mode
+    let rollMode = game.settings.get("core", "rollMode");
+    if (["gmroll", "blindroll"].includes(rollMode))
+      chatData["whisper"] = ChatMessage.getWhisperRecipients("GM");
+    if (rollMode === "selfroll") chatData["whisper"] = [game.user._id];
+    if (rollMode === "blindroll") chatData["blind"] = true;
+
+    // Create the chat message
+    return ChatMessage.create(chatData);
+  }
+
+    /**
+   * Handle toggling the visibility of chat card content when the name is clicked
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  static _onChatCardToggleContent(event) {
+    event.preventDefault();
+    const header = event.currentTarget;
+    const card = header.closest(".chat-card");
+    const content = card.querySelector(".card-content");
+    if (content.style.display == "none") {
+      $(content).slideDown(200);
+    } else {
+      $(content).slideUp(200);
+    }
+  }
+
+
 }

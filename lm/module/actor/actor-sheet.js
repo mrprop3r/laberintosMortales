@@ -219,6 +219,12 @@ export class LmActorSheet extends ActorSheet {
     // Add Inventory Item
     html.find('.item-create').click(this._onItemCreate.bind(this));
 
+    // Show Inventory Item in chat
+    html.find(".item-show").click(async (ev) => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.getOwnedItem(li.data("itemId"));
+      item.show();
+    });
     // Update Inventory Item
     html.find('.item-edit').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
@@ -331,6 +337,8 @@ export class LmActorSheet extends ActorSheet {
     html.find('.saving-throw').click(this._onSavingThrow.bind(this));
     html.find('.thac0-roll').click(this._onThac0Roll.bind(this));
     html.find('.turn.roll').click(this._onTurnRoll.bind(this));
+    html.find('.surprise.roll').click(this._onSurpriseRoll.bind(this));
+    html.find('.reaction.roll').click(this._onReactionRoll.bind(this));
 
     // Refresh turn undead
     html.find(".turn.refresh").click(async (ev) => {
@@ -671,7 +679,9 @@ export class LmActorSheet extends ActorSheet {
     let roll = new Roll("2d6" + tb + tm, this.actor.data.data);
     let roll2 = new Roll("2d6" + hb, this.actor.data.data);
     let result = roll.roll();
+    let text1 = result.total;
     let result2 = roll2.roll();
+    let text2 = result2.total;
     let newData = this.actor.data.data.skills.turn.used + 1;
     this.actor.update({ 
       data: {
@@ -684,15 +694,171 @@ export class LmActorSheet extends ActorSheet {
     })
     let flavor2 = game.i18n.localize('LM.monsterHd.turn');
     let flavor = game.i18n.localize('LM.skills.turn');
+    let finalText = flavor + text1 + "," + flavor2 + text2;
+
     result.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor:  flavor
+        flavor:  finalText
     });
-    result2.toMessage({
-      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flavor:  flavor2
-  });
+  }
 
+  _onSurpriseRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let data = this.actor.data.data;
+    const surpriseMod = data.surprise.mod;
+    const surprise = data.surprise.value;
+    return new Promise(resolve => {
+      new Dialog({
+         title: game.i18n.localize('LM.surprisename'),
+         content: `<form>
+         <div class="form-group">
+           <label>Modificador sorpresa</label>
+           <input type='text' name='inputField'></input>
+         </div>
+        </form>`,
+         buttons: {
+            normal: {
+              icon: '<i class="fas fa-dice-d6"></i>',
+              label: game.i18n.localize('LM.roll.normal'),
+              callback: (html) => {
+                let surpriseMod2 = html.find('input[name=\'inputField\']');
+                let mod2 = "+" + surpriseMod2.val();
+                let mod = "+" + surpriseMod;
+                let result = new Roll("d6" + mod + mod2, data).roll();
+                let surprised = (result.total <= surprise ? '<span class="failed">¡Sorprendido!</span> ' : '<span class="success">No sorprendido</span> ');
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: surprised,
+                });
+             }
+            },
+            disadvantage: {
+              icon: '<i class="fas fa-dice"></i>',
+              label: game.i18n.localize('LM.roll.disadvantage'),
+              callback: (html) => {
+                let surpriseMod2 = html.find('input[name=\'inputField\']');
+                let mod2 = "+" + surpriseMod2.val();
+                let mod = "+" + surpriseMod;
+                let result = new Roll("2d6dh" + mod + mod2, data).roll();
+                let surprised = (result.total <= surprise ? '<span class="failed">¡Sorprendido!</span> ' : '<span class="success">No sorprendido</span> ');
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: surprised,
+                });
+              }
+            }
+         },
+         default: "roll",
+         close: () => resolve(null)
+        }).render(true);
+    });
+  }
+
+  _onReactionRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let data = this.actor.data.data;
+    const reactionMod = data.abilities.cha.mod;
+    return new Promise(resolve => {
+      new Dialog({
+         title: game.i18n.localize('LM.reactionRoll'),
+         content: `<form>
+         <div class="form-group">
+           <label>Modificador reacción</label>
+           <input type='text' name='inputField'></input>
+         </div>
+        </form>`,
+         buttons: {
+            contract: {
+              icon: '<i class="fas fa-dice"></i>',
+              label: game.i18n.localize('LM.contract'),
+              callback: (html) => {
+                let reactionMod2 = html.find('input[name=\'inputField\']');
+                let mod2 = "+" + reactionMod2.val();
+                let mod = "+" + reactionMod;
+                let result = new Roll("2d6" + mod + mod2, data).roll();
+                let reaction = "";
+                let control = result.total;
+                if (control <= 2) {
+                  control = 2;
+                }
+                switch (control) {
+                  case 2:
+                    reaction = game.i18n.localize('LM.refusedPlus');
+                    break;
+                  case 3:
+                  case 4:
+                  case 5:
+                    reaction = game.i18n.localize('LM.refused');
+                    break;
+                  case 6:
+                  case 7:
+                  case 8:
+                    reaction = game.i18n.localize('LM.undecided');
+                    break;
+                  case 9:
+                  case 10:
+                  case 11:
+                    reaction = game.i18n.localize('LM.accepted');
+                    break;
+                  default:
+                    reaction = game.i18n.localize('LM.acceptedPlus');
+                }
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: reaction,
+                });
+             }
+            },
+            reaction: {
+              icon: '<i class="fas fa-dice"></i>',
+              label: game.i18n.localize('LM.reaction'),
+              callback: (html) => {
+                let reactionMod2 = html.find('input[name=\'inputField\']');
+                let mod2 = "+" + reactionMod2.val();
+                let mod = "+" + reactionMod;
+                let result = new Roll("2d6" + mod + mod2, data).roll();
+                let reaction = "";
+                let control = result.total;
+                if (control <= 2) {
+                  control = 2;
+                }
+                switch (control) {
+                  case 2:
+                    reaction = game.i18n.localize('LM.hostilePlus');
+                    break;
+                  case 3:
+                  case 4:
+                  case 5:
+                    reaction = game.i18n.localize('LM.hostile');
+                    break;
+                  case 6:
+                  case 7:
+                  case 8:
+                    reaction = game.i18n.localize('LM.undecidedNormal');
+                    break;
+                  case 9:
+                  case 10:
+                  case 11:
+                    reaction = game.i18n.localize('LM.indiferent');
+                    break;
+                  default:
+                    reaction = game.i18n.localize('LM.friendly');
+                }
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: reaction,
+                });
+              }
+            }
+         },
+         default: "roll",
+         close: () => resolve(null)
+        }).render(true);
+    });
   }
 
 }

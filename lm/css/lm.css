@@ -91,6 +91,13 @@
   font-weight: bolder;
   font-weight: 16px;
 }
+.lm.chat-card .card-content > * {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
 
 /*   Dialog  */
 .dialog .dialog-buttons button {
@@ -786,7 +793,50 @@
   box-shadow: none;
   background-color: var(--color-background);
 }
-.lm.sheet.actor .sheet-body .tab.features .backstab-box img {
+.lm.sheet.actor .sheet-body .tab.features .fight-box {
+  margin-top: 2px;
+  border: solid 2px;
+}
+.lm.sheet.actor .sheet-body .tab.features .fight-box img {
+  flex: 0 0 30px;
+  height: 30px;
+}
+.lm.sheet.actor .sheet-body .tab.features .fight-box .fight-head {
+  background: var(--color-foreground);
+}
+.lm.sheet.actor .sheet-body .tab.features .fight-box .fight-head label {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  bottom: 8px;
+}
+.lm.sheet.actor .sheet-body .tab.features .fight-box .fight-head span {
+  background: var(--color-background);
+  font-weight: bold;
+  padding: 4px 4px 4px 4px;
+  position: relative;
+  bottom: 8px;
+  border-radius: 25%;
+}
+.lm.sheet.actor .sheet-body .tab.features .fight-box .fight-head input {
+  background: var(--color-background);
+  font-weight: bold;
+  padding: 4px 4px 4px 4px;
+  position: relative;
+  bottom: 8px;
+  border-radius: 25%;
+  width: 18px;
+}
+.lm.sheet.actor .sheet-body .tab.features .fight-box .fight-head a {
+  position: relative;
+  bottom: 8px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+.lm.sheet.actor .sheet-body .tab.features .fight-box .fight-head .backstab-box img {
+  color: white;
   border: none;
   flex: 0 0 20px;
   height: 20px;
@@ -848,6 +898,43 @@
   font-weight: bold;
   font-size: 12px;
 }
+.lm.sheet.actor .sheet-body .tab.features ol.items-list  {
+  margin-top: 2px;
+  padding: 0px;
+}
+.lm.sheet.actor .sheet-body .tab.features .items-list li.item.header {
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  background: var(--color-foreground);
+  margin-bottom: 2px;
+}
+.lm.sheet.actor .sheet-body .tab.features .items-list li.item .item-image {
+  flex: 0 26px;
+}
+.lm.sheet.actor .sheet-body .tab.features .items-list li.item .item-name {
+  text-align: left;
+}
+.lm.sheet.actor .sheet-body .tab.features .items-list li.item.header .item-controls {
+  text-align: right;
+  padding-top: 8px;
+  padding-right: 4px;
+}
+.lm.sheet.actor .sheet-body .tab.features .items-list li.item .item-controls {
+  padding-top: 4px;
+  text-align: right;
+}
+.lm.sheet.actor .sheet-body .tab.features .items-list .item.flexrow {
+  border: none none groove none;
+}
+.lm.sheet.actor .sheet-body .tab.features .items-list .item .item-name:hover .item-image {
+  background-image: url("/icons/svg/d20-grey.svg") !important;
+  cursor: pointer;
+}
+.lm.sheet.actor .sheet-body .tab.features .items-list .item .item-name .item-image:hover {
+  background-image: url("/icons/svg/d20-black.svg") !important;
+}
+
 
 /* Description tab */
 

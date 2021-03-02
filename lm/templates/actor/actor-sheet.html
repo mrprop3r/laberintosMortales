@@ -417,19 +417,23 @@
             <span>{{data.skills.armors}}.</span>
           </div>
         </div>
-        <div class="languages">
-          <label>{{ localize "LM.lan.lan" }}:</label>
-          <span><b>({{ data.skills.lan.literacy }},{{ data.skills.lan.spoken }})</b></span>
-          {{#each data.skills.lan.ini as | language |}}
-          <span class="list" data-skills-lan="{{language}}">{{ localize language }}</span>
-          {{/each}}
-          {{#each data.skills.lan.learn as | lanlearn |}}
-          <span class="list" data-skills-lan="{{lanlearn}}">{{ localize lanlearn }}</span>
-          {{/each}}
-          <a class="item-control item-push" data-array="languages" title="{{localize 'LM.Add'}}"><i
-                    class="fa fa-plus"></i></a>
-          <a class="item-control item-pop" data-array="languages" title="{{localize 'LM.Del'}}"><i
-                    class="fa fa-trash"></i></a>
+        <div class="fight-box">
+          <div class="fight-head">
+            <img title="{{localize 'LM.fighting'}}" src="/systems/lm/assets/skills/combat.svg">
+            <a class="surprise roll">{{ localize 'LM.surprisename' }}</a>
+            <span>{{data.surprise.value}}</span>
+            <a class="initiative roll">{{ localize 'LM.initiative.value' }}</a>
+            <span>{{data.abilities.dex.init}}</span>
+            <a class="reaction roll">{{ localize 'LM.reaction' }}</a>
+            <span>{{data.abilities.cha.mod}}</span>
+            {{#if data.skills.back.yes  }}
+            <a class="backstab-box"><img title="{{localize 'LM.skills.back'}}" src="/systems/lm/assets/skills/backstab.svg"></a>
+            <label>{{ localize "LM.backRange"}}</label>
+            <input name="data.skills.back.value" type="text" value="{{data.skills.back.value}}" data-dtype="Number"/>
+            <label>{{ localize "LM.backBonus"}}</label>
+            <span>+{{data.skills.back.hit}}/x{{data.skills.back.dmg}}</span>
+            {{/if}}
+          </div>
         </div>
         <div class="skills-box">
             <div class="skills-head">
@@ -461,22 +465,15 @@
               <input name="data.skills.sur.value" type="text" value="{{data.skills.sur.value}}" data-dtype="Number"/>
             </div>
           </div>
-          {{#if data.skills.back.yes  }}
-          <div class="backstab-box">
-            <a><img title="{{localize 'LM.skills.back'}}" src="/systems/lm/assets/skills/backstab.svg"></a>
-            <input name="data.skills.back.value" type="text" value="{{data.skills.back.value}}" data-dtype="Number"/>
-            <span>{{data.skills.back.hit}}{{data.skills.back.dmg}}</span>
-          </div>
-          {{/if}}
           {{#if data.skills.turn.yes  }}
-          <div class="turn-box">
+        <div class="turn-box">
             <div class="turn-head">
                 <img title="{{localize 'LM.skills.turn'}}" src="/systems/lm/assets/skills/turn-skull.svg">
                 <label>{{localize "LM.skills.turn"}}</label>
                 <label title="{{ localize 'LM.used.turn' }}">#</label>
                 <span>{{data.skills.turn.used}}</span>
                 <a title="{{localize 'LM.used.refresh'}}" 
-                class="turn refresh"><i class="fa fa-reply"></i></a>
+                class="turn refresh"><i class="fas fa-sync"></i></a>
                 <label>{{ localize 'LM.bonus.turn' }}</label>
                 <span>{{data.skills.turn.value}}</span>
                 <a title="{{localize 'LM.righteous.turn'}}" 
@@ -533,22 +530,43 @@
             </div>
           </div>
           {{/if}}
-          <ol class="items-list">
-              <li class="item flexrow item-header">
+        <div class="languages">
+            <label>{{ localize "LM.lan.lan" }}:</label>
+            <span><b>({{ data.skills.lan.literacy }},{{ data.skills.lan.spoken }})</b></span>
+            {{#each data.skills.lan.ini as | language |}}
+            <span class="list" data-skills-lan="{{language}}">{{ localize language }}</span>
+            {{/each}}
+            {{#each data.skills.lan.learn as | lanlearn |}}
+            <span class="list" data-skills-lan="{{lanlearn}}">{{ localize lanlearn }}</span>
+            {{/each}}
+            <a class="item-control item-push" data-array="languages" title="{{localize 'LM.Add'}}"><i
+                      class="fa fa-plus"></i></a>
+            <a class="item-control item-pop" data-array="languages" title="{{localize 'LM.Del'}}"><i
+                      class="fa fa-trash"></i></a>
+          </div>
+        <ol class="items-list">
+              <li class="item header flexrow">
                 <div class="item-image"></div>
-                <div class="item-name">Name</div>
+                <div class="item-name">{{ localize "LM.proficiences"}}</div>
                 <div class="item-controls">
-                  <a class="item-control item-create" title="Create item" data-type="feature"><i class="fas fa-plus"></i> Add item</a>
+                  <a class="item-control item-create" title='{{localize "LM.Add"}}' data-type="feature"><i class="fas fa-plus"></i></a>
                 </div>
               </li>
           {{#each actor.features as |item id|}}
               <li class="item flexrow" data-item-id="{{item._id}}">
-                  <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
-                  <h4 class="item-name">{{item.name}}</h4>
-                  <div class="item-controls">
-                      <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                      <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-                  </div>
+                <div class="item-name {{#if item.data.roll}}item-rollable{{/if}} flexrow">
+                  <div class="item-image" style="background-image: url({{item.img}})"></div>
+                  <a>
+                    <h4 title="{{item.name}}">
+                      {{item.name~}}
+                    </h4>
+                  </a>
+                </div>
+                <div class="item-controls">
+                      <a class="item-control item-show" title='{{localize "LM.show"}}'><i class="fas fa-eye"></i></a>
+                      <a class="item-control item-edit" title='{{localize "LM.edit"}}'><i class="fas fa-edit"></i></a>
+                      <a class="item-control item-delete" title='{{localize "LM.Del"}}'><i class="fas fa-trash"></i></a>
+                </div>
               </li>
           {{/each}}
           </ol>
