@@ -62,7 +62,6 @@ export class LmActorSheet extends ActorSheet {
     const features = [];
     const occupations = [];
     const spells = {
-      0: [],
       1: [],
       2: [],
       3: [],
@@ -106,12 +105,11 @@ export class LmActorSheet extends ActorSheet {
       }
       // Append to spells.
       else if (i.type === 'spell') {
-        if (i.data.spellLevel != undefined) {
-          spells[i.data.spellLevel].push(i);
+        if (i.data.lvl != undefined) {
+          spells[i.data.lvl].push(i);
         }
       }
     }
-
 
     // Assign and return
     actorData.gear = gear;
@@ -276,6 +274,14 @@ export class LmActorSheet extends ActorSheet {
       item.data.quantity = item.data.quantity + amount;
       this.actor.updateEmbeddedEntity('OwnedItem', item);
     });
+    // Add 1 to memorized
+    html.find('.plusm').click(clickEvent => {
+      const shownItem = itemForClickEvent(clickEvent);
+      const item = duplicate(this.actor.getEmbeddedEntity("OwnedItem", shownItem.data("itemId")));
+      let amount = (event.ctrlKey || event.metaKey) ? 10 : 1;
+      item.data.memorized = item.data.memorized + amount;
+      this.actor.updateEmbeddedEntity('OwnedItem', item);
+     });
     
     // Subtract 1 from Quantity
     html.find('.minus').click(clickEvent => {
@@ -285,6 +291,15 @@ export class LmActorSheet extends ActorSheet {
       item.data.quantity = item.data.quantity - amount;
       this.actor.updateEmbeddedEntity('OwnedItem', item);
     });
+    // Subtract 1 to memorized
+    html.find('.minusm').click(clickEvent => {
+      const shownItem = itemForClickEvent(clickEvent);
+      const item = duplicate(this.actor.getEmbeddedEntity("OwnedItem", shownItem.data("itemId")));
+      let amount = (event.ctrlKey || event.metaKey) ? 10 : 1;
+      item.data.memorized = item.data.memorized - amount;
+      this.actor.updateEmbeddedEntity('OwnedItem', item);
+    });
+    
 
     // Subtract 1 from Anmunition
     html.find('.spendAnmo').click(clickEvent => {
@@ -356,7 +371,7 @@ export class LmActorSheet extends ActorSheet {
     });
 
     
-    //inventory weapon rolls
+    // inventory weapon rolls
     html.find('.dmg.roll').click(ev =>
       {
         const li = $(ev.currentTarget).parents(".item");
@@ -369,6 +384,20 @@ export class LmActorSheet extends ActorSheet {
         const item = this.actor.getOwnedItem(li.data("itemId"));
         this._onWeaponRoll(item, ev.currentTarget);
     });
+    // skill roll
+    html.find('.item-image.skill').click(ev =>
+      {
+        const li = $(ev.currentTarget).parents(".item");
+        const item = this.actor.getOwnedItem(li.data("itemId"));
+        this._onSkillRoll(item, ev.currentTarget);
+    });
+    // cast spell
+    html.find(".item-image.castSpell").click(async (ev) => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.getOwnedItem(li.data("itemId"));
+      item.spendSpell();
+    });
+    
 
     // Occupation show.
     html.find('.occupation').click( ev => {
@@ -493,7 +522,7 @@ export class LmActorSheet extends ActorSheet {
     let roll = new Roll("2d6" + skb, this.actor.data.data);
     let result = roll.roll();
     let needed = "9+"
-    let flavor = ((result.total + bonus) >= 9  ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
+    let flavor = (result.total >= 9  ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
     result.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
         flavor:  (dataset.label ? `${dataset.label} ` : '') + '<span class="objetive">(</span>' + needed + '<span class="objetive">)</span>' + ": " + flavor
@@ -538,6 +567,26 @@ export class LmActorSheet extends ActorSheet {
       let messageHeader = "<b>" + item.name + `</b><b class="failed"> daño</b>`;
       r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
     }
+  }
+
+  _onSkillRoll(item, eventTarget)
+  {
+    let data = this.actor.data.data;
+    let type = item.data.data.rollType;
+    let objetive = item.data.data.rollTarget
+    let text = game.i18n.localize('LM.items.roll');
+    let success = "";
+    let r = new Roll(item.data.data.roll);
+    r.roll();
+    if ( type == "above"){
+      success = ( r.total  >=  objetive ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
+    } else if ( type == "below") {
+      success = ( r.total  <=  objetive ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
+    } else {
+      success = ( r.total  ==  objetive ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
+    }
+    let messageHeader = text + item.name +"(" + objetive + "):" + success;
+    r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
   }
 
 
@@ -611,6 +660,7 @@ export class LmActorSheet extends ActorSheet {
         }).render(true);
     });
   }
+
   _onWeaponRoll(item) {
     
     const element = event.currentTarget;

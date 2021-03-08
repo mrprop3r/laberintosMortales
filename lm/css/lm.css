@@ -62,19 +62,19 @@
 }
 #chat-log .chat-message .message-header .flavor-text {
   font-size: 14px;
-  background: var(--color-highlight);
+  background: var(--color-background);
   color: #000000;
-  font-weight: bold;
 }
 #chat-log .chat-message .message-content .dice-roll .dice-result .dice-formula {
-  background: var(--color-background);
+  background: var(--color-highlight);
   border: none;
   text-shadow: 2px 2px 4px #000000;
 }
 #chat-log .chat-message .message-content .dice-roll .dice-result .dice-total {
-  background: var(--color-background);
+  background: var(--color-foreground);
   border: solid none none none;
   font-weight: bolder;
+  color: white
 }
 .objetive {
   color: rgb(38, 59, 38);
@@ -97,7 +97,17 @@
   -ms-user-select: text;
   user-select: text;
 }
-
+.lm.chat-card header.card-header {
+  background: #858581;
+  border: none none groove none;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+.lm.chat-card header.card-header img {
+  flex: 0 0 30px;
+  height: 30px;
+ }
 
 /*   Dialog  */
 .dialog .dialog-buttons button {
@@ -844,6 +854,7 @@
 .lm.sheet.actor .sheet-body .tab.features .turn-box {
   margin-top: 2px;
   border: solid 2px;
+  height: 94px;
 }
 .lm.sheet.actor .sheet-body .tab.features .turn-box .turn-head {
   background: var(--color-foreground);
@@ -933,6 +944,66 @@
 }
 .lm.sheet.actor .sheet-body .tab.features .items-list .item .item-name .item-image:hover {
   background-image: url("/icons/svg/d20-black.svg") !important;
+}
+
+/*  Spells tab  */
+.lm.sheet.actor .sheet-body .tab.spells .item-titles {
+  background: var(--color-foreground);
+  color: white;
+  font-size: 12px;
+  margin-bottom: 2px;
+  height: 20px;
+}
+.lm.sheet.actor .sheet-body .tab.spells .item-titles span {
+  text-align: center;
+}
+.lm.sheet.actor .sheet-body .tab.spells .item-titles .spellLevel {
+  background: var(--color-background);
+  font-size: 12px;
+  margin-left: 2px;
+  color: black;
+  width: 15px;
+  border: solid 1px;
+  text-align: center;
+}
+.lm.sheet.actor .sheet-body .tab.spells .item-titles .item-controls {
+  text-align: right;
+}
+.lm.sheet.actor .sheet-body .tab.spells .item-titles .item-caret {
+  flex: 0 20px;
+}
+.lm.sheet.actor .sheet-body .tab.spells .item-titles .item-name {
+  align-items: left;
+}
+.lm.sheet.actor .sheet-body .tab.spells .item-titles .field-short {
+  text-align: right;
+}
+.lm.sheet.actor .sheet-body .tab.spells .item-titles .field-spell {
+  border: none;
+  text-align: left;
+  font-weight: bold;
+}
+.lm.sheet.actor .sheet-body .tab.spells .item-titles input {
+  height: 20px;
+  color: white;
+}
+.lm.sheet.actor .sheet-body .tab.spells .item-list {
+  list-style: none;
+  font-size: 12px;
+  padding: 0;
+}
+.lm.sheet.actor .sheet-body .tab.spells .item-list .item-entry .item .item-name {
+  text-align: left;
+}
+.lm.sheet.actor .sheet-body .tab.spells .item-list .item-entry .item .field-long {
+  flex: 0 0 160px;
+}
+.lm.sheet.actor .sheet-body .tab.spells .item-list .item-entry .item .field-long input {
+  background: var(--color-background);
+  border: none;
+}
+.lm.sheet.actor .sheet-body .tab.spells .item-list .item-entry .item .item-controls {
+  text-align: right;
 }
 
 
@@ -1171,6 +1242,13 @@
   color: rgb(192, 186, 186);
 }
 .lm.sheet.item .sheet-body .stats .item-info .quantity {
+  padding-top: 5px;
+}
+.lm.sheet.item .sheet-body .stats .item-long input {
+  width: 80px;
+}
+.lm.sheet.item .sheet-body .stats .item-long .quantity {
+  font-weight: bold;
   padding-top: 5px;
 }
 .lm.sheet.item .sheet-body .stats .item-info .item-toggle {

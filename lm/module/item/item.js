@@ -7,12 +7,35 @@ export class LmItem extends Item {
    * Augment the basic Item data model with additional dynamic data.
    */
   prepareData() {
+    // Set default image
+    let img = CONST.DEFAULT_TOKEN;
+    switch (this.data.type) {
+    case "spell":
+      img = "/systems/lm/assets/default/spell.png";
+        break;
+    case "feature":
+      img = "/systems/lm/assets/default/ability.png";
+        break;
+    case "armor":
+      img = "/systems/lm/assets/default/armor.png";
+        break;
+    case "weapon":
+      img = "/systems/lm/assets/default/weapon.png";
+          break;
+    case "item":
+      img = "/systems/lm/assets/default/item.png";
+          break;
+    }
+    if (!this.data.img) this.data.img = img;
+
     super.prepareData();
 
     // Get the Item's data
     const itemData = this.data;
     const actorData = this.actor ? this.actor.data : {};
     const data = itemData.data;
+
+    
   }
 
   static chatListeners(html) {
@@ -90,7 +113,7 @@ export class LmItem extends Item {
       data.tags.forEach(t => props.push(t.value));
     }
     if (this.data.type == "spell") {
-      props.push(`${data.class} ${data.lvl}`, data.range, data.duration);
+      props.push(`${data.user} ${data.lvl}`, data.range, data.duration);
     }
     if (data.hasOwnProperty("equipped")) {
       props.push(data.equipped ? "Equipped" : "Not Equipped");
@@ -104,6 +127,15 @@ export class LmItem extends Item {
     return data;
   }
 
+  spendSpell() {
+    this.update({
+      data: {
+        cast: this.data.data.cast + 1,
+      },
+    }).then(() => {
+      this.show({ skipDialog: true });
+    });
+  }
 
   /**
    * Handle clickable rolls.
@@ -189,5 +221,17 @@ export class LmItem extends Item {
     }
   }
 
+  static _onChatCardAction(event) {
+    event.preventDefault();
+    const header = event.currentTarget;
+    const card = header.closest(".chat-card");
+    const content = card.querySelector(".card-content");
+    if (data.action == "formula") {
+      let r = new Roll(item.data.data.roll);
+      r.roll();
+      let messageHeader = text + item.name ;
+      r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
+    }
+  }
 
 }

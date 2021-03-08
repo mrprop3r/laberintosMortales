@@ -369,6 +369,17 @@ export class LmActor extends Actor {
 
     // Compute magicUser
     data.magicUser = classInfo.magic.yes;
+    if (data.magicUser) {
+      data.canSpell.lvl1 = classInfo.magic.spellsLevel.lvl1[data.description.level.value];
+      data.canSpell.lvl2 = classInfo.magic.spellsLevel.lvl2[data.description.level.value];
+      data.canSpell.lvl3 = classInfo.magic.spellsLevel.lvl3[data.description.level.value];
+      data.canSpell.lvl4 = classInfo.magic.spellsLevel.lvl4[data.description.level.value];
+      data.canSpell.lvl5 = classInfo.magic.spellsLevel.lvl5[data.description.level.value];
+      data.canSpell.lvl6 = classInfo.magic.spellsLevel.lvl6[data.description.level.value];
+      data.canSpell.lvl7 = classInfo.magic.spellsLevel.lvl7[data.description.level.value];
+      data.canSpell.lvl8 = classInfo.magic.spellsLevel.lvl8[data.description.level.value];
+      data.canSpell.lvl9 = classInfo.magic.spellsLevel.lvl9[data.description.level.value];
+    }
     
     /* Compute freeHands */    
     let total = 0;

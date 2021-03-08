@@ -56,6 +56,9 @@ Hooks.once('init', async function() {
   Handlebars.registerHelper("gt", function (a, b) {
     return a >= b;
   });
+  Handlebars.registerHelper("grt", function (a, b) {
+    return a > b;
+  });
   Handlebars.registerHelper("sum", function (a, b) {
     return a + b;
   });

@@ -12,27 +12,44 @@
      <div class="flexrow">
       <div class="stats">
         <div class="item-info">
-            <label>{{ localize "LM.items.carriedIn"}}</label>
-            <select name="data.carried">
-            {{#select data.carried}}
-              {{#each containers as |id name|}}
-                  <option value="{{id}}">{{name}}</option>
+            <label class="quantity">{{ localize "LM.spells.level"}}</label>
+            <input type="text" name="data.lvl" value="{{data.lvl}}" data-dtype="Number" />
+        </div>
+        <div class="item-info">
+            <label>{{ localize "LM.spells.user"}}</label>
+            <select name="data.user">
+            {{#select data.user}}
+                <option value=""></option>
+                {{#each config.magicUser as |magic u|}}
+                <option value="{{u}}">{{ localize magic}}</option>
               {{/each}}
             {{/select}}
             </select>
         </div>
-        <div class="item-info">
-            <label class="quantity">{{ localize "LM.items.quantity"}}</label>
-            <input type="text" name="data.quantity" value="{{data.quantity}}" data-dtype="Number" />
+        <div class="item-long">
+            <label class="quantity">{{ localize "LM.spells.duration"}}</label>
+            <input type="text" name="data.duration" value="{{data.duration}}" data-dtype="String" />
+        </div>
+        <div class="item-long">
+            <label class="quantity">{{ localize "LM.items.range"}}</label>
+            <input type="text" name="data.range" value="{{data.range}}" data-dtype="String" />
+        </div>
+        <div class="item-long">
+            <label class="quantity">{{ localize "LM.items.roll"}}</label>
+            <input type="text" name="data.roll" value="{{data.roll}}" data-dtype="String" />
         </div>
         <div class="item-info">
-            <label>{{localize 'LM.items.treasure'}}</label>
-            <a class="item-toggle treasure {{# if data.treasure}}active{{/if}}"
-              title='{{localize "LM.items.treasure"}}'>
-              <i class="far {{#if data.treasure}}fa-times-circle{{else}}fa-circle{{/if}}"></i>
-              </a>
+            <label>{{localize 'LM.spell.save'}}</label>
+              <select name="data.save">
+                {{#select data.save}}
+                <option value=""></option>
+                {{#each config.savesShort as |save a|}}
+                <option value="{{a}}">{{save}}</option>
+                {{/each}}
+                {{/select}}
+              </select>
         </div>
-       </div> 
+        </div> 
         <div class="description item-editor">
             {{editor content=data.description target="data.description" button=true
             owner=owner editable=editable}}        

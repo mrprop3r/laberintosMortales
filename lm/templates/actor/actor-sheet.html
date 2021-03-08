@@ -555,7 +555,7 @@
           {{#each actor.features as |item id|}}
               <li class="item flexrow" data-item-id="{{item._id}}">
                 <div class="item-name {{#if item.data.roll}}item-rollable{{/if}} flexrow">
-                  <div class="item-image" style="background-image: url({{item.img}})"></div>
+                  <div class="item-image skill" style="background-image: url({{item.img}})"></div>
                   <a>
                     <h4 title="{{item.name}}">
                       {{item.name~}}
@@ -655,8 +655,7 @@
                     </div>
                     <label class="quantity plus" title="{{localize 'LM.items.sum'}}" value="{{data.quantity}}"><a class="fas
                         fa-plus-circle"></a></label>
-                </div>
-        
+                  </div>
                   <div class="item-controls">
                       <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
                       <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
@@ -724,7 +723,74 @@
       {{!-- Owned Spells Tab --}}
       {{#if data.magicUser}}
       <div class="tab spells" data-group="primary" data-tab="spells">
-      conjuros
+        <div class="item-titles flexrow">
+          <div class="item-name">{{localize "LM.category.spells"}}</div>
+          <span>{{ localize "LM.level.name1"}}</span>
+          <span class="spellLevel">{{data.canSpell.lvl1}}</span>
+          <span>{{ localize "LM.level.name2"}}</span>
+          <span class="spellLevel">{{data.canSpell.lvl2}}</span>
+          <span>{{ localize "LM.level.name3"}}</span>
+          <span class="spellLevel">{{data.canSpell.lvl3}}</span>
+          <span>{{ localize "LM.level.name4"}}</span>
+          <span class="spellLevel">{{data.canSpell.lvl4}}</span>
+          <span>{{ localize "LM.level.name5"}}</span>
+          <span class="spellLevel">{{data.canSpell.lvl5}}</span>
+          <span>{{ localize "LM.level.name6"}}</span>
+          <span class="spellLevel">{{data.canSpell.lvl6}}</span>
+          <div class="item-controls">
+            <a class="item-control item-reset" title='{{localize "LM.spells.resetSlots"}}'><i class="fas fa-sync"></i></a>
+            <a class="item-control item-create" data-type="spell" title="{{localize 'LM.Add'}}"><i
+                class="fa fa-plus"></i></a>
+          </div>
+        </div>
+        {{#each actor.spells as |spellGroup lvl|}}
+        <div>
+          <li class="item-titles flexrow" style="line-height:15px">
+            <div class="item-caret"><i class="fas fa-caret-down"></i> </div>
+            <div class="item-name">{{localize "LM.spells.level"}} {{lvl}}</div>
+            <div class="field-short">{{localize 'LM.spells.slots'}}</div>
+            <div class="field-spell">
+              <input type="text" value="{{lookup @root.slots.used @key}}" name="data.canSpell.{{id}}.value" data-dtype="Number"
+              placeholder="0" disabled>
+            </div>
+            <div class="item-controls">
+              <a class="item-control item-create" data-type="spell" data-lvl="{{lvl}}" title="{{localize 'LM.Add'}}"><i
+                  class="fa fa-plus"></i></a>
+            </div>
+          </li>
+          <ol class="item-list">
+            {{#each spellGroup as |item|}}
+            <li class="item-entry">
+              <div class="item flexrow" data-item-id="{{item._id}}">
+                <div class="item-name item-rollable flexrow">
+                  <div class="item-image castSpell" style="background-image: url({{item.img}})"></div>
+                  <a>
+                    <h4 title="{{item.name}}">
+                      {{item.name~}}
+                    </h4>
+                  </a>
+                </div>
+                <div class="field-long memorize flexrow">
+                  <span title="{{localize 'LM.spells.cast'}}">{{data.cast}}</span>
+                  <label class="quantity minusm" title="{{localize 'LM.items.sub'}}"><a class="fas
+                      fa-minus-circle"></a></label>
+                  <span title="{{localize 'LM.spells.memorized'}}">{{data.memorized}}</span>
+                  <label class="quantity plusm" title="{{localize 'LM.items.sum'}}" value="{{data.memorized}}"><a class="fas
+                        fa-plus-circle"></a></label>
+                </div>
+                <div class="item-controls">
+                  {{#if ../../owner}}
+                  <a class="item-control item-show" title='{{localize "LM.show"}}'><i class="fas fa-eye"></i></a>
+                  <a class="item-control item-edit" title='{{localize "LM.Edit"}}'><i class="fas fa-edit"></i></a>
+                  <a class="item-control item-delete" title='{{localize "LM.Delete"}}'><i class="fas fa-trash"></i></a>
+                  {{/if}}
+                </div>
+              </div>
+            </li>
+            {{/each}}
+          </ol>
+        </div>
+        {{/each}}
       </div>
       {{/if}}
       {{!-- Description Tab --}}
