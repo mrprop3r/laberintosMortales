@@ -399,6 +399,35 @@
               </li>
           {{/if}}
           {{/each}}
+          {{#each actor.armors as |item id|}}
+          {{#if item.data.equipped }}
+          {{#if  (eq item.data.type "shield") }}
+          <li class="item flexrow" data-item-id="{{item._id}}">
+            <div class="item-name item-rollable flexrow">
+              <div class="item-image weapon" style="background-image: url({{item.img}})">
+              </div>
+              <a>
+                <h4 class="item-namep inhand" title="{{item.name}}">
+                    {{item.name}}
+                </h4>
+              </a>
+            </div>
+            <div class="item-info">
+              <img title="{{localize 'LM.items.wc'}}" src="/systems/lm/assets/ink-swirl.svg" alt="{{ localize 'LM.items.wc' }}" >
+              <span class="wc">{{ item.data.wc }}</span>
+              <a class="dmg roll"
+              title='{{localize "LM.items.damage"}}'><i class="fas fa-dice"></i>
+              </a>
+              <span class="item-dice">{{item.data.damage}}</span>
+              <a class="item-control item-toggle {{#unless item.data.equipped}}item-unequipped{{/unless}}"
+                  title='{{localize "LM.items.equip"}}'>
+                  <i class="fas fa-hand-rock"></i>
+              </a>
+            </div>
+          </li>
+          {{/if}}
+          {{/if}}
+          {{/each}}
         </div>
       </div>
       {{!-- Owned Features Tab --}}
@@ -644,6 +673,10 @@
                       title='{{localize "LM.items.equip"}}'>
                       <i class="fas fa-hand-rock"></i>
                       </a>
+                      <a class="item-control item-fast {{#unless item.data.fast}}item-unfast{{/unless}}"
+                      title='{{localize "LM.items.fast"}}'>
+                      <i class="fas fa-bolt"></i>
+                      </a>
                       <a class="item-control item-packed {{#unless item.data.packed}}item-unpacked{{/unless}}"
                       title='{{localize "LM.items.packed"}}'>
                       <i class="fas fa-suitcase"></i>
@@ -686,6 +719,10 @@
                       title='{{localize "LM.items.equip"}}'>
                       <i class="fas fa-tshirt"></i>
                       </a>
+                      <a class="item-control item-fast {{#unless item.data.fast}}item-unfast{{/unless}}"
+                      title='{{localize "LM.items.fast"}}'>
+                      <i class="fas fa-bolt"></i>
+                      </a>
                       <a class="item-control item-packed {{#unless item.data.packed}}item-unpacked{{/unless}}"
                       title='{{localize "LM.items.packed"}}'>
                       <i class="fas fa-suitcase"></i>
@@ -701,8 +738,9 @@
            <li class="item-titles flexrow">
             <div class="item-caret"><i class="fas fa-caret-down"></i></div>
             <div class="item-name">{{localize "LM.gearsname"}}</div>
-            <div class="icon-row">#</div>
+            <div class="field-short"><i class="fas fa-hashtag"></i></div>
             <div class="field-short"><i class="fas fa-weight-hanging"></i></div>
+            <div class="item-name">{{localize "LM.items.carriedIn"}}</div>
             <div class="item-controls">
               <a class="item-control item-create" data-type="item" title="{{localize 'LM.Add'}}"><i
                   class="fa fa-plus"></i></a>
@@ -721,9 +759,23 @@
                     <label class="quantity plus" title="{{localize 'LM.items.sum'}}" value="{{data.quantity}}"><a class="fas
                         fa-plus-circle"></a></label>
                   </div>
+                  <div>
+                    <span>{{item.data.weight}}</span>
+                  </div>
+                  <div>
+                    <span>{{item.data.carried}}</span>
+                  </div>
                   <div class="item-controls">
-                      <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                      <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                    <a class="item-control item-fast {{#unless item.data.fast}}item-unfast{{/unless}}"
+                    title='{{localize "LM.items.fast"}}'>
+                    <i class="fas fa-bolt"></i>
+                    </a>
+                    <a class="item-control item-packed {{#unless item.data.packed}}item-unpacked{{/unless}}"
+                    title='{{localize "LM.items.packed"}}'>
+                    <i class="fas fa-suitcase"></i>
+                    </a>
+                    <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                    <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
                   </div>
               </li>
             {{/unless}}
@@ -735,7 +787,9 @@
              <div class="item-caret"><i class="fas fa-caret-down"></i></div>
              <div class="item-name">{{localize "LM.treasurename"}}</div>
              <div class="field-long"><i class="fas fa-circle"></i></div>
-            <div class="field-short"><i class="fas fa-hashtag"></i></div>
+             <div class="field-short"><i class="fas fa-hashtag"></i></div>
+             <div class="field-short"><i class="fas fa-weight-hanging"></i></div>
+             <div class="item-name">{{localize "LM.items.carriedIn"}}</div>
              <div class="item-controls">
                <a class="item-control item-create" data-type="item" data-treasure= "true" title="{{localize 'LM.Add'}}"><i
                    class="fa fa-plus"></i></a>
@@ -754,7 +808,21 @@
                     <label class="quantity plus" title="{{localize 'LM.items.sum'}}" value="{{data.quantity}}"><a class="fas
                         fa-plus-circle"></a></label>
                   </div>
+                  <div>
+                    <span>{{item.data.weight}}</span>
+                  </div>
+                  <div>
+                    <span>{{item.data.carried}}</span>
+                  </div>
                    <div class="item-controls">
+                      <a class="item-control item-fast {{#unless item.data.fast}}item-unfast{{/unless}}"
+                      title='{{localize "LM.items.fast"}}'>
+                      <i class="fas fa-bolt"></i>
+                      </a>
+                      <a class="item-control item-packed {{#unless item.data.packed}}item-unpacked{{/unless}}"
+                      title='{{localize "LM.items.packed"}}'>
+                      <i class="fas fa-suitcase"></i>
+                      </a>
                        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
                    </div>

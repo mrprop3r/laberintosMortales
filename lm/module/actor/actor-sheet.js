@@ -315,6 +315,16 @@ export class LmActorSheet extends ActorSheet {
         },
       });
     });
+    html.find(".item-fast").click(async (ev) => {
+      const li = $(ev.currentTarget).parents(".item");
+      const items = this.actor.getOwnedItem(li.data("itemId"));
+      await this.actor.updateOwnedItem({
+        _id: li.data("itemId"),
+        data: {
+          fast: !items.data.data.fast,
+        },
+      });
+    });
     html.find(".item-dmg").click(async (ev) => {
       const li = $(ev.currentTarget).parents(".item");
       const weapons = this.actor.getOwnedItem(li.data("itemId"));

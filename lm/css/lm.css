@@ -729,6 +729,9 @@
 .lm .inventory .item-controls .item-packed.item-unpacked {
   color: rgb(192, 186, 186);
 }
+.lm .inventory .item-controls .item-fast.item-unfast {
+  color: rgb(192, 186, 186);
+}
 .lm .inventory .item-conta .item-control.container-toggle.item-unequipped {
   color: rgb(0, 0, 0);
 }

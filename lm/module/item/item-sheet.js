@@ -38,7 +38,7 @@ export class LmItemSheet extends ItemSheet {
     if (this.actor && this.item.data.type !== 'container') {
       this.actor.items.forEach(it => {
         if (it.type === 'container') {
-          data.containers[it.name] = it.id;
+          data.containers[it.name] = it.name;
         }
         if (this.actor && this.item.data.carried !== 'in') {
           this.object.update({data: {conta: this.object.data.data.carried}});
