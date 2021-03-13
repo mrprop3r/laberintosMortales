@@ -98,15 +98,21 @@
   user-select: text;
 }
 .lm.chat-card header.card-header {
-  background: #858581;
+  background: #ffffff;
   border: none none groove none;
-  color: white;
+  color: black;
   font-weight: bold;
   text-align: center;
 }
 .lm.chat-card header.card-header img {
   flex: 0 0 30px;
   height: 30px;
+ }
+ .lm.chat-card footer.card-footer {
+  font-size: 10px;
+  color:rgb(90, 90, 90);
+  border: groove;
+  text-shadow: seashell;
  }
 
 /*   Dialog  */
@@ -720,6 +726,12 @@
 .lm .inventory .item-controls .item-toggle.item-unequipped {
   color: rgb(192, 186, 186);
 }
+.lm .inventory .item-controls .item-packed.item-unpacked {
+  color: rgb(192, 186, 186);
+}
+.lm .inventory .item-conta .item-control.container-toggle.item-unequipped {
+  color: rgb(0, 0, 0);
+}
 .lm.sheet.actor .sheet-body .inventory {
   padding: 0;
 }
@@ -946,12 +958,141 @@
   background-image: url("/icons/svg/d20-black.svg") !important;
 }
 
+/*  Inventory tab */
+
+.lm.sheet.actor .encumbrance {
+  height: 12px;
+  background: var(--color-foreground);
+  margin: 1px 1px 0 1px;
+  border: 1px solid rgba(139, 105, 105, 0.9);
+  border-radius: 3px;
+  position: relative;
+}
+.lm.sheet.actor .encumbrance .encumbrance-bar {
+  position: absolute;
+  background: rgba(226, 223, 223, 0.6);
+  height: 10px;
+  border: 1px solid rgb(134, 98, 98);
+  border-radius: 2px;
+}
+.lm.sheet.actor .encumbrance .encumbrance-label {
+  height: 10px;
+  padding: 0 5px;
+  position: absolute;
+  top: 0;
+  right: 10px;
+  font-size: 13px;
+  line-height: 12px;
+  text-align: right;
+  color: #EEE;
+  text-shadow: 0 0 5px #000;
+}
+.lm.sheet.actor .encumbrance .encumbrance-breakpoint {
+  display: block;
+  position: absolute;
+}
+.lm.sheet.actor .encumbrance .encumbrance-breakpoint.encumbrance-25 {
+  left: 25%;
+}
+.lm.sheet.actor .encumbrance .encumbrance-breakpoint.encumbrance-50 {
+  left: 50%;
+}
+.lm.sheet.actor .encumbrance .encumbrance-breakpoint.encumbrance-75 {
+  left: 75%;
+}
+.lm.sheet.actor .encumbrance .arrow-up {
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid #d8d6c9;
+}
+.lm.sheet.actor .encumbrance .arrow-down {
+  top: 0;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #d8d6c9;
+}
+.lm.sheet.actor .encumbrance.encumbered .arrow-up {
+  border-bottom: 4px solid rgba(0, 0, 0, 0.9);
+}
+.lm.sheet.actor .encumbrance.encumbered .arrow-down {
+  border-top: 4px solid rgba(0, 0, 0, 0.9);
+}
+.lm.sheet.actor .sheet-body .tab.items .item-titles {
+  background: var(--color-foreground);
+  color: white;
+  font-size: 12px;
+  margin-bottom: 1px;
+  height: 20px;
+}
+.lm.sheet.actor .sheet-body .tab.items .item-titles.con {
+  background: rgb(77, 77, 77);
+}
+.lm.sheet.actor .sheet-body .tab.items .item-titles .item-controls {
+  text-align: right;
+  margin-right: 4px;
+}
+.lm.sheet.actor .sheet-body .tab.items .item-titles .item-caret {
+  flex: 0 20px;
+}
+.lm.sheet.actor .sheet-body .tab.items .item-titles .item-conta {
+  flex: 0 20px;
+}
+.lm.sheet.actor .sheet-body .tab.items .item-titles .item-name {
+  align-items: left;
+  flex: 0 90px;
+}
+.lm.sheet.actor .sheet-body .tab.items .item-titles .field-short {
+  text-align: right;
+}
+.lm.sheet.actor .sheet-body .tab.items .item-list {
+  list-style: none;
+  font-size: 12px;
+  padding: 0;
+  margin: 1px 4px 1px 4px;
+}
+.lm.sheet.actor .sheet-body .tab.items .item-list .item-list {
+  overflow-y: auto;
+}
+.lm.sheet.actor .sheet-body .tab.items .item-list .item .item-image {
+  flex: 0 0 20px;
+}
+.lm.sheet.actor .sheet-body .tab.items .item-list .item .icon-row span {
+  font-size: 12px;
+  flex-grow: 0;
+}
+.lm.sheet.actor .sheet-body .tab.items .item-list .item .icon-row img {
+  border: none;
+  flex: 0 0 24px;
+}
+.lm.sheet.actor .sheet-body .tab.items .item-list .item .item-image img {
+  border: none;
+}
+.lm.sheet.actor .sheet-body .tab.items .item-list .item .item-name {
+  text-align: left;
+}
+.lm.sheet.actor .sheet-body .tab.items .item-list .item .field-long {
+  flex: 0 0 60px;
+  padding-top: 6px;
+  text-align: center;
+}
+.lm.sheet.actor .sheet-body .tab.items .item-list .item .item-controls {
+  text-align: right;
+  padding-top: 6px;
+}
+
+
 /*  Spells tab  */
+
 .lm.sheet.actor .sheet-body .tab.spells .item-titles {
   background: var(--color-foreground);
   color: white;
   font-size: 12px;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
   height: 20px;
 }
 .lm.sheet.actor .sheet-body .tab.spells .item-titles span {
@@ -974,18 +1115,10 @@
 }
 .lm.sheet.actor .sheet-body .tab.spells .item-titles .item-name {
   align-items: left;
+  flex: 0 90px;
 }
 .lm.sheet.actor .sheet-body .tab.spells .item-titles .field-short {
   text-align: right;
-}
-.lm.sheet.actor .sheet-body .tab.spells .item-titles .field-spell {
-  border: none;
-  text-align: left;
-  font-weight: bold;
-}
-.lm.sheet.actor .sheet-body .tab.spells .item-titles input {
-  height: 20px;
-  color: white;
 }
 .lm.sheet.actor .sheet-body .tab.spells .item-list {
   list-style: none;
@@ -996,14 +1129,13 @@
   text-align: left;
 }
 .lm.sheet.actor .sheet-body .tab.spells .item-list .item-entry .item .field-long {
-  flex: 0 0 160px;
-}
-.lm.sheet.actor .sheet-body .tab.spells .item-list .item-entry .item .field-long input {
-  background: var(--color-background);
-  border: none;
+  flex: 0 0 60px;
+  padding-top: 6px;
+  text-align: center;
 }
 .lm.sheet.actor .sheet-body .tab.spells .item-list .item-entry .item .item-controls {
   text-align: right;
+  padding-top: 6px;
 }
 
 
@@ -1205,7 +1337,6 @@
   left: 10px;
 }
 .lm.sheet.item .sheet-body .stats .item-multi {
-  border-style: none none ridge none;
   border-width: 2px;
   margin: 2px;
   width: 100px;

@@ -74,6 +74,10 @@ Hooks.once('init', async function() {
   Handlebars.registerHelper("ors", function (a, b) {
     return a || b;
   });
+  Handlebars.registerHelper("getTagIcon", function (tag) {
+    let idx = Object.keys(CONFIG.LM.tags).find(k => (CONFIG.LM.tags[k] == tag));
+    return CONFIG.LM.tag_images[idx];
+  });
 
 
 

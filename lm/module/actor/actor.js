@@ -337,11 +337,46 @@ export class LmActor extends Actor {
     } else {
       data.skills.turn.rightMod = 0;
     }
-    // Compute combat movement
-    data.movement.encounter = data.movement.base / 3;
-    
+
     // compute Max Weight
     data.encumbrance.weight = (data.abilities.str.value)*100;
+
+    // Compute encumbrance
+    let totalWeight = 0;
+    let hasItems = false;
+    Object.values(this.data.items).forEach((item) => {
+      if (item.type == "item" && !item.data.treasure) {
+          hasItems = true;
+      }
+      totalWeight += item.data.quantity * item.data.weight;
+    });
+
+    data.encumbrance = {
+      pct: Math.clamped(
+        (100 * parseFloat(totalWeight)) / data.encumbrance.weight,
+        0,
+        100
+      ),
+      weight: data.encumbrance.weight,
+      encumbered: totalWeight > data.encumbrance.weight,
+      value: totalWeight,
+    };
+
+    let weight = data.encumbrance.value;
+      if (weight > data.encumbrance.weight + 1) {
+        data.movement.base = 0;
+      } else if (weight > data.encumbrance.weight) {
+        data.movement.base = 30;
+      } else if (weight > data.encumbrance.weight*0.75) {
+        data.movement.base = 60;
+      } else if (weight > data.encumbrance.weight*0.5) {
+        data.movement.base = 90;
+      } else {
+        data.movement.base = 120;
+      }
+
+    // Compute combat movement
+    data.movement.encounter = data.movement.base / 3;
 
     // Compute initiative value 
     data.initiative.value += data.abilities.dex.init;
@@ -417,6 +452,7 @@ export class LmActor extends Actor {
     data.ac.value = baseAc - data.abilities.dex.mod - AcShield - AcHelm;
     data.ac.shield = AcShield;
     data.ac.helm = AcHelm;
+
 
 
   }

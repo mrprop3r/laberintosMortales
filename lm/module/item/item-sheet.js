@@ -32,13 +32,16 @@ export class LmItemSheet extends ItemSheet {
     const data = super.getData();
     data.config = CONFIG.LM;
 
-    data.containers = { 'Encima': 'on-person' };
+    data.containers = { 'Encima': 'in' };
     // Containers are not allowed in other containers.  So if this item is a container,
     // don't show any other containers.
     if (this.actor && this.item.data.type !== 'container') {
       this.actor.items.forEach(it => {
         if (it.type === 'container') {
           data.containers[it.name] = it.id;
+        }
+        if (this.actor && this.item.data.carried !== 'in') {
+          this.object.update({data: {conta: this.object.data.data.carried}});
         }
       }); 
     } 

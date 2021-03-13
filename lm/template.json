@@ -196,6 +196,7 @@
             "treasure": false,
             "identified": true,
             "carried": "in",
+            "conta": "0",
             "hands": 0
         }
     },
@@ -242,8 +243,10 @@
         "templates": ["common", "equipment"],
         "capacity": {
           "max": 1,
-          "value": 0
-        }
+          "value": 0,
+          "fastBonus": 0
+        },
+        "drop": false
     },
     "consumable": {
         "templates": ["common", "equipment"],

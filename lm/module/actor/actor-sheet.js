@@ -26,6 +26,26 @@ export class LmActorSheet extends ActorSheet {
       attr.isCheckbox = attr.dtype === "Boolean";
     } */
 
+
+    // Setup the fake container entry for "On Person" container
+    data.containers = {
+      'in': {
+          "data": {
+              "name": "Encima",
+              "type": "container",
+              "data": {
+                  "container": "in",
+              }
+          }
+      }
+    };
+
+    this.actor.items.forEach(it => {
+      if (it.type === 'container') {
+          data.containers[it._id] = it;
+      }
+    });
+
     // Prepare items.
     if (this.actor.data.type == 'character') {
       this._prepareCharacterItems(data);
@@ -125,7 +145,8 @@ export class LmActorSheet extends ActorSheet {
       if (it.type === 'container') {
           actorData.containers[it._id] = it;
       }
-    });
+   });
+
 
 
   }
@@ -200,7 +221,19 @@ export class LmActorSheet extends ActorSheet {
     
   }
 
-
+  async _resetSpells(event) {
+    let spells = $(event.currentTarget)
+      .closest(".tab.spells")
+      .find(".item");
+    spells.each((_, el) => {
+      let itemId = el.dataset.itemId;
+      const item = this.actor.getOwnedItem(itemId);
+      item.update({
+        _id: item.id,
+        "data.cast": 0,
+      });
+    });
+  }
   /* -------------------------------------------- */
 
   /** @override */
@@ -229,6 +262,13 @@ export class LmActorSheet extends ActorSheet {
       const item = this.actor.getOwnedItem(li.data("itemId"));
       item.sheet.render(true);
     });
+    // Update Container Item
+    html.find('.container-edit').click(ev => {
+      const li = $(ev.currentTarget).parents(".item-titles");
+      const item = this.actor.getOwnedItem(li.data("itemId"));
+      item.sheet.render(true);
+    });
+    
 
     // Delete Inventory Item
     html.find('.item-delete').click(ev => {
@@ -240,7 +280,7 @@ export class LmActorSheet extends ActorSheet {
     // Delete Container Item
     html.find('.container-delete').click(ev => {
       const li = $(ev.currentTarget).parents(".item-titles");
-      this.actor.deleteOwnedItem(li.data("containerId"));
+      this.actor.deleteOwnedItem(li.data("itemId"));
       li.slideUp(200, () => this.render(false));
     });
 
@@ -255,6 +295,26 @@ export class LmActorSheet extends ActorSheet {
         },
       });
     });
+    html.find(".container-toggle").click(async (ev) => {
+      const li = $(ev.currentTarget).parents(".item-titles");
+      const containers = this.actor.getOwnedItem(li.data("itemId"));
+      await this.actor.updateOwnedItem({
+        _id: li.data("itemId"),
+        data: {
+          equipped: !containers.data.data.equipped,
+        },
+      });
+    });
+    html.find(".item-packed").click(async (ev) => {
+      const li = $(ev.currentTarget).parents(".item");
+      const items = this.actor.getOwnedItem(li.data("itemId"));
+      await this.actor.updateOwnedItem({
+        _id: li.data("itemId"),
+        data: {
+          packed: !items.data.data.packed,
+        },
+      });
+    });
     html.find(".item-dmg").click(async (ev) => {
       const li = $(ev.currentTarget).parents(".item");
       const weapons = this.actor.getOwnedItem(li.data("itemId"));
@@ -265,7 +325,10 @@ export class LmActorSheet extends ActorSheet {
         },
       });
     });
-
+    // Reset spells
+    html.find(".spells .item-reset").click((ev) => {
+      this._resetSpells(ev);
+    });
     // Add 1 to Quantity
     html.find('.plus').click(clickEvent => {
       const shownItem = itemForClickEvent(clickEvent);

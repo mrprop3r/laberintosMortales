@@ -9,32 +9,33 @@ export class LmItem extends Item {
   prepareData() {
     // Set default image
     let img = CONST.DEFAULT_TOKEN;
-    switch (this.data.type) {
-    case "spell":
-      img = "/systems/lm/assets/default/spell.png";
-        break;
-    case "feature":
-      img = "/systems/lm/assets/default/ability.png";
-        break;
-    case "armor":
-      img = "/systems/lm/assets/default/armor.png";
-        break;
-    case "weapon":
-      img = "/systems/lm/assets/default/weapon.png";
-          break;
-    case "item":
-      img = "/systems/lm/assets/default/item.png";
-          break;
-    }
+        switch (this.data.type) {
+        case "spell":
+            img = "/systems/lm/assets/default/spell.png";
+                break;
+        case "feature":
+            img = "/systems/lm/assets/default/ability.png";
+                break;
+        case "armor":
+            img = "/systems/lm/assets/default/armor.png";
+                break;
+        case "weapon":
+            img = "/systems/lm/assets/default/weapon.png";
+                  break;
+        case "item":
+              img = "/systems/lm/assets/default/item.png";
+                  break;
+        }
     if (!this.data.img) this.data.img = img;
-
+    
     super.prepareData();
+
+    
 
     // Get the Item's data
     const itemData = this.data;
     const actorData = this.actor ? this.actor.data : {};
     const data = itemData.data;
-
     
   }
 
