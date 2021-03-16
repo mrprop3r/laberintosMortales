@@ -78,6 +78,9 @@ Hooks.once('init', async function() {
     let idx = Object.keys(CONFIG.LM.tags).find(k => (CONFIG.LM.tags[k] == tag));
     return CONFIG.LM.tag_images[idx];
   });
+  Handlebars.registerHelper("multround", function (a, b) {
+    return Math.round(parseFloat(a) * parseFloat(b) * 100) / 100;
+  })
 
 
 

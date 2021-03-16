@@ -173,7 +173,18 @@
     },
     "monster": {
       "templates": ["base"],
-      "biography": ""
+      "biography": "",
+      "aligment": "",
+      "xp": 5,
+      "treasure": {
+        "table": "",
+        "type": ""
+      },
+      "appearing": {
+        "d": 0,
+        "w": 0
+      },
+      "attacks": ""
     },
     "container": {
       "templates": ["base"],

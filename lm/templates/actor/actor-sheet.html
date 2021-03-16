@@ -615,6 +615,9 @@
           <i class="encumbrance-breakpoint encumbrance-75 arrow-down"></i>
           {{/with}}
         </div>
+        <div class="fast-bar">
+          <span class="fast-label"><i class="fas fa-bolt" title="{{localize 'LM.items.slotsFast'}}"></i>{{data.abilities.dex.fast}}/{{data.abilities.dex.itemFast}}</span>
+        </div>
         <div class="inventory">
           {{#each actor.containers as |item id|}}
               <li class="item-titles con flexrow" data-item-id="{{item._id}}" >
@@ -637,9 +640,9 @@
             <li class="item-titles flexrow">
               <div class="item-caret"><i class="fas fa-caret-down"></i></div>
               <div class="item-name">{{localize "LM.weaponsname"}}</div>
-              <div class="icon-row">{{localize "LM.items.qualities"}}</div>
-              <div class="field-short"><i class="fas fa-weight-hanging" title="{{localize 'LM.items.weight'}}"></i></div>
-              <div class="item-name">{{localize "LM.items.carriedIn"}}</div>
+              <div class="item-data long">{{localize "LM.items.qualities"}}</div>
+              <div class="item-data"><i class="fas fa-weight-hanging" title="{{localize 'LM.items.weight'}}"></i></div>
+              <div class="item-data">{{localize "LM.items.carriedIn"}}</div>
               <div class="item-controls">
                 <a class="item-control item-create" data-type="weapon" title="{{localize 'LM.Add'}}"><i
                     class="fa fa-plus"></i></a>
@@ -662,10 +665,10 @@
                     {{/unless}}
                     {{/each}}
                   </div>
-                  <div>
+                  <div class="field-short">
                     <span>{{item.data.weight}}</span>
                   </div>
-                  <div>
+                  <div class="field-short">
                     <span>{{item.data.carried}}</span>
                   </div>
                   <div class="item-controls">
@@ -692,9 +695,9 @@
           <li class="item-titles flexrow">
             <div class="item-caret"><i class="fas fa-caret-down"></i></div>
             <div class="item-name">{{localize "LM.armorsname"}}</div>
-            <div class="icon-row">{{localize "LM.items.ac"}}</div>
-            <div class="field-short"><i class="fas fa-weight-hanging"></i></div>
-            <div class="item-name">{{localize "LM.items.carriedIn"}}</div>
+            <div class="item-data">{{localize "LM.items.ac"}}</div>
+            <div class="item-data"><i class="fas fa-weight-hanging" title="{{localize 'LM.items.weight'}}"></i></div>
+            <div class="item-data">{{localize "LM.items.carriedIn"}}</div>
             <div class="item-controls">
               <a class="item-control item-create" data-type="armor" title="{{localize 'LM.Add'}}"><i
                   class="fa fa-plus"></i></a>
@@ -705,13 +708,13 @@
               <li class="item flexrow" data-item-id="{{item._id}}">
                   <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
                   <h4 class="item-name">{{item.name}}</h4>
-                  <div>
+                  <div class="field-short">
                     <span>{{item.data.ac}}</span>
                   </div>
-                  <div>
+                  <div class="field-short">
                     <span>{{item.data.weight}}</span>
                   </div>
-                  <div>
+                  <div class="field-short">
                     <span>{{item.data.carried}}</span>
                   </div>
                   <div class="item-controls">
@@ -738,8 +741,8 @@
            <li class="item-titles flexrow">
             <div class="item-caret"><i class="fas fa-caret-down"></i></div>
             <div class="item-name">{{localize "LM.gearsname"}}</div>
-            <div class="field-short"><i class="fas fa-hashtag"></i></div>
-            <div class="field-short"><i class="fas fa-weight-hanging"></i></div>
+            <div class="item-data"><i class="fas fa-hashtag" title="{{localize 'LM.items.quantity'}}"></i></div>
+            <div class="item-data"><i class="fas fa-weight-hanging" title="{{localize 'LM.items.weight'}}"></i></div>
             <div class="item-name">{{localize "LM.items.carriedIn"}}</div>
             <div class="item-controls">
               <a class="item-control item-create" data-type="item" title="{{localize 'LM.Add'}}"><i
@@ -751,18 +754,18 @@
            {{#unless item.data.treasure }}
               <li class="item flexrow" data-item-id="{{item._id}}">
                   <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
-                  <h4 class="item-name">{{item.name}} {{data.conta}}</h4>
-                  <div class="item-info flexrow">
+                  <h4 class="item-name">{{item.name}}</h4>
+                  <div class="field-short flexrow">
                     <label class="quantity minus" title="{{localize 'LM.items.sub'}}"><a class="fas
                       fa-minus-circle"></a></label>
-                    <input type="text" name="data.quantity" value="{{data.quantity}}" data-dtype="Number" />
+                    <span>{{data.quantity}}</span>
                     <label class="quantity plus" title="{{localize 'LM.items.sum'}}" value="{{data.quantity}}"><a class="fas
                         fa-plus-circle"></a></label>
                   </div>
-                  <div>
+                  <div class="field-short">
                     <span>{{item.data.weight}}</span>
                   </div>
-                  <div>
+                  <div class="field-short">
                     <span>{{item.data.carried}}</span>
                   </div>
                   <div class="item-controls">
@@ -780,15 +783,46 @@
               </li>
             {{/unless}}
             {{/each}}
+            {{#each actor.consumables as |item id|}}
+               <li class="item flexrow" data-item-id="{{item._id}}">
+                   <div class="item-image consumable"><a><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></a></div>
+                   <h4 class="item-name">{{item.name}}</h4>
+                   <div class="field-short flexrow">
+                     <label class="quantity minus" title="{{localize 'LM.items.sub'}}"><a class="fas
+                       fa-minus-circle"></a></label>
+                     <span>{{data.quantity}}</span>
+                     <label class="quantity plus" title="{{localize 'LM.items.sum'}}" value="{{data.quantity}}"><a class="fas
+                         fa-plus-circle"></a></label>
+                   </div>
+                   <div class="field-short">
+                     <span>{{item.data.weight}}</span>
+                   </div>
+                   <div class="field-short">
+                     <span>{{item.data.carried}}</span>
+                   </div>
+                   <div class="item-controls">
+                     <a class="item-control item-fast {{#unless item.data.fast}}item-unfast{{/unless}}"
+                     title='{{localize "LM.items.fast"}}'>
+                     <i class="fas fa-bolt"></i>
+                     </a>
+                     <a class="item-control item-packed {{#unless item.data.packed}}item-unpacked{{/unless}}"
+                     title='{{localize "LM.items.packed"}}'>
+                     <i class="fas fa-suitcase"></i>
+                     </a>
+                     <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                     <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                   </div>
+               </li>
+             {{/each}}
           </ol>
           </div>
         <div class="inventory">
             <li class="item-titles flexrow">
              <div class="item-caret"><i class="fas fa-caret-down"></i></div>
              <div class="item-name">{{localize "LM.treasurename"}}</div>
-             <div class="field-long"><i class="fas fa-circle"></i></div>
-             <div class="field-short"><i class="fas fa-hashtag"></i></div>
-             <div class="field-short"><i class="fas fa-weight-hanging"></i></div>
+             <div class="item-data"><i class="fas fa-circle" title="{{localize 'LM.items.value'}}"></i></div>
+             <div class="item-data"><i class="fas fa-hashtag" title="{{localize 'LM.items.quantity'}}"></i></div>
+             <div class="item-data"><i class="fas fa-weight-hanging" title="{{localize 'LM.items.weight'}}"></i></div>
              <div class="item-name">{{localize "LM.items.carriedIn"}}</div>
              <div class="item-controls">
                <a class="item-control item-create" data-type="item" data-treasure= "true" title="{{localize 'LM.Add'}}"><i
@@ -801,17 +835,18 @@
                <li class="item flexrow" data-item-id="{{item._id}}">
                    <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
                    <h4 class="item-name">{{item.name}}</h4>
-                   <div class="item-info flexrow">
+                   <div class="field-short">{{multround item.data.quantity item.data.cost}}</div>
+                   <div class="field-short flexrow">
                     <label class="quantity minus" title="{{localize 'LM.items.sub'}}"><a class="fas
                       fa-minus-circle"></a></label>
-                    <input type="text" name="data.quantity" value="{{data.quantity}}" data-dtype="Number" />
+                      <span>{{data.quantity}}</span>
                     <label class="quantity plus" title="{{localize 'LM.items.sum'}}" value="{{data.quantity}}"><a class="fas
                         fa-plus-circle"></a></label>
                   </div>
-                  <div>
+                  <div class="field-short">
                     <span>{{item.data.weight}}</span>
                   </div>
-                  <div>
+                  <div class="field-short">
                     <span>{{item.data.carried}}</span>
                   </div>
                    <div class="item-controls">
@@ -967,8 +1002,8 @@
             <div class="headname">{{localize "LM.actor.description"}}</div>
             {{editor content=data.biography target="data.biography"
               button=true owner=owner editable=editable}}
+            </div>
           </div>
-        </div>
         <div class="inventory notes">
           <div class="headabilities">{{localize "LM.actor.notes"}}</div>
           <div class="resizable" data-editor-size="140">

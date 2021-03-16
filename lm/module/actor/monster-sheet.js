@@ -7,10 +7,10 @@ export class LmMonsterSheet extends ActorSheet {
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["lm", "sheet", "actor"],
+      classes: ["lm", "sheet", "monster"],
       template: "systems/lm/templates/actor/monster-sheet.html",
-      width: 500,
-      height: 600,
+      width: 460,
+      height: 580,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
     });
   }

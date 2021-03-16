@@ -202,6 +202,15 @@ export class LmActor extends Actor {
       itemFast,
       data.abilities.dex.value
     );
+    
+    let totalFast = 0;
+    Object.values(this.data.items).forEach((item) => {
+      if (item.data.fast) {
+      totalFast += 1;
+      }
+    });
+      
+    data.abilities.dex.fast = totalFast;
 
     /*  Compute languages   */
     const literacy = {
