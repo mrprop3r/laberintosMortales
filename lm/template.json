@@ -73,7 +73,8 @@
           }
         },
         "movement": {
-          "base": 120
+          "base": 120,
+          "other": ""
         },
         "initiative": {
           "value": 0,

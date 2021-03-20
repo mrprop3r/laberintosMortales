@@ -243,6 +243,7 @@
     "LM.surprisename": "Sorpresa",
     "LM.initiative.value": "Iniciativa",
     "LM.combat.movement": "Mov",
+    "LM.movement.other": "otro mov",
     "LM.combat.thac0": "gac0",
     "LM.combat.ac": "CA",
     "LM.combat.melee": "Melé",

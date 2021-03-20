@@ -10,17 +10,21 @@
                     <input class="center" name="data.ac.value" type="text" value="{{data.ac.value}}" data-dtype="Number"/>
                 </li>
                 <li class="container">
-                        <span class="data-box2">{{ localize "LM.hp.short"}}</span>
-                        <img class="heart-img" src="/systems/lm/assets/heart_empty.png" alt="hp" >
-                        <div>
-                          <input class="center2" name="data.hp.value" type="text" value="{{data.hp.value}}" data-dtype="String"/>
-                          <input class="center3" name="data.hp.max" type="text" value="{{data.hp.max}}" data-dtype="String"/>
-                        </div>
-                        <div class="hd-hp">
-                          <a><span class="hd-roll">{{localize "LM.hd.short"}}</span></a>
-                          <input name="data.hp.hd" type="text" value="{{data.hp.hd}}" data-dtype="String"/>
-                        </div>
+                    <span class="data-box2">{{ localize "LM.hp.short"}}</span>
+                    <img class="heart-img" src="/systems/lm/assets/heart_empty.png" alt="hp" >
+                    <div>
+                        <input class="center2" name="data.hp.value" type="text" value="{{data.hp.value}}" data-dtype="String"/>
+                        <input class="center3" name="data.hp.max" type="text" value="{{data.hp.max}}" data-dtype="String"/>
+                    </div>
+                    <div class="hd-hp">
+                        <a><span class="hd-roll">{{localize "LM.hd.short"}}</span></a>
+                        <input name="data.hp.hd" type="text" value="{{data.hp.hd}}" data-dtype="String"/>
+                    </div>
                 </li>
+               <li class="container2">
+                    <span class="thac0-box">{{ localize "LM.combat.thac0"}}</span>
+                    <input name="data.thac0.value" type="text" value="{{data.thac0.value}}" data-dtype="Number"/>
+               </li> 
             </ul>
             <div class="head">
                 <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
@@ -30,9 +34,14 @@
                   <input class="aligment" type="text" name="data.aligment" value="{{data.aligment}}" data-dtype="String"/>
                 </div>
               </div>
-            <div class="combat-data flexcol">
+            <div class="combat-data">
+              <div class="move-data">
                 <span class="move">{{ localize "LM.combat.movement"}}</span>
-                <span>{{ data.movement.base }}</span>
+                <div class="flexrow">
+                  <input class="short" name="data.movement.base" type="text" value="{{ data.movement.base }}" data-dtype="Number">
+                  <input name="data.movement.other" type="text" value="{{ data.movement.other }}" data-dtype="String" placeholder="{{ localize 'LM.movement.other' }}">
+                </div>
+              </div>
                 <input class="header-input" name="data.retainer.moral" type="text" value="{{data.retainer.moral}}"/>
                 <a class="moral-check" title="{{localize 'LM.retainer.moralcheck'}}">
                   <i class="fas fa-dice"></i></a>
