@@ -127,6 +127,7 @@
     "LM.abilities.cha.short": "CAR",
 
     "LM.skillsname": "Habilidades",
+    "LM.skillsItems": "Habilidades y equipo",
     "LM.proficiences": "Habilidades y competencias",
     "LM.skills.bonus": "Bonos de habilidad",
     "LM.skills.acr": "Acrobacias",
@@ -324,8 +325,14 @@
     "LM.spells.user": "Usuario",
     "LM.spells.duration": "Duración",
 
+    "LM.data.magicUser": "Lanza conjuros",
     "LM.user.magicUser": "Arcano",
     "LM.user.divineUser": "Divino",
     "LM.user.bladeUser": "Danzafilos",
-    "LM.user.elfUser": "Elfo"
+    "LM.user.elfUser": "Elfo",
+
+    "LM.monster.mov": "Movimiento",
+    "LM.monster.appearing": "NºA",
+    "LM.monster.appearingLong": "Número que aparecen",
+    "LM.monster.xp": "Px"
 }
