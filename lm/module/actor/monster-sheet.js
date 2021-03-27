@@ -42,9 +42,12 @@ export class LmMonsterSheet extends ActorSheet {
 
     // Initialize containers.
     const gear = [];
+    const weapons = [];
+    const containers = [];
+    const armors = [];
+    const consumables = [];
     const features = [];
     const spells = {
-      0: [],
       1: [],
       2: [],
       3: [],
@@ -56,6 +59,8 @@ export class LmMonsterSheet extends ActorSheet {
       9: []
     };
 
+    
+
     // Iterate through items, allocating to containers
     // let totalWeight = 0;
     for (let i of sheetData.items) {
@@ -65,25 +70,78 @@ export class LmMonsterSheet extends ActorSheet {
       if (i.type === 'item') {
         gear.push(i);
       }
+      if (i.type === 'weapon') {
+        weapons.push(i);
+      }
+      if (i.type === 'armor') {
+        armors.push(i);
+      }
+      if (i.type === 'consumable') {
+        consumables.push(i);
+      }
+      if (i.type === "container") {
+        containers.push(i);
+      }
       // Append to features.
       else if (i.type === 'feature') {
         features.push(i);
       }
       // Append to spells.
       else if (i.type === 'spell') {
-        if (i.data.spellLevel != undefined) {
-          spells[i.data.spellLevel].push(i);
+        if (i.data.lvl != undefined) {
+          spells[i.data.lvl].push(i);
         }
       }
     }
 
     // Assign and return
     actorData.gear = gear;
+    actorData.weapons = weapons;
+    actorData.armors = armors;
+    actorData.consumables = consumables;
+    actorData.containers = containers;
     actorData.features = features;
     actorData.spells = spells;
+
+    this.actor.items.forEach(it => {
+      if (it.type === 'container') {
+          actorData.containers[it._id] = it;
+      }
+   });
   }
 
   /* -------------------------------------------- */
+  async _chooseItemType(choices = ["weapon", "armor", "shield", "consumable","gear"]) {
+    let templateData = { types: choices },
+      dlg = await renderTemplate(
+        "systems/lm/templates/item/entity-create.html",
+        templateData
+      );
+    //Create Dialog window
+    return new Promise((resolve) => {
+      new Dialog({
+        title: game.i18n.localize("LM.dialog.createItem"),
+        content: dlg,
+        buttons: {
+          ok: {
+            label: game.i18n.localize("LM.Ok"),
+            icon: '<i class="fas fa-check"></i>',
+            callback: (html) => {
+              resolve({
+                type: html.find('select[name="type"]').val(),
+                name: html.find('input[name="name"]').val(),
+              });
+            },
+          },
+          cancel: {
+            icon: '<i class="fas fa-times"></i>',
+            label: game.i18n.localize("LM.Cancel"),
+          },
+        },
+        default: "ok",
+      }).render(true);
+    });
+  }
 
   /** @override */
   activateListeners(html) {
@@ -93,13 +151,44 @@ export class LmMonsterSheet extends ActorSheet {
     if (!this.options.editable) return;
 
     // Add Inventory Item
-    html.find('.item-create').click(this._onItemCreate.bind(this));
+    html.find(".item-create").click((event) => {
+      event.preventDefault();
+      const header = event.currentTarget;
+      const type = header.dataset.type;
+
+      // item creation helper func
+      let createItem = function (type, name = `New ${type.capitalize()}`) {
+        const itemData = {
+          name: name ? name : `New ${type.capitalize()}`,
+          type: type,
+          data: duplicate(header.dataset),
+        };
+        delete itemData.data["type"];
+        return itemData;
+      };
+
+      // Getting back to main logic
+      if (type == "choice") {
+        const choices = header.dataset.choices.split(",");
+        this._chooseItemType(choices).then((dialogInput) => {
+          const itemData = createItem(dialogInput.type, dialogInput.name);
+          this.actor.createOwnedItem(itemData, {});
+        });
+        return;
+      }
+      const itemData = createItem(type);
+      return this.actor.createOwnedItem(itemData, {});
+    });
+
+    html.find(".item-reset").click((ev) => {
+      this._resetCounters(ev);
+    });
 
     // Update Inventory Item
     html.find('.item-edit').click(ev => {
-      const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.getOwnedItem(li.data("itemId"));
-      item.sheet.render(true);
+    const li = $(ev.currentTarget).parents(".item");
+    const item = this.actor.getOwnedItem(li.data("itemId"));
+    item.sheet.render(true);
     });
 
     // Delete Inventory Item
@@ -123,32 +212,6 @@ export class LmMonsterSheet extends ActorSheet {
     }
   }
 
-  /**
-   * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  _onItemCreate(event) {
-    event.preventDefault();
-    const header = event.currentTarget;
-    // Get the type of item to create.
-    const type = header.dataset.type;
-    // Grab any data associated with this control.
-    const data = duplicate(header.dataset);
-    // Initialize a default name.
-    const name = `New ${type.capitalize()}`;
-    // Prepare the item object.
-    const itemData = {
-      name: name,
-      type: type,
-      data: data
-    };
-    // Remove the type from the dataset since it's in the itemData.type prop.
-    delete itemData.data["type"];
-
-    // Finally, create the item!
-    return this.actor.createOwnedItem(itemData);
-  }
 
   /**
    * Handle clickable rolls.

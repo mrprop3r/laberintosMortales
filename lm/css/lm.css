@@ -663,17 +663,17 @@
 .lm.sheet.actor .sheet-body .item.flexrow {
   border: none none groove none;
 }
-.lm.sheet.actor .sheet-body .item .item-rollable:hover .item-image {
+.lm .sheet-body .item .item-rollable:hover .item-image {
   background-image: url("/icons/svg/d20-grey.svg") !important;
   cursor: pointer;
 }
-.lm.sheet.actor .sheet-body .item .item-rollable .item-image:hover {
+.lm .sheet-body .item .item-rollable .item-image:hover {
   background-image: url("/icons/svg/d20-black.svg") !important;
 }
-.lm.sheet.actor .sheet-body .item .item-name .item-namep {
+.lm .sheet-body .item .item-name .item-namep {
   font-weight: bold;
 }
-.lm.sheet.actor .sheet-body .item .item-name {
+.lm .sheet-body .item .item-name {
   text-indent: 8px;
   text-align: left;
   overflow: hidden;
@@ -683,26 +683,26 @@
   width: 100px;
   display: flex;
 }
-.lm.sheet.actor .sheet-body .item .item-info img {
+.lm .sheet-body .item .item-info img {
   border: none;
   flex: 0 0 24px;
   height: 24px;
   position: relative;
   top: 5px;
 }
-.lm.sheet.actor .sheet-body .item .item-info .wc {
+.lm .sheet-body .item .item-info .wc {
   position: relative;
   right: 18px;
   bottom: 2px;
   font-weight: bold;
 }
-.lm.sheet.actor .sheet-body .item .item-name .item-image {
+.lm .sheet-body .item .item-name .item-image {
   flex-basis: 30px;
   flex-grow: 0;
   background-size: contain;
   background-repeat: no-repeat;
 }
-.lm.sheet.actor .sheet-body .item .dmg {
+.lm .sheet-body .item .dmg {
   padding-bottom: 4px;
 }
 .lm.sheet.actor .sheet-body .item .item-dice {
@@ -710,7 +710,7 @@
   font-weight: bold;
   padding: 4px;
 }
-.lm.sheet.actor .sheet-body .item .item-anmo {
+.lm .sheet-body .item .item-anmo {
   font-size: 12px;
   font-weight: bold;
   padding: 4px;
@@ -718,7 +718,7 @@
   border-radius: 50%;
   border-width: 3px;
 }
-.lm.sheet.actor .sheet-body .item .item-range {
+.lm .sheet-body .item .item-range {
   border: groove;
   border-radius: 15%;
   border-width: 2px;
@@ -726,7 +726,7 @@
   align-items: center;
   padding: 4px;
 }
-.lm.sheet.actor .sheet-body .item .item-control.item-dmg.item-damage2 {
+.lm .sheet-body .item .item-control.item-dmg.item-damage2 {
   color: rgb(192, 186, 186);
 }
 .lm .inventory .item-controls .item-toggle.item-unequipped {
@@ -744,7 +744,7 @@
 .lm.sheet.actor .sheet-body .inventory {
   padding: 0;
 }
-.lm.sheet.actor .sheet-body .inventory .item-titles {
+.lm .sheet-body .inventory .item-titles {
   text-align: center;
   padding: 4px 0;
   background: #000000;
@@ -1605,39 +1605,82 @@
   position: relative;
   bottom: 4px;
 }
-.lm.sheet.monster .sheet-header .header-fields .combat-data {
-  text-align: center;
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul {
+  list-style: none;
+  padding-left: 5px;
+  flex: 0 0 135;
 }
-.lm.sheet.monster .sheet-header .header-fields .combat-data .data {
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.mov {
+  border: solid 2px;
+  border-radius: 5%;
+  height: 25px;
+}
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.mov label {
+  flex: 0 0 30px;
   font-family: var(--font-special);
-  font-size: 16px;
-  position: relative;
-  top: 8px;
+  font-size: 18px;
+  background: var(--color-foreground);
+  color: white;
+  text-align: center;
+  padding-top: 6px;
 }
-.lm.sheet.monster .sheet-header .header-fields .combat-data .move-data input {
-  height: 24px;
-  margin-top: 4px;
-  border-bottom: solid 1px;
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.mov input {
+  height: 15px;
+  text-align: center;
+  padding-top: 5px;
 }
-.lm.sheet.monster .sheet-header .header-fields .combat-data .move-data input.short {
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.mov span {
+  flex: 0 0 4px;
+  padding-top: 7px;
+}
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.mov input.short {
   flex: 0 0 30px;
 }
-.lm.sheet.monster .sheet-header .header-fields .combat-data .data2 {
-  flex: 0 0 50px;
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li .double {
+  background: var(--color-foreground);
+  color: white;
+  flex: 0 0 80px;
+  padding-left: 4px;
+  padding-top: 4px;
+  border-radius: 10%;
+  margin: 2px;
 }
-.lm.sheet.monster .sheet-header .header-fields .combat-data .header-input {
-  height: 24px;
-  width: 40px;
-  margin-top: 8px;
-  border-bottom: solid 1px;
-  padding-bottom: 0;
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li .double a {
+ font-size: 12px;
 }
-.lm.sheet.monster .sheet-header .header-fields .combat-data a {
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li input.header-input {
+  flex: 0 0 30px;
+  border-bottom: solid 2px;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 4px;
+}
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li .data {
+  flex: 0 0 30px;
+  font-family: var(--font-special);
+  font-size: 18px;
+  background: var(--color-foreground);
+  color: white;
+  text-align: center;
+  padding-top: 6px;
+  margin: 2px;
+}
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li .appearing-check {
   font-size: 12px;
-  color: #545557;
-  position: relative;
-  top: 6px;
+  padding-top: 7px;
 }
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li input.header-inputl {
+  flex: 0 0 60px;
+  border-bottom: solid 2px;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 4px;
+}
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li .magicUser {
+  font-size: 12px;
+  padding-top: 7px;
+}
+
 
 /*  monster tabs  */
 

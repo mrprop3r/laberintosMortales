@@ -69,8 +69,10 @@
                 </div>
               </div> 
               <div class="item-info">
+                <label>{{ localize "LM.items.bonus"}}</label>
+                <input type="text" name="data.bonus" value="{{data.bonus}}" data-dtype="Number" />
                 <label>{{ localize "LM.items.wc"}}</label>
-                  <input type="text" name="data.wc" value="{{data.wc}}" data-dtype="Number" />
+                <input type="text" name="data.wc" value="{{data.wc}}" data-dtype="Number" />
               </div>
               <div class="ranges-icons">
                 <a title="{{localize 'LM.items.melee'}}" class="melee-toggle 
@@ -121,15 +123,6 @@
                     {{/select}}
                   </select>
               </div>
-              <div class="item-info flexrow">
-                <label>{{localize 'LM.items.slow'}}</label>
-                <div class="toggle-data"> 
-                <a class="item-toggle slow {{# if data.slow}}active{{/if}}"
-                  title='{{localize "LM.items.slow"}}'>
-                  <i class="far {{#if data.slow}}fa-times-circle{{else}}fa-circle{{/if}}"></i>
-                  </a>
-                </div> 
-            </div>
           </div>
               <div class="description">
                   {{editor content=data.description target="data.description" button=true
