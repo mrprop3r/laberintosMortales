@@ -240,6 +240,7 @@
     "LM.roll.dmg": "Tirada de Daño",
     "LM.roll.normal": "Tirada normal",
     "LM.roll.disadvantage": "Desventaja",
+    "LM.roll.appearing": "Nº monstruos que aparecen: ",
 
     "LM.surprisename": "Sorpresa",
     "LM.initiative.value": "Iniciativa",

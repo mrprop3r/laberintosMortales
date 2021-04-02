@@ -73,11 +73,11 @@
                 <li class="flexrow">
                   <label class= "data">{{localize 'LM.monster.appearing'}}
                   </label>
-                  <input class="header-input2" name="data.appearing.d" type="text" value="{{data.appearing.d}}"/>
-                  <a class="appearing-check" title="{{localize 'LM.monster.appearingLong'}}">
+                  <input class="header-input2"  name="data.appearing.d" type="text" value="{{data.appearing.d}}"/>
+                  <a class="appearing-check D" title="{{localize 'LM.monster.appearingLong'}}">
                   <i class="fas fa-dice"></i></a>
-                  <input class="header-input2" data-check="wilderness" name="data.appearing.w" type="text" value="{{data.appearing.w}}"/>
-                  <a class="appearing-check" title="{{localize 'LM.monster.appearingLong'}}">
+                  <input class="header-input2"  name="data.appearing.w" type="text" value="{{data.appearing.w}}"/>
+                  <a class="appearing-check W" title="{{localize 'LM.monster.appearingLong'}}">
                   <i class="fas fa-dice"></i></a>
                 </li>
                 <li class="flexrow">
@@ -86,7 +86,7 @@
                   <input class="header-inputl" name="data.xp" type="text" value="{{data.xp}}"/>
                   <a class="magicUser {{# if data.magicUser}}active{{/if}}"
                     title='{{localize "LM.data.magicUser"}}'>
-                  <i class="far {{#if data.magicUser.enabled}}fa-times-circle{{else}}fa-circle{{/if}}"></i>
+                  <i class="far {{#if data.magicUser}}fa-times-circle{{else}}fa-circle{{/if}}"></i>
                   </a>
                 </li>
               </ul>
@@ -181,7 +181,7 @@
                             </h4>
                           </a>
                         </div>
-                        <div class="field-short flexrow">
+                        <div class="field-short counter flexrow">
                           <input type="text" value="{{item.data.counter.value}}" data-dtype="Number"
                           placeholder="0" data-field="value" title="{{localize 'LM.items.roundAttacks'}}">
                           /

@@ -64,27 +64,6 @@ export class LmActor extends Actor {
     });
   }
 
-  rollAppearing(options = {}) {
-    let rollParts = "";
-    let label = "";
-    if (options.check == "wilderness") {
-      rollParts = new Roll(this.data.data.appearing.w).roll();
-      label = "(2)";
-    } else {
-      rollParts = new Roll(this.data.data.appearing.d).roll();
-      label = "(1)";
-    }
-    
-    let result = rollParts;
-    // Roll and return
-    result.toMessage({
-      parts: rollParts,
-      skipDialog: true,
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      flavor: game.i18n.format("LM.roll.appearing", { type: label }),
-      title: game.i18n.format("LM.roll.appearing", { type: label }),
-    });
-  }
 
   /**
    * Prepare Character type specific data

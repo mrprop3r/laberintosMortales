@@ -194,12 +194,9 @@ export class LmMonsterSheet extends ActorSheet {
     html.find('.moral-check').click(this._onMoralCheck.bind(this));
     html.find('.surprise-check').click(this._onSurpriseRoll.bind(this));
     html.find('.reaction-check').click(this._onReactionRoll.bind(this));
-
-    html.find(".appearing-check").click((ev) => {
-      let actorObject = this.actor;
-      let check = $(ev.currentTarget).closest('.check-field').data('check');
-      actorObject.rollAppearing({ event: event, check: check });
-    });
+    html.find(".appearing-check.W").click(this._appearingW.bind(this));
+    html.find(".appearing-check.D").click(this._appearingD.bind(this));
+    html.find('.saving-throw').click(this._onSavingThrow.bind(this));
 
     // Add Inventory Item
     html.find(".item-create").click((event) => {
@@ -230,6 +227,11 @@ export class LmMonsterSheet extends ActorSheet {
       const itemData = createItem(type);
       return this.actor.createOwnedItem(itemData, {});
     });
+    html
+    .find(".counter input")
+    .click((ev) => ev.target.select())
+    .change(this._onCountChange.bind(this));
+
 
     html.find(".item-reset").click((ev) => {
       this._resetCounters(ev);
@@ -264,6 +266,38 @@ export class LmMonsterSheet extends ActorSheet {
 
     // Generate Saves
     html.find('.monsterSaves').click(() => this.generateSave());
+
+    // Toggle magicUser
+    html.find(".magicUser").click(async (ev) => {
+    const magicValue = this.actor.data.data.magicUser;
+    this.actor.update({ "data.magicUser": !magicValue });
+    this._render();
+    });
+    // Toggle damage
+    html.find(".item-dmg").click(async (ev) => {
+      const li = $(ev.currentTarget).parents(".item");
+      const weapons = this.actor.getOwnedItem(li.data("itemId"));
+      await this.actor.updateOwnedItem({
+        _id: li.data("itemId"),
+        data: {
+          isDamage2: !weapons.data.data.isDamage2,
+        },
+      });
+    });
+    // inventory weapon rolls
+    html.find('.dmg.roll').click(ev =>
+      {
+        const li = $(ev.currentTarget).parents(".item");
+        const item = this.actor.getOwnedItem(li.data("itemId"));
+        this._onDmgRoll(item, ev.currentTarget);
+      });
+    html.find('.item-image.weapon').click(ev =>
+      {
+        const li = $(ev.currentTarget).parents(".item");
+        const item = this.actor.getOwnedItem(li.data("itemId"));
+        this._onWeaponRoll(item, ev.currentTarget);
+    });
+    
   }
 
 
@@ -458,5 +492,160 @@ export class LmMonsterSheet extends ActorSheet {
         }).render(true);
     });
   }
-
+  _appearingW(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let data = this.actor.data.data;
+    const wilderness = data.appearing.w;
+    let rollParts = "";
+    let label = "en Exterior";
+    rollParts = new Roll(wilderness).roll();
+    let result = rollParts;
+    // Roll and return
+    result.toMessage({
+      parts: rollParts,
+      skipDialog: true,
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      flavor: game.i18n.format("LM.roll.appearing") + label,
+      title: game.i18n.format("LM.roll.appearing") + label,
+    });
+  }
+  _appearingD(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let data = this.actor.data.data;
+    const dungeon = data.appearing.d;
+    let rollParts = "";
+    let label = "en Laberinto";
+    rollParts = new Roll(dungeon).roll();
+    let result = rollParts;
+    // Roll and return
+    result.toMessage({
+      parts: rollParts,
+      skipDialog: true,
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      flavor: game.i18n.format("LM.roll.appearing") + label,
+      title: game.i18n.format("LM.roll.appearing") + label,
+    });
+  }
+  _onSavingThrow(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    if (! dataset.save) return;
+    let bonus = 0;
+    let data = this.actor.data.data;
+    let result = new Roll(bonus ? `d20+${bonus}` : "d20", data).roll();
+    let success = (result.total >= data.saves[dataset.save].value ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
+    let saveName = game.i18n.localize(`${CONFIG.LM.savesCheck[dataset.save]}`);
+    result.toMessage({
+      speaker: ChatMessage.getSpeaker({actor: this.actor}),
+      flavor: `${saveName} >= ${data.saves[dataset.save].value} ${success} `
+    });
+  }
+  _onWeaponRoll(item) {
+    
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let data = this.actor.data.data;
+    const meleemod = data.thac0.mod.melee;
+    const missilemod = data.thac0.mod.missile;
+    const thac0 = data.thac0.value;
+    item.update({
+      data: { counter: { value: item.data.data.counter.value - 1 } },
+    });
+    return new Promise(resolve => {
+      new Dialog({
+         title: game.i18n.localize('LM.attack'),
+         content: `<form>
+         <div class="form-group">
+           <label>Modificador ataque</label>
+           <input type='text' name='inputField'></input>
+         </div>
+        </form>`,
+         buttons: {
+            melee: {
+              icon: '<i class="fas fa-dice-d20"></i>',
+              label: game.i18n.localize('LM.melee.attack'),
+              callback: (html) => {
+                let attackmod = html.find('input[name=\'inputField\']');
+                let mod = "+" + attackmod.val();
+                let melee = "+" + meleemod;
+                let result = new Roll("d20" + mod + melee, data).roll();
+                let hitac = thac0 - result.total;
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: item.name + `Ataque de melé da a CA:` + hitac,
+                });
+             }
+            },
+            missile: {
+              icon: '<i class="fas fa-dice-d20"></i>',
+              label: game.i18n.localize('LM.missile.attack'),
+              callback: (html) => {
+                let attackmod = html.find('input[name=\'inputField\']');
+                let mod = "+" + attackmod.val();
+                let missile = "+" + missilemod
+                let result = new Roll("d20" + mod + missile, data).roll();
+                let hitac = thac0 - result.total;
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: item.name + `Ataque de distancia da a CA:` + hitac,
+                });
+              }
+            }
+         },
+         default: "roll",
+         close: () => resolve(null)
+        }).render(true);
+    });
+    
+  }
+  _onDmgRoll(item, eventTarget)
+  {
+    let data = this.actor.data.data;
+    let text = game.i18n.localize('LM.items.damage2');
+    if(eventTarget.title === text)
+    {
+      let r = new Roll(item.data.data.damage2);
+      r.roll();
+      let messageHeader = "<b>" + item.name + `</b><b class="failed"> daño</b>`;
+      r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
+    }
+    else {
+      let r = new Roll(item.data.data.damage);
+      r.roll();
+      let messageHeader = "<b>" + item.name + `</b><b class="failed"> daño</b>`;
+      r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
+    }
+  }
+  async _resetCounters(event) {
+    const weapons = this.actor.data.items.filter(i => i.type === 'weapon');
+    for (let wp of weapons) {
+      const item = this.actor.getOwnedItem(wp._id);
+      await item.update({
+        data: {
+          counter: {
+            value: parseInt(wp.data.counter.max),
+          },
+        },
+      });
+    }
+  }
+  async _onCountChange(event) {
+    event.preventDefault();
+    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const item = this.actor.getOwnedItem(itemId);
+    if (event.target.dataset.field == "value") {
+      return item.update({
+        "data.counter.value": parseInt(event.target.value),
+      });
+    } else if (event.target.dataset.field == "max") {
+      return item.update({
+        "data.counter.max": parseInt(event.target.value),
+      });
+    }
+  }
 }

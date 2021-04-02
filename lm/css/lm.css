@@ -1124,17 +1124,17 @@
 
 /*  Spells tab  */
 
-.lm.sheet.actor .sheet-body .tab.spells .item-titles {
+.lm .sheet-body .tab.spells .item-titles {
   background: var(--color-foreground);
   color: white;
   font-size: 12px;
   margin-bottom: 1px;
   height: 20px;
 }
-.lm.sheet.actor .sheet-body .tab.spells .item-titles span {
+.lm .sheet-body .tab.spells .item-titles span {
   text-align: center;
 }
-.lm.sheet.actor .sheet-body .tab.spells .item-titles .spellLevel {
+.lm .sheet-body .tab.spells .item-titles .spellLevel {
   background: var(--color-background);
   font-size: 12px;
   margin-left: 2px;
@@ -1143,33 +1143,33 @@
   border: solid 1px;
   text-align: center;
 }
-.lm.sheet.actor .sheet-body .tab.spells .item-titles .item-controls {
+.lm .sheet-body .tab.spells .item-titles .item-controls {
   text-align: right;
 }
-.lm.sheet.actor .sheet-body .tab.spells .item-titles .item-caret {
+.lm .sheet-body .tab.spells .item-titles .item-caret {
   flex: 0 20px;
 }
-.lm.sheet.actor .sheet-body .tab.spells .item-titles .item-name {
+.lm .sheet-body .tab.spells .item-titles .item-name {
   align-items: left;
   flex: 0 90px;
 }
-.lm.sheet.actor .sheet-body .tab.spells .item-titles .field-short {
+.lm .sheet-body .tab.spells .item-titles .field-short {
   text-align: right;
 }
-.lm.sheet.actor .sheet-body .tab.spells .item-list {
+.lm .sheet-body .tab.spells .item-list {
   list-style: none;
   font-size: 12px;
   padding: 0;
 }
-.lm.sheet.actor .sheet-body .tab.spells .item-list .item-entry .item .item-name {
+.lm .sheet-body .tab.spells .item-list .item-entry .item .item-name {
   text-align: left;
 }
-.lm.sheet.actor .sheet-body .tab.spells .item-list .item-entry .item .field-long {
+.lm .sheet-body .tab.spells .item-list .item-entry .item .field-long {
   flex: 0 0 60px;
   padding-top: 6px;
   text-align: center;
 }
-.lm.sheet.actor .sheet-body .tab.spells .item-list .item-entry .item .item-controls {
+.lm .sheet-body .tab.spells .item-list .item-entry .item .item-controls {
   text-align: right;
   padding-top: 6px;
 }
@@ -1432,6 +1432,7 @@
 /* Monster sheet */
 
 .lm.sheet.monster .sheet-header {
+  flex: 0 0 200px;
   border: none;
   box-shadow: 0 0 6px var(--color-border);
   line-height: 5px;
