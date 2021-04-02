@@ -9,7 +9,7 @@ export class LmMonsterSheet extends ActorSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["lm", "sheet", "monster"],
       template: "systems/lm/templates/actor/monster-sheet.html",
-      width: 460,
+      width: 490,
       height: 580,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
     });
@@ -185,6 +185,11 @@ export class LmMonsterSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
+    function itemForClickEvent(clickEvent) {
+      return $(clickEvent.currentTarget).parents(".item");
+    }
+
+
     // Roll monster hp
     html.find(".hd-roll").click((ev) => {
       let actorObject = this.actor;
@@ -227,16 +232,38 @@ export class LmMonsterSheet extends ActorSheet {
       const itemData = createItem(type);
       return this.actor.createOwnedItem(itemData, {});
     });
+    // Input monster attacks
     html
     .find(".counter input")
     .click((ev) => ev.target.select())
     .change(this._onCountChange.bind(this));
-
-
     html.find(".item-reset").click((ev) => {
       this._resetCounters(ev);
     });
-
+    // Add 1 to Quantity
+    html.find('.plus').click(clickEvent => {
+    const shownItem = itemForClickEvent(clickEvent);
+    const item = duplicate(this.actor.getEmbeddedEntity("OwnedItem", shownItem.data("itemId")));
+    let amount = (event.ctrlKey || event.metaKey) ? 10 : 1;
+    item.data.quantity = item.data.quantity + amount;
+    this.actor.updateEmbeddedEntity('OwnedItem', item);
+    });
+    // Subtract 1 from Quantity
+    html.find('.minus').click(clickEvent => {
+    const shownItem = itemForClickEvent(clickEvent);
+    const item = duplicate(this.actor.getEmbeddedEntity("OwnedItem", shownItem.data("itemId")));
+    let amount = (event.ctrlKey || event.metaKey) ? 10 : 1;
+    item.data.quantity = item.data.quantity - amount;
+    this.actor.updateEmbeddedEntity('OwnedItem', item);
+    });
+    
+    // Show Inventory Item in chat
+    html.find(".item-show").click(async (ev) => {
+    const li = $(ev.currentTarget).parents(".item");
+    const item = this.actor.getOwnedItem(li.data("itemId"));
+    item.show();
+    });
+    
     // Update Inventory Item
     html.find('.item-edit').click(ev => {
     const li = $(ev.currentTarget).parents(".item");
@@ -290,12 +317,25 @@ export class LmMonsterSheet extends ActorSheet {
         const li = $(ev.currentTarget).parents(".item");
         const item = this.actor.getOwnedItem(li.data("itemId"));
         this._onDmgRoll(item, ev.currentTarget);
-      });
+    });
     html.find('.item-image.weapon').click(ev =>
       {
         const li = $(ev.currentTarget).parents(".item");
         const item = this.actor.getOwnedItem(li.data("itemId"));
         this._onWeaponRoll(item, ev.currentTarget);
+    });
+    // skill roll
+    html.find('.item-image.skill').click(ev =>
+    {
+        const li = $(ev.currentTarget).parents(".item");
+        const item = this.actor.getOwnedItem(li.data("itemId"));
+        this._onSkillRoll(item, ev.currentTarget);
+    });
+    // cast spell
+    html.find(".item-image.castSpell").click(async (ev) => {
+        const li = $(ev.currentTarget).parents(".item");
+        const item = this.actor.getOwnedItem(li.data("itemId"));
+        item.spendSpell();
     });
     
   }
@@ -621,6 +661,27 @@ export class LmMonsterSheet extends ActorSheet {
       r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
     }
   }
+
+  _onSkillRoll(item, eventTarget)
+  {
+    let data = this.actor.data.data;
+    let type = item.data.data.rollType;
+    let objetive = item.data.data.rollTarget
+    let text = game.i18n.localize('LM.items.roll');
+    let success = "";
+    let r = new Roll(item.data.data.roll);
+    r.roll();
+    if ( type == "above"){
+      success = ( r.total  >=  objetive ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
+    } else if ( type == "below") {
+      success = ( r.total  <=  objetive ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
+    } else {
+      success = ( r.total  ==  objetive ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
+    }
+    let messageHeader = text + item.name +"(" + objetive + "):" + success;
+    r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
+  }
+
   async _resetCounters(event) {
     const weapons = this.actor.data.items.filter(i => i.type === 'weapon');
     for (let wp of weapons) {

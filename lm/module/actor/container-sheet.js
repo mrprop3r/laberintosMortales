@@ -92,6 +92,26 @@ export class LmContainerSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
+    function itemForClickEvent(clickEvent) {
+      return $(clickEvent.currentTarget).parents(".item");
+    }
+    // Add 1 to Quantity
+    html.find('.plus').click(clickEvent => {
+      const shownItem = itemForClickEvent(clickEvent);
+      const item = duplicate(this.actor.getEmbeddedEntity("OwnedItem", shownItem.data("itemId")));
+      let amount = (event.ctrlKey || event.metaKey) ? 10 : 1;
+      item.data.quantity = item.data.quantity + amount;
+      this.actor.updateEmbeddedEntity('OwnedItem', item);
+    });
+    // Subtract 1 from Quantity
+    html.find('.minus').click(clickEvent => {
+      const shownItem = itemForClickEvent(clickEvent);
+      const item = duplicate(this.actor.getEmbeddedEntity("OwnedItem", shownItem.data("itemId")));
+      let amount = (event.ctrlKey || event.metaKey) ? 10 : 1;
+      item.data.quantity = item.data.quantity - amount;
+      this.actor.updateEmbeddedEntity('OwnedItem', item);
+    });
+
     // Add Inventory Item
     html.find('.item-create').click(this._onItemCreate.bind(this));
 

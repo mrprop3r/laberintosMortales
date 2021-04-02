@@ -1647,7 +1647,7 @@
   margin: 2px;
 }
 .lm.sheet.monster .sheet-header .header-fields .monster-data ul li .double a {
- font-size: 12px;
+  font-size: 12px;
 }
 .lm.sheet.monster .sheet-header .header-fields .monster-data ul li input.header-input {
   flex: 0 0 30px;
@@ -1667,15 +1667,19 @@
   margin: 2px;
 }
 .lm.sheet.monster .sheet-header .header-fields .monster-data ul li .appearing-check {
+  position: relative;
   font-size: 10px;
-  padding-top: 7px;
+  top: 10px;
 }
 .lm.sheet.monster .sheet-header .header-fields .monster-data ul li input.header-input2 {
+  flex: 0 0 32px;
   font-size: 10px;
-  flex: 0 0 35px;
   border-bottom: solid 2px;
   text-align: center;
   padding-top: 4px;
+}
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.encounter a {
+  flex: 0 0 10px;
 }
 .lm.sheet.monster .sheet-header .header-fields .monster-data ul li input.header-inputl {
   flex: 0 0 60px;
@@ -1751,10 +1755,21 @@
   font-weight: bold;
 }
 .lm.sheet.monster .sheet-body .item .item-controls {
-  flex: 0 0 95px;
+  flex: 0 0 100px;
   text-align: right;
   margin-right: 2px;
   padding-top: 6px;
+}
+.lm.sheet.monster .sheet-body .item .item-controls .item-dice {
+  margin-left: 2px;
+  font-size: 11px;
+  font-weight: bold;
+  background: var(--color-foreground);
+  border-radius: 20%;
+  text-align: center;
+  padding-top: 5px;
+  color: white;
+  flex: 0 0 30px;
 }
 .lm.sheet.monster .sheet-body .item .field-short {
   flex: 0 0 50px;

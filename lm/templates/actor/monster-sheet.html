@@ -70,15 +70,15 @@
                 </li>
               </ul>
               <ul >
-                <li class="flexrow">
+                <li class="encounter flexrow">
                   <label class= "data">{{localize 'LM.monster.appearing'}}
                   </label>
-                  <input class="header-input2"  name="data.appearing.d" type="text" value="{{data.appearing.d}}"/>
-                  <a class="appearing-check D" title="{{localize 'LM.monster.appearingLong'}}">
-                  <i class="fas fa-dice"></i></a>
-                  <input class="header-input2"  name="data.appearing.w" type="text" value="{{data.appearing.w}}"/>
-                  <a class="appearing-check W" title="{{localize 'LM.monster.appearingLong'}}">
-                  <i class="fas fa-dice"></i></a>
+                    <input class="header-input2"  name="data.appearing.d" type="text" value="{{data.appearing.d}}"/>
+                    <a class="appearing-check D" title="{{localize 'LM.monster.appearingLong'}}">
+                    <i class="fas fa-dice"></i></a>
+                    <input class="header-input2"  name="data.appearing.w" type="text" value="{{data.appearing.w}}"/>
+                    <a class="appearing-check W" title="{{localize 'LM.monster.appearingLong'}}">
+                    <i class="fas fa-dice"></i></a>
                 </li>
                 <li class="flexrow">
                   <label class= "data">{{localize 'LM.monster.xp'}}
@@ -284,7 +284,15 @@
         {{!-- Owned Spells Tab --}}
         {{#if data.magicUser}}
         <div class="tab spells" data-group="primary" data-tab="spells">
-          {{#each actor.spells as |spellGroup lvl|}}
+          <div class="item-titles flexrow">
+            <div class="item-name">{{localize "LM.category.spells"}}</div>
+            <div class="item-controls">
+              <a class="item-control item-reset" title='{{localize "LM.spells.resetSlots"}}'><i class="fas fa-sync"></i></a>
+              <a class="item-control item-create" data-type="spell" title="{{localize 'LM.Add'}}"><i
+                  class="fa fa-plus"></i></a>
+            </div>
+          </div>
+            {{#each actor.spells as |spellGroup lvl|}}
           <div>
             <li class="item-titles flexrow" style="line-height:15px">
               <div class="item-caret"><i class="fas fa-caret-down"></i> </div>

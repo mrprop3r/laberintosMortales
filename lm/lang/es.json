@@ -340,5 +340,9 @@
     "LM.monster.appearingLong": "Número que aparecen",
     "LM.monster.xp": "Px",
     "LM.monsterSaves": "Salvación monstruo",
-    "LM.generateSaves": "Generar salvación"
+    "LM.generateSaves": "Generar salvación",
+
+    "LM.dialog.itemName": "Nombre de objeto",
+    "LM.dialog.itemType": "Clase de objeto",
+    "LM.dialog.createItem": "Crear objeto"
 }
