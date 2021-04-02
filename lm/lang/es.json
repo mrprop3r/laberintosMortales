@@ -337,5 +337,7 @@
     "LM.monster.mov": "Movimiento",
     "LM.monster.appearing": "NºA",
     "LM.monster.appearingLong": "Número que aparecen",
-    "LM.monster.xp": "Px"
+    "LM.monster.xp": "Px",
+    "LM.monsterSaves": "Salvación monstruo",
+    "LM.generateSaves": "Generar salvación"
 }

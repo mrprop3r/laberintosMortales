@@ -23,6 +23,69 @@ export class LmActor extends Actor {
     if (actorData.type === 'container') this._prepareContainerData(actorData);
   }
 
+  generateSave(hd) {
+    let saves = {};
+    for (let i = 0; i <= hd; i++) {
+      let tmp = CONFIG.LM.monster_saves[i];
+      if (tmp) {
+        saves = tmp;
+      }
+    }
+    this.update({
+      "data.saves": {
+        death: {
+          value: saves.d,
+        },
+        wand: {
+          value: saves.w,
+        },
+        paralysis: {
+          value: saves.p,
+        },
+        breath: {
+          value: saves.b,
+        },
+        spell: {
+          value: saves.s,
+        },
+      },
+    });
+  }
+
+  rollHP(options = {}) {
+    let roll = new Roll(this.data.data.hp.hd).roll();
+    return this.update({
+      data: {
+        hp: {
+          max: roll.total,
+          value: roll.total,
+        },
+      },
+    });
+  }
+
+  rollAppearing(options = {}) {
+    let rollParts = "";
+    let label = "";
+    if (options.check == "wilderness") {
+      rollParts = new Roll(this.data.data.appearing.w).roll();
+      label = "(2)";
+    } else {
+      rollParts = new Roll(this.data.data.appearing.d).roll();
+      label = "(1)";
+    }
+    
+    let result = rollParts;
+    // Roll and return
+    result.toMessage({
+      parts: rollParts,
+      skipDialog: true,
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      flavor: game.i18n.format("LM.roll.appearing", { type: label }),
+      title: game.i18n.format("LM.roll.appearing", { type: label }),
+    });
+  }
+
   /**
    * Prepare Character type specific data
    */
@@ -473,6 +536,7 @@ export class LmActor extends Actor {
     // Compute combat movement
     data.movement.encounter = data.movement.base / 3;
 
+    
 
   }
 

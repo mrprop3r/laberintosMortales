@@ -17,6 +17,41 @@ export class LmMonsterSheet extends ActorSheet {
 
   /* -------------------------------------------- */
 
+  /**
+   * Monster creation helpers
+   */
+   async generateSave() {
+    let choices = CONFIG.LM.monster_saves;
+
+    let templateData = { choices: choices },
+      dlg = await renderTemplate(
+        "/systems/lm/templates/dialog/monster-saves.html",
+        templateData
+      );
+    //Create Dialog window
+    new Dialog({
+      title: game.i18n.localize("LM.generateSaves"),
+      content: dlg,
+      buttons: {
+        ok: {
+          label: game.i18n.localize("LM.Ok"),
+          icon: '<i class="fas fa-check"></i>',
+          callback: (html) => {
+            let hd = html.find('input[name="hd"]').val();
+            this.actor.generateSave(hd);
+          },
+        },
+        cancel: {
+          icon: '<i class="fas fa-times"></i>',
+          label: game.i18n.localize("LM.Cancel"),
+        },
+      },
+      default: "ok",
+    }, {
+      width: 250
+    }).render(true);
+  }
+
   /** @override */
   getData() {
     const data = super.getData();
@@ -150,6 +185,22 @@ export class LmMonsterSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
+    // Roll monster hp
+    html.find(".hd-roll").click((ev) => {
+      let actorObject = this.actor;
+      actorObject.rollHP({ event: ev });
+    });
+
+    html.find('.moral-check').click(this._onMoralCheck.bind(this));
+    html.find('.surprise-check').click(this._onSurpriseRoll.bind(this));
+    html.find('.reaction-check').click(this._onReactionRoll.bind(this));
+
+    html.find(".appearing-check").click((ev) => {
+      let actorObject = this.actor;
+      let check = $(ev.currentTarget).closest('.check-field').data('check');
+      actorObject.rollAppearing({ event: event, check: check });
+    });
+
     // Add Inventory Item
     html.find(".item-create").click((event) => {
       event.preventDefault();
@@ -210,6 +261,9 @@ export class LmMonsterSheet extends ActorSheet {
         li.addEventListener("dragstart", handler, false);
       });
     }
+
+    // Generate Saves
+    html.find('.monsterSaves').click(() => this.generateSave());
   }
 
 
@@ -231,6 +285,178 @@ export class LmMonsterSheet extends ActorSheet {
         flavor: label
       });
     }
+  }
+
+  _onMoralCheck(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+
+    let data = this.actor.data.data;
+    let result = new Roll("2d6", data).roll();
+    let needed = this.actor.data.data.retainer.moral;
+    let flavor = (result.total <= needed ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
+    let text = game.i18n.localize('LM.retainer.moralcheck') + ": ";
+    result.toMessage({
+      speaker: ChatMessage.getSpeaker({actor: this.actor},{text : text}),
+      flavor: text + flavor,
+    }, {rollMode: DICE_ROLL_MODES.BLIND});
+  }
+
+  _onSurpriseRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let data = this.actor.data.data;
+    const surpriseMod = data.surprise.mod;
+    const surprise = data.surprise.value;
+    return new Promise(resolve => {
+      new Dialog({
+         title: game.i18n.localize('LM.surprisename'),
+         content: `<form>
+         <div class="form-group">
+           <label>Modificador sorpresa</label>
+           <input type='text' name='inputField'></input>
+         </div>
+        </form>`,
+         buttons: {
+            normal: {
+              icon: '<i class="fas fa-dice-d6"></i>',
+              label: game.i18n.localize('LM.roll.normal'),
+              callback: (html) => {
+                let surpriseMod2 = html.find('input[name=\'inputField\']');
+                let mod2 = "+" + surpriseMod2.val();
+                let mod = "+" + surpriseMod;
+                let result = new Roll("d6" + mod + mod2, data).roll();
+                let surprised = (result.total <= surprise ? '<span class="failed">¡Sorprendido!</span> ' : '<span class="success">No sorprendido</span> ');
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: surprised,
+                });
+             }
+            },
+            disadvantage: {
+              icon: '<i class="fas fa-dice"></i>',
+              label: game.i18n.localize('LM.roll.disadvantage'),
+              callback: (html) => {
+                let surpriseMod2 = html.find('input[name=\'inputField\']');
+                let mod2 = "+" + surpriseMod2.val();
+                let mod = "+" + surpriseMod;
+                let result = new Roll("2d6dh" + mod + mod2, data).roll();
+                let surprised = (result.total <= surprise ? '<span class="failed">¡Sorprendido!</span> ' : '<span class="success">No sorprendido</span> ');
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: surprised,
+                });
+              }
+            }
+         },
+         default: "roll",
+         close: () => resolve(null)
+        }).render(true);
+    });
+  }
+
+  _onReactionRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let data = this.actor.data.data;
+    return new Promise(resolve => {
+      new Dialog({
+         title: game.i18n.localize('LM.reactionRoll'),
+         content: `<form>
+         <div class="form-group">
+           <label>Modificador reacción</label>
+           <input type='text' name='inputField'></input>
+         </div>
+        </form>`,
+         buttons: {
+            contract: {
+              icon: '<i class="fas fa-dice"></i>',
+              label: game.i18n.localize('LM.contract'),
+              callback: (html) => {
+                let reactionMod2 = html.find('input[name=\'inputField\']');
+                let mod2 = "+" + reactionMod2.val();
+                let result = new Roll("2d6" + mod2, data).roll();
+                let reaction = "";
+                let control = result.total;
+                if (control <= 2) {
+                  control = 2;
+                }
+                switch (control) {
+                  case 2:
+                    reaction = game.i18n.localize('LM.refusedPlus');
+                    break;
+                  case 3:
+                  case 4:
+                  case 5:
+                    reaction = game.i18n.localize('LM.refused');
+                    break;
+                  case 6:
+                  case 7:
+                  case 8:
+                    reaction = game.i18n.localize('LM.undecided');
+                    break;
+                  case 9:
+                  case 10:
+                  case 11:
+                    reaction = game.i18n.localize('LM.accepted');
+                    break;
+                  default:
+                    reaction = game.i18n.localize('LM.acceptedPlus');
+                }
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: reaction,
+                });
+             }
+            },
+            reaction: {
+              icon: '<i class="fas fa-dice"></i>',
+              label: game.i18n.localize('LM.reaction'),
+              callback: (html) => {
+                let reactionMod2 = html.find('input[name=\'inputField\']');
+                let mod2 = "+" + reactionMod2.val();
+                let result = new Roll("2d6" + mod2, data).roll();
+                let reaction = "";
+                let control = result.total;
+                if (control <= 2) {
+                  control = 2;
+                }
+                switch (control) {
+                  case 2:
+                    reaction = game.i18n.localize('LM.hostilePlus');
+                    break;
+                  case 3:
+                  case 4:
+                  case 5:
+                    reaction = game.i18n.localize('LM.hostile');
+                    break;
+                  case 6:
+                  case 7:
+                  case 8:
+                    reaction = game.i18n.localize('LM.undecidedNormal');
+                    break;
+                  case 9:
+                  case 10:
+                  case 11:
+                    reaction = game.i18n.localize('LM.indiferent');
+                    break;
+                  default:
+                    reaction = game.i18n.localize('LM.friendly');
+                }
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: reaction,
+                });
+              }
+            }
+         },
+         default: "roll",
+         close: () => resolve(null)
+        }).render(true);
+    });
   }
 
 }

@@ -1666,8 +1666,15 @@
   margin: 2px;
 }
 .lm.sheet.monster .sheet-header .header-fields .monster-data ul li .appearing-check {
-  font-size: 12px;
+  font-size: 10px;
   padding-top: 7px;
+}
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li input.header-input2 {
+  font-size: 10px;
+  flex: 0 0 35px;
+  border-bottom: solid 2px;
+  text-align: center;
+  padding-top: 4px;
 }
 .lm.sheet.monster .sheet-header .header-fields .monster-data ul li input.header-inputl {
   flex: 0 0 60px;
@@ -1731,11 +1738,28 @@
 .lm.sheet.monster .sheet-body .item .item-image {
   flex: 0 0 24px;
 }
+.lm.sheet.monster .sheet-body .item .item-image img {
+  border: none;
+}
 .lm.sheet.monster .sheet-body .item .item-name {
   text-align: left;
+  font-size: 13px;
+  font-weight: bold;
+}
+.lm.sheet.monster .sheet-body .item .item-name h4 {
+  font-weight: bold;
 }
 .lm.sheet.monster .sheet-body .item .item-controls {
+  flex: 0 0 95px;
   text-align: right;
   margin-right: 2px;
+  padding-top: 6px;
 }
+.lm.sheet.monster .sheet-body .item .field-short {
+  flex: 0 0 50px;
+  padding-top: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
 
