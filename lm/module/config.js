@@ -144,7 +144,7 @@ export const LM = {
                 yes: false
             },
             luck: false,
-            title: [ "Recitador", "Versificador", "Archivista", "Analista", "Cronista", "Panegirista", "Poeta", "Rapsodista", "Bardo", "Bardo", "Bardo", "Bardo", "Bardo", "Bardo", "Maestro Bardo" ],
+            title: [ "Aspirante","Recitador", "Versificador", "Archivista", "Analista", "Cronista", "Panegirista", "Poeta", "Rapsodista", "Bardo", "Bardo", "Bardo", "Bardo", "Bardo","Maestro Bardo" ],
             thac0: [ 20, 19, 19, 18, 18, 17, 17, 16, 16, 15, 15, 14, 14, 13, 13 ],
             hitbonusp: {
                 yes: false,
@@ -193,7 +193,7 @@ export const LM = {
                 yes: false
             },
             luck: false,
-            title: [ "Iniciada-filo", "Hija-filo", "Cantarina-filo", "Tejedora-filo", "Hermana-filo", "Adepta-filo", "Danzarina-filo", "Sacerdotisa-filo", "Dama-filo", "Dama-filo", "Dama-filo", "Dama-filo", "Dama-filo", "Dama-filo", "Dama-todo filo" ],
+            title: [ "Aspirante","Iniciada-filo", "Hija-filo", "Cantarina-filo", "Tejedora-filo", "Hermana-filo", "Adepta-filo", "Danzarina-filo", "Sacerdotisa-filo", "Dama-filo", "Dama-filo", "Dama-filo", "Dama-filo", "Dama-filo","Dama-todo filo" ],
             thac0: [ 20, 19, 19, 18, 18, 17, 17, 16, 16, 15, 15, 14, 14, 13, 13 ],
             hitbonusp: {
                 yes: false,

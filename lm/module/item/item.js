@@ -21,10 +21,19 @@ export class LmItem extends Item {
                 break;
         case "weapon":
             img = "/systems/lm/assets/default/weapon.png";
-                  break;
+                break;
         case "item":
-              img = "/systems/lm/assets/default/item.png";
-                  break;
+            img = "/systems/lm/assets/default/item.png";
+                break;
+        case "consumable":
+            img = "/systems/lm/assets/default/spiral-bottle.png";
+                break;
+        case "occupation":
+            img = "/systems/lm/assets/default/3d-meeple.png";
+                break;
+        case "container":
+            img = "/systems/lm/assets/default/item.png";
+                break;
         }
     if (!this.data.img) this.data.img = img;
     

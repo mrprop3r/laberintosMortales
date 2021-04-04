@@ -32,7 +32,7 @@ export class LmItemSheet extends ItemSheet {
     const data = super.getData();
     data.config = CONFIG.LM;
 
-    data.containers = { 'Encima': 'in' };
+    data.containers = { 'Encima': 'encima' };
     // Containers are not allowed in other containers.  So if this item is a container,
     // don't show any other containers.
     if (this.actor && this.item.data.type !== 'container') {
@@ -40,7 +40,7 @@ export class LmItemSheet extends ItemSheet {
         if (it.type === 'container') {
           data.containers[it.name] = it.name;
         }
-        if (this.actor && this.item.data.carried !== 'in') {
+        if (this.actor && this.item.data.carried !== 'encima') {
           this.object.update({data: {conta: this.object.data.data.carried}});
         }
       }); 
@@ -97,7 +97,30 @@ export class LmItemSheet extends ItemSheet {
       this.object.update({data: {slow: !this.object.data.data.slow}});
     });
     super.activateListeners(html);
+
+    // Rolling occupation initial money
+    html.find('.roll-item').click(this._onRollItem.bind(this));
   }
 
+  /**
+  * Handle clickable rolls.
+  * @param {Event} event   The originating click event
+  * @private
+  */
+
+  _onRollItem(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+      const dataset = element.dataset;
+  
+    if (dataset.roll) {
+      let roll = new Roll(dataset.roll, this.item.data.data);
+      let label = dataset.label ? `Tirando ${dataset.label}` : '';
+      roll.roll().toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: label
+      });
+      }
+  }
   
 }

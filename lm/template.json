@@ -7,7 +7,8 @@
           "enabled": false,
           "occupation": "",
           "moral": 0,
-          "wage": ""
+          "wage": "",
+          "pxWage": 100
         },
         "magicUser": false,
         "canSpell": {
@@ -189,7 +190,28 @@
     },
     "container": {
       "templates": ["base"],
-      "biography": ""
+      "biography": "",
+      "gm": false,
+      "group": true,
+      "shop": false,
+      "object": false,
+      "members": [],
+      "marketclass": "VI",
+      "price": {
+        "1mo": "10",
+        "10mo": "1",
+        "100mo": "10%",
+        "1000mo": "5%",
+        "10000mo": "1%",
+        "mas10000": "NA"
+      },
+      "travel": {
+        "guide": [],
+        "scout": [],
+        "foraging": [],
+        "camp": [],
+        "explore": []
+      }
     }
   },
   "Item": {
@@ -205,7 +227,7 @@
             "fast": false,
             "treasure": false,
             "identified": true,
-            "carried": "in",
+            "carried": "encima",
             "conta": "0",
             "hands": 0
         }

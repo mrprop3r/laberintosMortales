@@ -75,6 +75,7 @@
     
     "LM.retainer.occupation": "Ocupación",
     "LM.retainer.coins": "Dinero Inicial",
+    "LM.retainer.init": "dinero inicial de ocupación",
     "LM.retainer.wage": "Salario",
     "LM.retainer.moral": "Moral",
     "LM.retainer.moralcheck": "Prueba de Moral",
@@ -320,6 +321,7 @@
     "LM.items.rollType": "Tipo",
     "LM.items.objective": "Objetivo",
     "LM.items.blindRoll": "Tirada ciega",
+    "LM.items.resetAttacks": "Reiniciar ataques",
 
     "LM.spells.resetSlots": "Reiniciar conjuros",
     "LM.spells.level": "Nivel",
@@ -341,6 +343,8 @@
     "LM.monster.xp": "Px",
     "LM.monsterSaves": "Salvación monstruo",
     "LM.generateSaves": "Generar salvación",
+    "LM.monster.treasureTable": "Arrastra una tabla de tesoro de monstruo para tirar",
+    "LM.monster.treasure": "Tabla de tesoro",
 
     "LM.dialog.itemName": "Nombre de objeto",
     "LM.dialog.itemType": "Clase de objeto",

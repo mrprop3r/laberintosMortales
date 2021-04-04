@@ -1116,6 +1116,10 @@
   padding-top: 6px;
   text-align: center;
 }
+.lm.sheet.actor .sheet-body .tab.items .item-list .item .field-short.black {
+  color:rgb(102, 98, 98);
+  font-weight: bolder;
+}
 .lm.sheet.actor .sheet-body .tab.items .item-list .item .item-controls {
   text-align: right;
   padding-top: 6px;
@@ -1690,9 +1694,36 @@
 }
 .lm.sheet.monster .sheet-header .header-fields .monster-data ul li .magicUser {
   font-size: 12px;
-  padding-top: 7px;
+  margin-top: 10px;
+  margin-left: 4px;
+}
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.treasure-table {
+  margin-top: 1px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.treasure-table .editor {
+  height: 24px;
+}
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.treasure-table .editor .editor-edit {
+  font-size: xx-small;
+}
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.treasure-table .editor .tox .tox-editor-header {
+  font-size: xx-small; 
+  position: relative;
+  left: 90px;
+  width: 40px;
+}
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.treasure-table .editor .tox .tox-sidebar-wrap {
+  font-size: xx-small;
+  position: relative; 
+  top: 5px;
 }
 
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.treasure-table .editor .tox .tox-tbtn {
+  height: 24px;
+}
 
 /*  monster tabs  */
 
@@ -1776,6 +1807,12 @@
   padding-top: 5px;
   text-align: center;
   font-weight: bold;
+}
+.lm.sheet.monster .sheet-body .tab.spells .item-list .item-name {
+  flex: 0 0 190px;
+}
+.lm.sheet.monster .sheet-body .tab.spells .item-list .item-controls {
+  flex: 0 0 185px;
 }
 
 

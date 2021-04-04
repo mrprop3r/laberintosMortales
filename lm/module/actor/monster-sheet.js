@@ -61,8 +61,17 @@ export class LmMonsterSheet extends ActorSheet {
     if (this.actor.data.type == 'monster') {
       this._prepareMonsterItems(data);
     }
+    data.data.treasure.link = TextEditor.enrichHTML(data.data.treasure.table);
 
     return data;
+  }
+
+  activateEditor(target, editorOptions, initialContent) {
+    // remove some controls to the editor as the space is lacking
+    if (target == "data.treasure.table") {
+      editorOptions.toolbar = "save";
+    }
+    super.activateEditor(target, editorOptions, initialContent);
   }
 
   /**
@@ -178,6 +187,21 @@ export class LmMonsterSheet extends ActorSheet {
     });
   }
 
+  async _resetSpells(event) {
+    let spells = $(event.currentTarget)
+      .closest(".tab.spells")
+      .find(".item");
+    spells.each((_, el) => {
+      let itemId = el.dataset.itemId;
+      const item = this.actor.getOwnedItem(itemId);
+      item.update({
+        _id: item.id,
+        "data.cast": 0,
+      });
+    });
+  }
+
+
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
@@ -209,28 +233,28 @@ export class LmMonsterSheet extends ActorSheet {
       const header = event.currentTarget;
       const type = header.dataset.type;
 
-      // item creation helper func
-      let createItem = function (type, name = `New ${type.capitalize()}`) {
-        const itemData = {
-          name: name ? name : `New ${type.capitalize()}`,
-          type: type,
-          data: duplicate(header.dataset),
-        };
-        delete itemData.data["type"];
-        return itemData;
+    // item creation helper func
+    let createItem = function (type, name = `New ${type.capitalize()}`) {
+      const itemData = {
+      name: name ? name : `New ${type.capitalize()}`,
+      type: type,
+      data: duplicate(header.dataset),
       };
+      delete itemData.data["type"];
+      return itemData;
+    };
 
-      // Getting back to main logic
-      if (type == "choice") {
-        const choices = header.dataset.choices.split(",");
-        this._chooseItemType(choices).then((dialogInput) => {
-          const itemData = createItem(dialogInput.type, dialogInput.name);
-          this.actor.createOwnedItem(itemData, {});
-        });
-        return;
-      }
-      const itemData = createItem(type);
-      return this.actor.createOwnedItem(itemData, {});
+    // Getting back to main logic
+    if (type == "choice") {
+    const choices = header.dataset.choices.split(",");
+    this._chooseItemType(choices).then((dialogInput) => {
+    const itemData = createItem(dialogInput.type, dialogInput.name);
+    this.actor.createOwnedItem(itemData, {});
+    });
+    return;
+    }
+    const itemData = createItem(type);
+    return this.actor.createOwnedItem(itemData, {});
     });
     // Input monster attacks
     html
@@ -262,6 +286,28 @@ export class LmMonsterSheet extends ActorSheet {
     const li = $(ev.currentTarget).parents(".item");
     const item = this.actor.getOwnedItem(li.data("itemId"));
     item.show();
+    });
+    
+    // Reset spells
+    html.find(".spells .item-reset").click((ev) => {
+    this._resetSpells(ev);
+    });
+    // Add 1 to memorized
+    html.find('.plusm').click(clickEvent => {
+    const shownItem = itemForClickEvent(clickEvent);
+    const item = duplicate(this.actor.getEmbeddedEntity("OwnedItem", shownItem.data("itemId")));
+    let amount = (event.ctrlKey || event.metaKey) ? 10 : 1;
+    item.data.memorized = item.data.memorized + amount;
+    this.actor.updateEmbeddedEntity('OwnedItem', item);
+    });
+        
+    // Subtract 1 to memorized
+    html.find('.minusm').click(clickEvent => {
+    const shownItem = itemForClickEvent(clickEvent);
+    const item = duplicate(this.actor.getEmbeddedEntity("OwnedItem", shownItem.data("itemId")));
+    let amount = (event.ctrlKey || event.metaKey) ? 10 : 1;
+    item.data.memorized = item.data.memorized - amount;
+    this.actor.updateEmbeddedEntity('OwnedItem', item);
     });
     
     // Update Inventory Item
