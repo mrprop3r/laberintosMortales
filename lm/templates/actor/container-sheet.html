@@ -3,64 +3,95 @@
   <header class="sheet-header">
       <div class="header-fields">
           <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
+          <ul class="summary options flexrow">
+            <label>{{localize "LM.containerClass"}}</label>
+            <li>
+              <a class="item-control gm-toggle {{#unless data.gm}}nogm{{/unless}}" title="{{localize 'LM.gm'}}">
+                <i class="fa fa-user"></i></a>
+            </li>
+            <li>
+              <a class="item-control group-toggle {{#unless data.group}}nogroup{{/unless}}" title="{{localize 'LM.group'}}">
+                <i class="fa fa-users"></i></a>
+            </li>
+            <li>
+              <a class="item-control shop-toggle {{#unless data.shop}}noshop{{/unless}}" title="{{localize 'LM.shop'}}">
+                <i class="fa fa-circle"></i></a>
+            </li>
+            <li>
+              <a class="item-control object-toggle {{#unless data.object}}noobject{{/unless}}" title="{{localize 'LM.object'}}">
+                <i class="fa fa-briefcase"></i></a>
+            </li>
+            <li>
+              <a class="item-control magic-toggle {{#unless data.magicUser}}nomagic{{/unless}}" title="{{localize 'LM.magicUser'}}">
+                <i class="fa fa-star"></i></a>
+            </li>
+          </ul>
+          {{#if data.gm}}
+          <ul class="summary flexrow">
+            <li class="control encounter flexrow">
+              <label class="encounterCheck" title="{{localize 'LM.encounter'}}"><a class="fas
+                fa-dice-d6"></a></label>
+              <label>{{localize 'LM.encounter'}}</label>
+            </li>
+            <li class="control time flexrow">
+              <label class="turnplus" title="{{localize 'LM.items.sum'}}" value="{{data.time.turn}}"><a class="fas
+                fa-plus-circle"></a></label>
+              <span>{{data.time.turn}}</span>
+              <label>{{localize 'LM.turns'}}</label>
+            </li>
+            <li class="control time flexrow">
+              <label class="hourplus" title="{{localize 'LM.items.sum'}}"  value="{{data.time.hour}}"><a class="fas
+                fa-plus-circle"></a></label>
+              <span>{{data.time.hour}}</span>
+              <label>{{localize 'LM.hours'}}</label>
+            </li>
+            <div class="date flexrow">
+                <li class="title">
+                  <label>{{localize 'LM.time'}}</label>
+                </li>
+                <li>
+                  <input type="text" name="data.time.day" value="{{data.time.day}}" />
+                  <label>{{localize 'LM.day'}}</label>
+                </li>
+                <li>
+                  <input type="text" name="data.time.month" value="{{data.time.month}}" />
+                  <label>{{localize 'LM.month'}}</label>
+                </li>
+                <li>
+                  <input type="text" name="data.time.year" value="{{data.time.year}}" />
+                  <label>{{localize 'LM.year'}}</label>
+                </li>
+              </div>
+          </ul>
+          {{/if}}
           {{#if data.shop}}
           <ul class="summary flexrow">
             <li>
               <input type="text" name="data.price.1mo" value="{{data.price.1mo}}" />
-              <label>{{localize 'OSE.details.precio1'}}</label>
+              <label>{{localize 'LM.price1'}}</label>
             </li>
             <li>
               <input type="text" name="data.price.10mo" value="{{data.price.10mo}}" />
-              <label>{{localize 'OSE.details.precio2'}}</label>
+              <label>{{localize 'LM.price2'}}</label>
             </li>
             <li>
               <input type="text" name="data.price.100mo" value="{{data.price.100mo}}" />
-              <label>{{localize 'OSE.details.precio3'}}</label>
+              <label>{{localize 'LM.price3'}}</label>
             </li>
             <li>
               <input type="text" name="data.price.1000mo" value="{{data.price.1000mo}}" />
-              <label>{{localize 'OSE.details.precio4'}}</label>
+              <label>{{localize 'LM.price4'}}</label>
             </li>
             <li>
               <input type="text" name="data.price.10000mo" value="{{data.price.10000mo}}" />
-              <label>{{localize 'OSE.details.precio5'}}</label>
+              <label>{{localize 'LM.price5'}}</label>
             </li>
             <li>
               <input type="text" name="data.price.mas10000" value="{{data.price.mas10000}}" />
-              <label>{{localize 'OSE.details.precio6'}}</label>
+              <label>{{localize 'LM.price6'}}</label>
             </li>
           </ul>
           {{/if}}
-          <ul class="summary flexrow">
-             <div class="small">
-              <li class="{{#if (gt data.description.level.xp data.description.level.xpnext)}}notify{{/if}}">
-                <span class="header-data">{{data.description.level.value}}</span>
-                <label>{{localize 'LM.description.level.value'}}</label>
-              </li>
-            </div>
-            <li>
-              <span class="header-data">{{data.description.title}}</span>
-              <label>{{localize 'LM.description.title'}}</label>
-            </li>
-            <li>
-              <div class="field-long flexrow">
-                <input type="text" name="data.description.level.xp" value="{{data.description.level.xp}}" data-dtype="Number"
-                />
-                <span class="next-level"><a>/{{data.description.level.xpnext}}</a></span>
-                <span class="xp-bonus" title="{{ localize 'LM.level.bonus'}}"><a>{{data.description.level.bonus}}%</a></span>
-              </div> 
-              <label>{{localize 'LM.description.level.xp'}}</label>
-            </li>
-            {{#if data.retainer.enabled }}
-            <li>
-              <input class="header-input" name="data.retainer.moral" type="text" value="{{data.retainer.moral}}"/>
-              <a class="moral-check" title="{{localize 'LM.retainer.moralcheck'}}">
-                <i class="fas fa-dice"></i></a>
-              <label class= "resource-label">{{localize 'LM.retainer.moral'}}
-              </label>
-            </li> 
-            {{/if}}
-          </ul>
       </div>
       <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
   </header>
@@ -69,9 +100,7 @@
   <nav class="sheet-tabs" data-group="primary">
       <a class="item" data-tab="attributes">{{localize 'LM.category.attributes'}}</a>
       <a class="item" data-tab="features">{{localize 'LM.category.features'}}</a>
-      {{#if data.shop }}
       <a class="item" data-tab="items">{{localize 'LM.category.items'}}</a>
-      {{/if}}
       {{#if data.magicUser }}
       <a class="item" data-tab="spells">{{localize 'LM.category.spells'}}</a>
       {{/if}}
@@ -83,9 +112,15 @@
   <hr/>
       {{!-- Attributes Tab --}}
       <div class="tab" data-group="primary" data-tab="attributes">
+        <div class="class flexrow">
+          <div class="headname">{{localize "LM.actor.description"}}</div>
+          {{editor content=data.biography target="data.biography"
+            button=true owner=owner editable=editable}}
+        </div>
       </div>
       {{!-- Owned Features Tab --}}
       <div class="tab features" data-group="primary" data-tab="features">
+      
       </div>
 
       {{!-- Owned Items Tab --}}
@@ -430,71 +465,6 @@
       {{/if}}
       {{!-- Description Tab --}}
       <div class="tab description" data-group="primary" data-tab="description">
-        <div class="class flexrow">
-          <div class="class-description">
-            <h3 class="headabilities">{{ localize "LM.data.class" }}</h3>
-              <div class="class-group">
-              <img class="class-img" title="{{localize 'LM.description.class'}}" src="{{data.class.img}}" alt="{{ localize 'LM.description.class' }}" >
-              <a class="retainer {{# if data.retainer.enabled}}active{{/if}}"
-                title='{{localize "LM.data.retainer"}}'>
-              <i class="far {{#if data.retainer.enabled}}fa-times-circle{{else}}fa-circle{{/if}}"></i>
-              </a>
-              <select name="data.class.value">
-              {{#select data.class.value}}
-              {{#each config.actorClass as |label class|}}
-                <option value="{{class}}">{{localize (concat "LM."label)}}</option>
-              {{/each}}
-              {{/select}}
-              </select>
-              <label>{{localize 'LM.description.aligment'}}:</label>
-              <select name="data.description.aligment">
-                {{#select data.description.aligment}}
-                <option value="legal" selected>{{ localize 'LM.aligment.legal' }}</option>
-                <option value="neutral">{{ localize 'LM.aligment.neutral' }}</option>
-                <option value="chaotic">{{ localize 'LM.aligment.chaotic' }}</option>
-                {{/select}}
-              </select>
-              <div class="class-group">
-                <label>{{localize 'LM.description.level.value'}}:</label>
-                <select name="data.description.level.value">
-                {{#select data.description.level.value}}
-                  <option value="0">{{ localize 'LM.level.name0' }}</option>
-                  <option value="1">{{ localize 'LM.level.name1' }}</option>
-                  <option value="2">{{ localize 'LM.level.name2' }}</option>
-                  <option value="3">{{ localize 'LM.level.name3' }}</option>
-                  <option value="4">{{ localize 'LM.level.name4' }}</option>
-                  <option value="5">{{ localize 'LM.level.name5' }}</option>
-                  <option value="6">{{ localize 'LM.level.name6' }}</option>
-                  <option value="7">{{ localize 'LM.level.name7' }}</option>
-                  <option value="8">{{ localize 'LM.level.name8' }}</option>
-                  <option value="9">{{ localize 'LM.level.name9' }}</option>
-                  <option value="10">{{ localize 'LM.level.name10' }}</option>
-                  <option value="11">{{ localize 'LM.level.name11' }}</option>
-                  <option value="12">{{ localize 'LM.level.name12' }}</option>
-                  <option value="13">{{ localize 'LM.level.name13' }}</option>
-                  <option value="14">{{ localize 'LM.level.name14' }}</option>
-                {{/select}}
-                </select>
-                <label>{{localize 'LM.level.bonus'}}:</label>
-                <input name="data.description.level.bonus" type="text" value="{{data.description.level.bonus}}"
-                  placeholder="0" />
-              </div>
-              </div>
-              <div class="class-group">
-              <label>{{localize 'LM.class.requeriment'}}:</label>
-              <span>{{data.abilities.requeriment}}</span>
-              </div>
-              <div class="class-group">
-              <label>{{localize 'LM.class.principalAbility'}}:</label>
-              <span>{{data.abilities.principal}}</span>
-              </div>
-          </div>
-          <div class="biography">
-            <div class="headname">{{localize "LM.actor.description"}}</div>
-            {{editor content=data.biography target="data.biography"
-              button=true owner=owner editable=editable}}
-            </div>
-          </div>
         <div class="inventory notes">
           <div class="headabilities">{{localize "LM.actor.notes"}}</div>
           <div class="resizable" data-editor-size="140">

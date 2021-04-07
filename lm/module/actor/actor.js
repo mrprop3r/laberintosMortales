@@ -64,7 +64,6 @@ export class LmActor extends Actor {
     });
   }
 
-
   /**
    * Prepare Character type specific data
    */

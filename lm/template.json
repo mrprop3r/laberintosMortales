@@ -191,26 +191,30 @@
     "container": {
       "templates": ["base"],
       "biography": "",
-      "gm": false,
-      "group": true,
+      "notes": "",
+      "gm": true,
+      "group": false,
       "shop": false,
       "object": false,
       "members": [],
-      "marketclass": "VI",
-      "price": {
-        "1mo": "10",
-        "10mo": "1",
-        "100mo": "10%",
-        "1000mo": "5%",
-        "10000mo": "1%",
-        "mas10000": "NA"
+      "market": {
+        "class": "VI"
       },
+      "capacity": 0,
       "travel": {
         "guide": [],
         "scout": [],
         "foraging": [],
         "camp": [],
         "explore": []
+      },
+      "time": {
+        "assault": 1,
+        "turn": 1,
+        "hour": 0,
+        "day": 1,
+        "month": 1,
+        "year": ""
       }
     }
   },

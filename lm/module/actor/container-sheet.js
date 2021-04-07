@@ -95,6 +95,58 @@ export class LmContainerSheet extends ActorSheet {
     function itemForClickEvent(clickEvent) {
       return $(clickEvent.currentTarget).parents(".item");
     }
+
+    // Add turn hour
+    html.find(".turnplus").click(async (ev) => {
+      let newValue = this.actor.data.data.time.turn + 1;
+      if ( newValue == 2) {
+        ui.notifications.error(game.i18n.localize("LM.encounterCheck"));
+      }
+      if ( newValue == 4) {
+        ui.notifications.error(game.i18n.localize("LM.encounterCheck"));
+      }
+      if ( newValue == 6) {
+        ui.notifications.error(game.i18n.localize("LM.encounterCheck"));
+      }
+      if  (newValue == 7) {
+        newValue = 1;
+        ui.notifications.error(game.i18n.localize("LM.torch"));
+        this.actor.update({ 
+          data: {
+            time: {
+              turn: newValue,
+              hour : this.actor.data.data.time.hour + newValue,
+            },
+          },
+        })
+      }
+      this.actor.update({ 
+          data: {
+            time: {
+              turn: newValue,
+            },
+          },
+        })
+      this._render();
+    });
+
+    html.find(".hourplus").click(async (ev) => {
+      let hourValue = this.actor.data.data.time.hour + 1;
+      if  (hourValue == 24) {
+        hourValue = 0;
+        ui.notifications.error(game.i18n.localize("LM.eat"));
+      }
+      this.actor.update({ 
+          data: {
+            time: {
+              hour: hourValue,
+            },
+          },
+        })
+      this._render();
+    });
+
+    
     // Add 1 to Quantity
     html.find('.plus').click(clickEvent => {
       const shownItem = itemForClickEvent(clickEvent);
@@ -141,6 +193,62 @@ export class LmContainerSheet extends ActorSheet {
         li.addEventListener("dragstart", handler, false);
       });
     }
+
+    // Toggle gm
+    html.find(".gm-toggle").click(async (ev) => {
+    const gmValue = this.actor.data.data.gm;
+    this.actor.update({ 
+      "data.gm": !gmValue,
+      "data.group": gmValue,
+      "data.object": gmValue,
+      "data.shop": gmValue,
+     });
+    this._render();
+    });
+
+    // Toggle group
+    html.find(".group-toggle").click(async (ev) => {
+    const groupValue = this.actor.data.data.group;
+    this.actor.update({ 
+      "data.group": !groupValue,
+      "data.gm": groupValue,
+      "data.object": groupValue,
+      "data.shop": groupValue,
+     });
+    this._render();
+    });
+
+    // Toggle object
+    html.find(".object-toggle").click(async (ev) => {
+      const objectValue = this.actor.data.data.object;
+      this.actor.update({ 
+        "data.object": !objectValue,
+        "data.group": objectValue,
+        "data.gm": objectValue,
+        "data.shop": objectValue,
+     });
+      this._render();
+      });
+
+    // Toggle shop
+    html.find(".shop-toggle").click(async (ev) => {
+      const shopValue = this.actor.data.data.shop;
+      this.actor.update({ 
+        "data.shop": !shopValue,
+        "data.group": shopValue,
+        "data.gm": shopValue,
+        "data.object": shopValue,
+       });
+      this._render();
+      });
+
+    // Toggle magicUser
+    html.find(".magic-toggle").click(async (ev) => {
+      const magicValue = this.actor.data.data.magicUser;
+      this.actor.update({ "data.magicUser": !magicValue });
+      this._render();
+      });
+      
   }
 
   /**

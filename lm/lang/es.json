@@ -348,5 +348,28 @@
 
     "LM.dialog.itemName": "Nombre de objeto",
     "LM.dialog.itemType": "Clase de objeto",
-    "LM.dialog.createItem": "Crear objeto"
+    "LM.dialog.createItem": "Crear objeto",
+
+    "LM.containerClass": "Clase :",
+    "LM.gm": "Amo del laberinto",
+    "LM.encounter": "Encuentros",
+    "LM.encounterCheck": "Tirada de encuentros",
+    "LM.torch": "Gastar antorchas",
+    "LM.eat": "Gastar raciones",
+    "LM.turns": "Turnos",
+    "LM.hours": "Hora",
+    "LM.day": "Día",
+    "LM.month": "Mes",
+    "LM.year": "Año",
+    "LM.time": "Fecha",
+    "LM.group": "Grupo de aventureros",
+    "LM.shop": "Tienda",
+    "LM.object": "Objeto",
+    "LM.magicUser": "Usa magia",
+    "LM.price1": "=<1 mo",
+    "LM.price2": "2-10 mo",
+    "LM.price3": "11-100 mo",
+    "LM.price4": "a 1000 mo",
+    "LM.price5": "a 10000 mo",
+    "LM.price6": "10001>"
 }

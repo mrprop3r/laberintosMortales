@@ -168,7 +168,7 @@
 .lm.sheet.actor .sheet-header .header-fields h1.charname input:focus {
   outline: none;
   box-shadow: none;
-  background-color: #f1f2f5;
+  background-color: var(--color-background);
 } 
 .lm.sheet.actor .sheet-header .header-fields .summary {
   margin: 0;
@@ -1814,5 +1814,69 @@
 .lm.sheet.monster .sheet-body .tab.spells .item-list .item-controls {
   flex: 0 0 185px;
 }
+
+/*  Container sheet */
+
+.lm .item-control.gm-toggle.nogm {
+  color: rgb(192, 186, 186);
+}
+.lm .item-control.group-toggle.nogroup {
+  color: rgb(192, 186, 186);
+}
+.lm .item-control.shop-toggle.noshop {
+  color: rgb(192, 186, 186);
+}
+.lm .item-control.object-toggle.noobject {
+  color: rgb(192, 186, 186);
+}
+.lm .item-control.magic-toggle.nomagic {
+  color: rgb(192, 186, 186);
+}
+.lm .sheet-header .header-fields ul.summary.options {
+  flex: content;
+  text-align: center;
+  color: white;
+  background: var(--color-foreground);
+  border-radius: 4%;
+}
+.lm .sheet-header .header-fields .summary.options label {
+  padding-top: 20px;
+  font-family: var(--font-special);
+  font-size: 18px;
+}
+.lm .sheet-header .header-fields .summary.options .item-control {
+  padding-top: 20px;
+}
+.lm .sheet-header .header-fields .summary li input {
+  border: none;
+  background: var(--color-background);
+}
+.lm .sheet-header .header-fields .summary li span {
+  padding-top: 5px;
+  font-weight: bold;
+}
+.lm .sheet-header .header-fields .summary .control.time {
+  flex: 0 0 40px;
+}
+.lm .sheet-header .header-fields .summary .control.encounter {
+  flex: 0 0 40px;
+  margin-top: 10px;
+}
+.lm .sheet-header .header-fields .summary .date {
+  margin-top: 4px;
+  border: solid 1px;
+  border-radius: 5%;
+}
+.lm .sheet-header .header-fields .summary .date .title {
+  background: var(--color-foreground);
+  color: white;
+}
+.lm .sheet-header .header-fields .summary .date input {
+  border-bottom: solid 1px;
+  padding-top: 5px;
+}
+
+
+
 
 
