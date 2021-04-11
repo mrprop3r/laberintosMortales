@@ -458,14 +458,12 @@ export class LmContainerSheet extends ActorSheet {
                 let players = html.find('input[name=\'inputField\']');
                 let mod = players.val();
                 let result = Math.floor(xpShare/mod);
-                let px = result.total;
                 ChatMessage.create({
                   content: `<html>
                             <div><label><strong>Total Px:${xpShare}</label></div>
                             <div>Experiencia cada uno:${result}</div>
                             </html>`
                 });
-          
              }
             },
          },

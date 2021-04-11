@@ -79,6 +79,8 @@
     "LM.retainer.wage": "Salario",
     "LM.retainer.moral": "Moral",
     "LM.retainer.moralcheck": "Prueba de Moral",
+    "LM.retainer.flee": "<strong>¡Huye inmediatamente!, solo lucha si es arrinconado</strong>",
+    "LM.retainer.stand": "<strong>¡Lucha hasta la muerte!</strong>",
     "LM.level.name0": "0 nvl",
     "LM.level.name1": "1º",
     "LM.level.name2": "2º",
@@ -114,6 +116,8 @@
     "LM.category.description": "Descripción",
     
     "LM.abilitiesname": "Características",
+    "LM.abilities.generate": "Generar características",
+    "LM.abilities.statApply": "Aplicar tiradas a ",
     "LM.abilities.str.long": "Fuerza",
     "LM.abilities.str.short": "FUE",
     "LM.abilities.wis.long": "Sabiduría",

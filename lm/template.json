@@ -106,22 +106,22 @@
       },
       "abilities": {
         "str": {
-          "value": 10
+          "value": 0
         },
         "dex": {
-          "value": 10
+          "value": 0
         },
         "con": {
-          "value": 10
+          "value": 0
         },
         "int": {
-          "value": 10
+          "value": 0
         },
         "wis": {
-          "value": 10
+          "value": 0
         },
         "cha": {
-          "value": 10
+          "value": 0
         }
       },
       "skills": {

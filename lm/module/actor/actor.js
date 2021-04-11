@@ -23,6 +23,7 @@ export class LmActor extends Actor {
     if (actorData.type === 'container') this._prepareContainerData(actorData);
   }
 
+
   generateSave(hd) {
     let saves = {};
     for (let i = 0; i <= hd; i++) {
@@ -182,6 +183,14 @@ export class LmActor extends Actor {
     );
     data.abilities.cha.retain = data.abilities.cha.mod + 4;
     data.abilities.cha.loyalty = data.abilities.cha.mod +7;
+    if (data.class.value ==="dw") {
+      data.abilities.con.mod = data.abilities.con.mod + 1;
+    }
+    if (data.class.value ==="hal") {
+      data.abilities.dex.mod = data.abilities.dex.mod + 1;
+      data.abilities.dex.init = data.abilities.dex.init + 1;
+    }
+
 
     // Compute Ability test
     const test = {
@@ -390,6 +399,10 @@ export class LmActor extends Actor {
 
     // compute Max Weight
     data.encumbrance.weight = (data.abilities.str.value)*100;
+    if (data.class.value ==="dw") {
+      data.encumbrance.weight = data.encumbrance.weight + 500;
+    }
+
 
     // Compute encumbrance
 

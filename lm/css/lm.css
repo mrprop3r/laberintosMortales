@@ -290,7 +290,10 @@
   border-style: none none solid none;
 }
 .lm .sheet-body .attribute-tab .attributes-group {
-  flex: 0 0 100px
+  flex: 0 0 100px;
+}
+.lm .sheet-body .attribute-tab .attributes-group h3 a {
+  font-size: 11px;
 }
 .lm .sheet-body .attribute-tab .attributes-group ul {
   list-style: none;

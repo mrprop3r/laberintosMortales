@@ -50,6 +50,7 @@ export class LmItem extends Item {
 
   static chatListeners(html) {
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
+    html.find(".card-buttons .apply.abilities").click(this._onApply.bind(this));
   }
 
   pushTag(values) {
@@ -242,5 +243,11 @@ export class LmItem extends Item {
       r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
     }
   }
-
+  static _onApply(event) {
+    event.preventDefault();
+    let r = new Roll("3d6");
+    r.roll();
+    let messageHeader = text + item.name ;
+    r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
+  } 
 }

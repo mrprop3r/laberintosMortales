@@ -246,7 +246,6 @@ export class LmActorSheet extends ActorSheet {
     function itemForClickEvent(clickEvent) {
       return $(clickEvent.currentTarget).parents(".item");
     }
-
     // Add Inventory Item
     html.find('.item-create').click(this._onItemCreate.bind(this));
 
@@ -427,6 +426,9 @@ export class LmActorSheet extends ActorSheet {
     html.find('.turn.roll').click(this._onTurnRoll.bind(this));
     html.find('.surprise.roll').click(this._onSurpriseRoll.bind(this));
     html.find('.reaction.roll').click(this._onReactionRoll.bind(this));
+    // Generate character abilities
+    html.find('.generate-abilities').click(this._onStatsRoll.bind(this));
+
 
     // Refresh turn undead
     html.find(".turn.refresh").click(async (ev) => {
@@ -559,17 +561,80 @@ export class LmActorSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const dataset = element.dataset;
-
     let data = this.actor.data.data;
-    let result = new Roll("2d6", data).roll();
-    let needed = this.actor.data.data.retainer.moral;
-    let flavor = (result.total <= needed ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
-    let text = game.i18n.localize('LM.retainer.moralcheck') + ": ";
-    result.toMessage({
-      speaker: ChatMessage.getSpeaker({actor: this.actor},{text : text}),
-      flavor: text + flavor,
-    }, {rollMode: DICE_ROLL_MODES.BLIND});
+    return new Promise(resolve => {
+      new Dialog({
+        title: game.i18n.localize('LM.retainer.moral'),
+        content:`<form>
+        <div class="form-group">
+          <label>Modificador a la moral</label>
+          <input type='text' name='inputField'></input>
+        </div>
+       </form>`,
+       buttons: {
+         normal: {
+           icon: '<i class="fas da-dice"></i>',
+           label: game.i18n.localize('LM.retainer.moralcheck'),
+           callback: (html) => {
+             let mod = html.find('input[name=\'inputField\']');
+             let moralMod = mod.val();
+             let needed = this.actor.data.data.retainer.moral;
+             let result = new Roll("2d6", data).roll();
+             let flavor;
+             if (result.total == 2) {
+                flavor = game.i18n.localize('LM.retainer.stand');
+             } else if (result.total == 12) {
+                flavor = game.i18n.localize('LM.retainer.flee');
+             } else {
+                flavor = ((result.total - moralMod) <= needed ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
+             }
+             let text = game.i18n.localize('LM.retainer.moralcheck') + ": ";
+             result.toMessage({
+               speaker: ChatMessage.getSpeaker({actor: this.actor},{text : text}),
+               flavor: text + flavor,
+             }, {rollMode: DICE_ROLL_MODES.BLIND});
+           }
+         },
+       },
+      default: "roll",
+      close: () => resolve(null)
+      }).render(true);
+    });
   }
+
+  async _onStatsRoll(event) {
+    event.preventDefault();
+        const dice = '3d6';
+        const rollstr = new Roll(dice).roll();
+        let str = rollstr.total;
+        const rollint = new Roll(dice).roll();
+        let int = rollint.total
+        const rollwis = new Roll(dice).roll();
+        let wis = rollwis.total
+        const rolldex = new Roll(dice).roll();
+        let dex = rolldex.total
+        const rollcon = new Roll(dice).roll();
+        let con = rollcon.total
+        const rollcha = new Roll(dice).roll();
+        let cha = rollcha.total
+        const data = {
+          actor: this.actor,
+          str,
+          int,
+          wis,
+          dex,
+          con,
+          cha,
+        };
+        const chatContent = await renderTemplate("systems/lm/templates/chat/stat-block.html", data);
+        ChatMessage.create({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                content: chatContent,
+            }, );
+    return;
+  }
+
+
 
   _onAbilityCheck(event) {
     event.preventDefault();
