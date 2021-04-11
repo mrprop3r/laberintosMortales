@@ -196,18 +196,12 @@
       "group": false,
       "shop": false,
       "object": false,
-      "members": [],
+      "members": "",
       "market": {
         "class": "VI"
       },
       "capacity": 0,
-      "travel": {
-        "guide": [],
-        "scout": [],
-        "foraging": [],
-        "camp": [],
-        "explore": []
-      },
+      "travel": "<strong>Guia:</strong><br /><strong>Vigía:</strong><br /><strong>Forrajear:</strong><br /><strong>Preparar campamento:</strong>",
       "time": {
         "assault": 1,
         "turn": 1,
@@ -215,7 +209,8 @@
         "day": 1,
         "month": 1,
         "year": ""
-      }
+      },
+      "pxShare": 0
     }
   },
   "Item": {

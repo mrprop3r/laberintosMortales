@@ -520,6 +520,16 @@ export class LmActor extends Actor {
 
   _prepareContainerData(actorData){
     const data = actorData.data;
+
+  // Set market class 
+  const marketClass = CONFIG.LM.marketClass[data.market.class];
+  data.market.a = marketClass[0];
+  data.market.b = marketClass[1];
+  data.market.c = marketClass[2];
+  data.market.d = marketClass[3];
+  data.market.e = marketClass[4];
+  data.market.f = marketClass[5];
+
   }
 
 }

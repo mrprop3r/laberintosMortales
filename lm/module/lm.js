@@ -92,8 +92,6 @@ Hooks.once("ready", async function() {
 });
 
 Hooks.on('createOwnedItem', (actor, item) => {
-  //console.log(actor);
-  //console.log(item);
   let occupations = actor.data.items.filter(i => i.type == "occupation");
   console.log(occupations);
   if(item.type == "occupation" && occupations.length>1){

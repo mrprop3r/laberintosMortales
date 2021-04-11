@@ -10,17 +10,18 @@ export class LmContainerSheet extends ActorSheet {
       classes: ["lm", "sheet", "actor"],
       template: "systems/lm/templates/actor/container-sheet.html",
       width: 500,
-      height: 600,
+      height: 664,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
     });
   }
 
-  /* -------------------------------------------- */
+
 
   /** @override */
   getData() {
     const data = super.getData();
     data.dtypes = ["String", "Number", "Boolean"];
+
 
     // Prepare items.
     if (this.actor.data.type == 'container') {
@@ -28,6 +29,18 @@ export class LmContainerSheet extends ActorSheet {
     }
 
     return data;
+  }
+/* -------------------------------------------- */
+
+  activateEditor(target, editorOptions, initialContent) {
+  // remove some controls to the editor as the space is lacking
+  if (target == "data.travel") {
+    editorOptions.toolbar = "save";
+  }
+  if (target == "data.members") {
+    editorOptions.toolbar = "styleselect bullist hr save";
+  }
+  super.activateEditor(target, editorOptions, initialContent);
   }
 
   /**
@@ -42,9 +55,12 @@ export class LmContainerSheet extends ActorSheet {
 
     // Initialize containers.
     const gear = [];
+    const weapons = [];
+    const containers = [];
+    const armors = [];
+    const consumables = [];
     const features = [];
     const spells = {
-      0: [],
       1: [],
       2: [],
       3: [],
@@ -65,22 +81,44 @@ export class LmContainerSheet extends ActorSheet {
       if (i.type === 'item') {
         gear.push(i);
       }
+      if (i.type === 'weapon') {
+        weapons.push(i);
+      }
+      if (i.type === 'armor') {
+        armors.push(i);
+      }
+      if (i.type === 'consumable') {
+        consumables.push(i);
+      }
+      if (i.type === "container") {
+        containers.push(i);
+      }
       // Append to features.
       else if (i.type === 'feature') {
         features.push(i);
       }
       // Append to spells.
       else if (i.type === 'spell') {
-        if (i.data.spellLevel != undefined) {
-          spells[i.data.spellLevel].push(i);
+        if (i.data.lvl != undefined) {
+          spells[i.data.lvl].push(i);
         }
       }
     }
 
     // Assign and return
     actorData.gear = gear;
+    actorData.weapons = weapons;
+    actorData.armors = armors;
+    actorData.consumables = consumables;
+    actorData.containers = containers;
     actorData.features = features;
     actorData.spells = spells;
+
+    this.actor.items.forEach(it => {
+      if (it.type === 'container') {
+          actorData.containers[it._id] = it;
+      }
+   });
   }
 
   /* -------------------------------------------- */
@@ -95,6 +133,10 @@ export class LmContainerSheet extends ActorSheet {
     function itemForClickEvent(clickEvent) {
       return $(clickEvent.currentTarget).parents(".item");
     }
+
+
+    // Encounter
+    html.find(".encounterCheck").click(this._onEncounterCheck.bind(this));
 
     // Add turn hour
     html.find(".turnplus").click(async (ev) => {
@@ -163,10 +205,14 @@ export class LmContainerSheet extends ActorSheet {
       item.data.quantity = item.data.quantity - amount;
       this.actor.updateEmbeddedEntity('OwnedItem', item);
     });
-
+    // Show Inventory Item in chat
+    html.find(".item-show").click(async (ev) => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.getOwnedItem(li.data("itemId"));
+      item.show();
+    });
     // Add Inventory Item
     html.find('.item-create').click(this._onItemCreate.bind(this));
-
     // Update Inventory Item
     html.find('.item-edit').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
@@ -179,6 +225,18 @@ export class LmContainerSheet extends ActorSheet {
       const li = $(ev.currentTarget).parents(".item");
       this.actor.deleteOwnedItem(li.data("itemId"));
       li.slideUp(200, () => this.render(false));
+    });
+    // Delete Container Item
+    html.find('.container-delete').click(ev => {
+      const li = $(ev.currentTarget).parents(".item-titles");
+      this.actor.deleteOwnedItem(li.data("itemId"));
+      li.slideUp(200, () => this.render(false));
+    });
+    // Update Container Item
+    html.find('.container-edit').click(ev => {
+      const li = $(ev.currentTarget).parents(".item-titles");
+      const item = this.actor.getOwnedItem(li.data("itemId"));
+      item.sheet.render(true);
     });
 
     // Rollable abilities.
@@ -247,8 +305,32 @@ export class LmContainerSheet extends ActorSheet {
       const magicValue = this.actor.data.data.magicUser;
       this.actor.update({ "data.magicUser": !magicValue });
       this._render();
-      });
-      
+    });
+    
+    // Calculate px
+    html.find(".calculate-xp").click(this._onCalculateXp.bind(this));
+
+    // Disponibility check
+    html.find(".item.disp").click(this._onItemDisp.bind(this));
+
+    // Expand inventory.
+    html.find(".item-titles .item-caret").click((ev) => {
+      let items = $(ev.currentTarget.parentElement.parentElement).children(
+        ".item-list"
+      );
+      if (items.css("display") == "none") {
+      let el = $(ev.currentTarget).find(".fas.fa-caret-right");
+      el.removeClass("fa-caret-right");
+      el.addClass("fa-caret-down");
+      items.slideDown(200);
+      } else {
+      let el = $(ev.currentTarget).find(".fas.fa-caret-down");
+      el.removeClass("fa-caret-down");
+      el.addClass("fa-caret-right");
+      items.slideUp(200);
+      }
+    });
+    
   }
 
   /**
@@ -296,6 +378,136 @@ export class LmContainerSheet extends ActorSheet {
         flavor: label
       });
     }
+  }
+  _onEncounterCheck(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    return new Promise(resolve => {
+      new Dialog({
+         title: game.i18n.localize('LM.encounterCheck'),
+         content: game.i18n.localize('LM.encounterChoice'),
+         buttons: {
+            dungeon: {
+              icon: '<i class="fas fa-dice-d6"></i>',
+              label: game.i18n.localize('LM.dungeonCheck'),
+              callback: () => {
+                let result = new Roll("d6").roll();
+                let distance = new Roll("2d6*10").roll();
+                let encounter = (result.total <= 1 ? '<span class="failed">¡Encuentro! a </span> ' + distance.total + 'pies'  : '<span class="success">Sin encuentro</span> ');
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: encounter,
+                }, {rollMode: DICE_ROLL_MODES.BLIND});
+             }
+            },
+            desert: {
+              icon: '<i class="fas fa-dice-d6"></i>',
+              label: game.i18n.localize('LM.desertCheck'),
+              callback: () => {
+                let result = new Roll("d6").roll();
+                let distance = new Roll("4d6*10").roll();
+                let encounter = (result.total <= 2 ? '<span class="failed">¡Encuentro! a </span> ' + distance.total + 'pies' : '<span class="success">Sin encuentro</span> ');
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: encounter,
+                }, {rollMode: DICE_ROLL_MODES.BLIND});
+              }
+            },
+            mountain: {
+              icon: '<i class="fas fa-dice-d6"></i>',
+              label: game.i18n.localize('LM.mountainCheck'),
+              callback: () => {
+                let result = new Roll("d6").roll();
+                let distance = new Roll("4d6*10").roll();
+                let encounter = (result.total <= 3 ? '<span class="failed">¡Encuentro! a </span> ' + distance.total + 'pies' : '<span class="success">Sin encuentro</span> ');
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: encounter,
+                }, {rollMode: DICE_ROLL_MODES.BLIND});
+              }
+            }
+
+         },
+         default: "roll",
+         close: () => resolve(null)
+        }).render(true);
+    });
+  }
+
+  _onCalculateXp(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let data = this.actor.data.data;
+    let xpShare = data.pxShare;
+    return new Promise(resolve => {
+      new Dialog({
+         title: game.i18n.localize('LM.actors.pxShare'),
+         content: `<form>
+         <div class="form-group">
+           <label>Nº miembros del grupo</label>
+           <input type='text' name='inputField'></input>
+         </div>
+        </form>`,
+         buttons: {
+            normal: {
+              icon: '<i class="fas fa-calculator"></i>',
+              label: game.i18n.localize('LM.actors.pxCalc'),
+              callback: (html) => {
+                let players = html.find('input[name=\'inputField\']');
+                let mod = players.val();
+                let result = Math.floor(xpShare/mod);
+                let px = result.total;
+                ChatMessage.create({
+                  content: `<html>
+                            <div><label><strong>Total Px:${xpShare}</label></div>
+                            <div>Experiencia cada uno:${result}</div>
+                            </html>`
+                });
+          
+             }
+            },
+         },
+         default: "roll",
+         close: () => resolve(null)
+        }).render(true);
+    });
+  }
+  _onItemDisp(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let data = this.actor.data.data;
+    return new Promise(resolve => {
+      new Dialog({
+         title: game.i18n.localize('LM.items.disp'),
+         content: `<form>
+         <div class="form-group">
+           <label>% de disponibilidad</label>
+           <input type='text' name='inputField'></input>
+         </div>
+        </form>`,
+         buttons: {
+            normal: {
+              icon: '<i class="fas fa-dice-d20"></i>',
+              label: game.i18n.localize('LM.items.percent'),
+              callback: (html) => {
+                let percent = html.find('input[name=\'inputField\']');
+                let mod = percent.val();
+                let result = new Roll("d100" , data).roll();
+                let isItem = (result.total <= mod ? '<span class="success">¡Uno disponible!</span> ' : '<span class="failed">Objeto no disponible</span> ');
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: isItem,
+              });
+             }
+            },
+         },
+         default: "roll",
+         close: () => resolve(null)
+        }).render(true);
+    });
   }
 
 }

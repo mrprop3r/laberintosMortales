@@ -29,12 +29,12 @@ export class LmActorSheet extends ActorSheet {
 
     // Setup the fake container entry for "On Person" container
     data.containers = {
-      'in': {
+      'encima': {
           "data": {
               "name": "Encima",
               "type": "container",
               "data": {
-                  "container": "in",
+                  "container": "encima",
               }
           }
       }

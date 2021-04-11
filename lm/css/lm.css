@@ -1839,6 +1839,40 @@
   background: var(--color-foreground);
   border-radius: 4%;
 }
+.lm .sheet-header .header-fields .summary-shop li {
+  list-style: none;
+}
+.lm .sheet-header .header-fields .summary-shop li span {
+  text-align: center;
+  padding-bottom: 2px;
+}
+.lm .sheet-header .header-fields .summary-shop li label {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 9px;
+  font-weight: bolder;
+  padding: 2px;
+  text-align: center;
+  border-top: solid 1px;
+}
+.lm .sheet-header .header-fields .summary-shop li .market {
+  font-family: var(--font-special);
+  font-size: 18px;
+  border: none;
+  position: relative;
+  left: 85px;
+  top: 10px;
+}
+.lm .sheet-header .header-fields .summary-shop li input {
+  border: none;
+  background: var(--color-background);
+  font-weight: bolder;
+  font-size: 16px;
+}
+.lm .sheet-header .header-fields .summary-shop li .item.disp {
+  position: relative;
+  left: 26px;
+  bottom: 18px;
+}
 .lm .sheet-header .header-fields .summary.options label {
   padding-top: 20px;
   font-family: var(--font-special);
@@ -1874,6 +1908,37 @@
 .lm .sheet-header .header-fields .summary .date input {
   border-bottom: solid 1px;
   padding-top: 5px;
+}
+.lm.sheet.actor .sheet-body .tab.description .groupGestion {
+  padding-top: 4px;
+  padding-bottom: 6px;
+  color: white;
+  background: var(--color-foreground);
+}
+.lm.sheet.actor .sheet-body .tab.description .groupGestion .name {
+  padding-top: 8px;
+  margin-left: 4px;
+}
+.lm.sheet.actor .sheet-body .tab.description .groupGestion input {
+  color: black;
+  background: var(--color-background);
+  margin-bottom: 4px;
+  margin-left: 4px;
+  text-align: center;
+}
+.lm.sheet.actor .sheet-body .tab.description .groupGestion a {
+  text-align: center;
+  margin-left: 3px;
+}
+.lm.sheet.actor .sheet-body .tab.description .member-container {
+  border: none;
+  box-shadow: 0 0 6px var(--color-border);
+  font-size: 12px;
+  line-height: 16px;
+  padding: 1px 2px;
+  width: 240px;
+  height: 200px;
+  flex: 0 0 240px;
 }
 
 

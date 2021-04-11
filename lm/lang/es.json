@@ -322,6 +322,8 @@
     "LM.items.objective": "Objetivo",
     "LM.items.blindRoll": "Tirada ciega",
     "LM.items.resetAttacks": "Reiniciar ataques",
+    "LM.items.disp": "Tirada de disponibilidad",
+    "LM.items.percent": "Tirar porcentaje",
 
     "LM.spells.resetSlots": "Reiniciar conjuros",
     "LM.spells.level": "Nivel",
@@ -354,6 +356,10 @@
     "LM.gm": "Amo del laberinto",
     "LM.encounter": "Encuentros",
     "LM.encounterCheck": "Tirada de encuentros",
+    "LM.encounterChoice": "Escoge el tipo de terreno donde puede ocurrir el encuentro",
+    "LM.dungeonCheck": "Laberinto, llanura, ciudad y asentamiento.",
+    "LM.desertCheck": "Aire, desierto, bosque, río, colinas, mar.",
+    "LM.mountainCheck": "Montañas, pantanos y junglas",
     "LM.torch": "Gastar antorchas",
     "LM.eat": "Gastar raciones",
     "LM.turns": "Turnos",
@@ -366,10 +372,17 @@
     "LM.shop": "Tienda",
     "LM.object": "Objeto",
     "LM.magicUser": "Usa magia",
-    "LM.price1": "=<1 mo",
-    "LM.price2": "2-10 mo",
-    "LM.price3": "11-100 mo",
-    "LM.price4": "a 1000 mo",
-    "LM.price5": "a 10000 mo",
-    "LM.price6": "10001>"
+    "LM.market": "Mercado",
+    "LM.price1": "=<1mo",
+    "LM.price2": "a 10mo",
+    "LM.price3": "a 100mo",
+    "LM.price4": "a 1000mo",
+    "LM.price5": "a 10000mo",
+    "LM.price6": "10001>",
+
+    "LM.actors.members": "Miembros del grupo",
+    "LM.actors.gestion": "Gestión de grupo",
+    "LM.actors.activity": "Actividad",
+    "LM.actors.pxShare": "Px acumulados",
+    "LM.actors.pxCalc": "Calcular PX"
 }
