@@ -48,11 +48,6 @@ export class LmItem extends Item {
     
   }
 
-  static chatListeners(html) {
-    html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
-    html.find(".card-buttons .apply.abilities").click(this._onApply.bind(this));
-  }
-
   pushTag(values) {
     const data = this.data.data;
     let update = [];
@@ -214,40 +209,4 @@ export class LmItem extends Item {
     return ChatMessage.create(chatData);
   }
 
-    /**
-   * Handle toggling the visibility of chat card content when the name is clicked
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  static _onChatCardToggleContent(event) {
-    event.preventDefault();
-    const header = event.currentTarget;
-    const card = header.closest(".chat-card");
-    const content = card.querySelector(".card-content");
-    if (content.style.display == "none") {
-      $(content).slideDown(200);
-    } else {
-      $(content).slideUp(200);
-    }
-  }
-
-  static _onChatCardAction(event) {
-    event.preventDefault();
-    const header = event.currentTarget;
-    const card = header.closest(".chat-card");
-    const content = card.querySelector(".card-content");
-    if (data.action == "formula") {
-      let r = new Roll(item.data.data.roll);
-      r.roll();
-      let messageHeader = text + item.name ;
-      r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
-    }
-  }
-  static _onApply(event) {
-    event.preventDefault();
-    let r = new Roll("3d6");
-    r.roll();
-    let messageHeader = text + item.name ;
-    r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
-  } 
 }

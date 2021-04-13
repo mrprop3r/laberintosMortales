@@ -52,6 +52,54 @@ export class LmActor extends Actor {
       },
     });
   }
+  /**
+  * Apply damage to this actor
+  * @param {Number} damageAmount   Damage amount to apply
+  * @param {Number} multiplier     Damage multiplier
+  */
+  async applyDamage (damageAmount, multiplier) {
+    const speaker = { alias: this.name, _id: this._id }
+  
+    // Calculate damage amount and current hit points
+    const amount = damageAmount * multiplier
+    const hp = this.data.data.hp.value
+  
+    let newHp = hp
+    if (amount > 0) {
+        // Taking damage - just subtract and allow damage to go below zero
+        newHp = newHp - amount
+      } else {
+        // Healing - don't allow HP to be brought above MaxHP, but if it's already there assume it's intentional
+        const maxHp = this.data.data.hp.max
+        if (hp >= maxHp) {
+          newHp = hp
+        } else {
+          newHp = Math.min(newHp - amount, maxHp)
+        }
+      }
+  
+      const deltaHp = newHp - hp
+  
+      // Announce damage or healing results
+      if (Math.abs(deltaHp) > 0) {
+        const locstring = (deltaHp > 0) ? 'LM.healDamage' : 'LM.takeDamage'
+        const messageData = {
+          user: game.user._id,
+          speaker: speaker,
+          type: CONST.CHAT_MESSAGE_TYPES.EMOTE,
+          content: game.i18n.format(locstring, { target: this.name, damage: Math.abs(deltaHp) }),
+          sound: CONFIG.sounds.notification
+        }
+        ChatMessage.applyRollMode(messageData, game.settings.get('core', 'rollMode'))
+        await CONFIG.ChatMessage.entityClass.create(messageData)
+      }
+  
+      // Apply new HP
+      return this.update({
+        'data.hp.value': newHp
+      })
+    }
+  
 
   rollHP(options = {}) {
     let roll = new Roll(this.data.data.hp.hd).roll();
@@ -445,10 +493,16 @@ export class LmActor extends Actor {
     // Compute initiative value 
     data.initiative.value += data.abilities.dex.init;
 
-    // Compute thac0  and modifiers
+    // Compute thac0 and modifiers
     data.thac0.value = classInfo.thac0[data.description.level.value];
+    data.skills.proyectile = classInfo.hitbonusp.yes;
     data.thac0.mod.melee = data.abilities.str.mod;
-    data.thac0.mod.missile = data.abilities.dex.mod;
+    if (data.skills.proyectile){
+      data.thac0.mod.proyectile = classInfo.hitbonusp.value;
+      data.thac0.mod.missile = data.abilities.dex.mod + data.thac0.mod.proyectile;
+    } else {
+      data.thac0.mod.missile = data.abilities.dex.mod;
+    }
     data.thac0.v1 = (data.thac0.value) - 1;
     data.thac0.v2 = (data.thac0.value) - 2;
     data.thac0.v3 = (data.thac0.value) - 3;
@@ -458,7 +512,10 @@ export class LmActor extends Actor {
     data.thac0.v7 = (data.thac0.value) - 7;
     data.thac0.v8 = (data.thac0.value) - 8;
     data.thac0.v9 = (data.thac0.value) - 9;
-
+    //compute damage modifiers
+    data.abilities.str.dmg = classInfo.dmgBonusm[data.description.level.value];
+    data.abilities.dex.dmg = classInfo.dmgBonusp[data.description.level.value];
+    
     // Compute saves
     data.saves.death.value = classInfo.saves.death[data.description.level.value];
     data.saves.wand.value = classInfo.saves.wand[data.description.level.value];

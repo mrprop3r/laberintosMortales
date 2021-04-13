@@ -118,6 +118,7 @@
     "LM.abilitiesname": "Características",
     "LM.abilities.generate": "Generar características",
     "LM.abilities.statApply": "Aplicar tiradas a ",
+    "LM.abilities.check": "Prueba de característica",
     "LM.abilities.str.long": "Fuerza",
     "LM.abilities.str.short": "FUE",
     "LM.abilities.wis.long": "Sabiduría",
@@ -132,6 +133,7 @@
     "LM.abilities.cha.short": "CAR",
 
     "LM.skillsname": "Habilidades",
+    "LM.skillCheck": "Prueba de habilidad",
     "LM.skillsItems": "Habilidades y equipo",
     "LM.proficiences": "Habilidades y competencias",
     "LM.skills.bonus": "Bonos de habilidad",
@@ -215,6 +217,7 @@
     "LM.lan.country": "Dialecto humano",
     
     "LM.savesname": "Salvaciones",
+    "LM.saveCheck": "Tirada de salvación",
     "LM.saves.death.short": "MU",
     "LM.saves.death.long": "Veneno o Muerte",
     "LM.saves.death.check": "Tirada Veneno o Muerte",
@@ -245,7 +248,12 @@
     "LM.roll.dmg": "Tirada de Daño",
     "LM.roll.normal": "Tirada normal",
     "LM.roll.disadvantage": "Desventaja",
+    "LM.roll.advantage": "Ventaja",
     "LM.roll.appearing": "Nº monstruos que aparecen: ",
+    "LM.roll.venom": "Aplicar bono veneno",
+    "LM.roll.magic": "Aplicar bono magia",
+    "LM.roll.fumble": "Tirada de pifía",
+    "LM.roll.critical": "Tirada de crítico",
 
     "LM.surprisename": "Sorpresa",
     "LM.initiative.value": "Iniciativa",
@@ -290,7 +298,7 @@
     "LM.items.roundAttacks": "Ataques asalto",
     "LM.items.roundAttacksMax": "Ataques asalto máximos",
     "LM.items.bonus": "Bono",
-    "LM.items.anmunition.type": "Munición",
+    "LM.items.ammunition.type": "Munición",
     "LM.items.range": "Alcance",
     "LM.items.ac": "CA",
     "LM.items.splintered": "Astillado",
@@ -388,5 +396,26 @@
     "LM.actors.gestion": "Gestión de grupo",
     "LM.actors.activity": "Actividad",
     "LM.actors.pxShare": "Px acumulados",
-    "LM.actors.pxCalc": "Calcular PX"
+    "LM.actors.pxCalc": "Calcular PX",
+
+    "LM.ChatContextHealing": "Aplicar curación",
+    "LM.ChatContextDamage": "Aplicar daño",
+    "LM.healDamage": "Curar daño",
+    "LM.takeDamage": "Sufrir daño",
+
+    "LM.fumble2": "Golpeas al aliado más cercano o si no lo hay, te golpeas a ti mismo.<br />Haz prueba de <b>DES</b> para mitad de daño.",
+    "LM.fumble3": "Te expones al enemigo en tu ataque.<br />Su siguiente ataque tiene un <strong>+4</strong> y pierdes el bono de <b>escudo</b> si lo llevas.",
+    "LM.fumble4": "Quedas atontado <b>(+2 CA y -2 tiradas de salvación)</b> un asalto.",
+    "LM.fumble5": "Te descolocas el <b>casco</b>, o te quedas <b>cegado</b> un asalto <b>(-4 a dar un asalto o hasta que te coloques el casco)</b>.",
+    "LM.fumble6": "Fallas y trastabillas <b>5'</b>(el enemigo escoge).<br />Prueba de <b>DES</b> o caes al suelo <b>(-1CA)</b> y siguiente asalto para leventarte.",
+    "LM.fumble7": "El <b>arma</b> te resbala y cae detrás del enemigo.<br />El <b>escudo</b> si no lleva arma.<br />En otro caso, pierde su <b>siguiente ataque</b>.",
+    "LM.fumble8": "Sin efecto adicional al fallo automático",
+
+    "LM.critical6": "Sin efecto adicional al <b>impacto automático</b>.",
+    "LM.critical7": "Impacto en brazo, coger el menor de los dos dados <b>(salvo guerrero y enano, que escogen dado)</b>.<br /><b>2,4,6 </b>Brazo principal.<br /><b>1,3,5 </b>Brazo secundario.<br /><b>9+</b> Daño se rompe el arma o escudo. Un <b>asalto sin usar</b>.",
+    "LM.critical8": "Golpe fuerte en el cuerpo, empujas <b>10'</b> y si hay pared <b>¡atontado!</b>.",
+    "LM.critical9": "Golpe en las piernas, cae al suelo <b>(+1CA y siguiente asalto se levanta)</b>.",
+    "LM.critical10": "Golpe en la cabeza.<b>Atontado</b> un asalto y <b>+1d3</b> daño.",
+    "LM.critical11": "Golpe en órgano vital, <b>daño arma x2</b>.",
+    "LM.critical12": "Golpe en los ojos, <b>cegado</b> <b>(-4 a dar y +4CA durante 1 asalto)</b>."
 }

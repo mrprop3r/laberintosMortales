@@ -252,7 +252,7 @@
           "short": 0,
           "medium": 10,
           "long": 20,
-          "anmunition": {
+          "ammunition": {
             "type": "",
             "quantity": 0
           }

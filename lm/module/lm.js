@@ -6,7 +6,7 @@ import { LmContainerSheet} from "./actor/container-sheet.js";
 import { LmItem } from "./item/item.js";
 import { LmItemSheet } from "./item/item-sheet.js";
 import { LM } from "./config.js";
-
+import * as chat from "./chat.js";
 
 Hooks.once('init', async function() {
 
@@ -97,7 +97,12 @@ Hooks.on('createOwnedItem', (actor, item) => {
   if(item.type == "occupation" && occupations.length>1){
       actor.deleteOwnedItem(occupations[0]._id);
   }
+
 });
+
+// Support context menu on chat cards
+Hooks.on('getChatLogEntryContext', chat.addChatMessageContextOptions)
+Hooks.on('renderChatLog', (app, html,data) => chat.addChatListeners(html));
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */

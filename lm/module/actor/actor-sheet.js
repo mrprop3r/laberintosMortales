@@ -373,12 +373,12 @@ export class LmActorSheet extends ActorSheet {
     });
     
 
-    // Subtract 1 from Anmunition
+    // Subtract 1 from Ammunition
     html.find('.spendAnmo').click(clickEvent => {
       const shownItem = itemForClickEvent(clickEvent);
       const item = duplicate(this.actor.getEmbeddedEntity("OwnedItem", shownItem.data("itemId")));
       let amount = (event.ctrlKey || event.metaKey) ? 10 : 1;
-      item.data.range.anmunition.quantity = item.data.range.anmunition.quantity - amount;
+      item.data.range.ammunition.quantity = item.data.range.ammunition.quantity - amount;
       this.actor.updateEmbeddedEntity('OwnedItem', item);
     });
 
@@ -634,21 +634,66 @@ export class LmActorSheet extends ActorSheet {
     return;
   }
 
-
-
   _onAbilityCheck(event) {
     event.preventDefault();
     const element = event.currentTarget;
     const dataset = element.dataset;
-    let roll = new Roll("1d6", this.actor.data.data);
-    let result = roll.roll();
-    let needed = this.actor.data.data.abilities[dataset.abilities].check
-    let flavor = (result.total <= this.actor.data.data.abilities[dataset.abilities].check ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
-    result.toMessage({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor:  (dataset.label ? `${dataset.label} ` : '') + '<span class="objetive">(</span>' + needed + '<span class="objetive"> en 1d6)</span>'+ ": " + flavor
-    });
-    
+    return new Promise(resolve => {
+      new Dialog({
+        title: game.i18n.localize('LM.abilities.check'),
+        content:`<form>
+        <div class="form-group">
+          <label>Escoge tipo de tirada en la característica</label>
+        </div>
+       </form>`,
+       buttons: {
+        disadvantage: {
+          icon: '<i class="fas fa-dice"></i>',
+          label: game.i18n.localize('LM.roll.disadvantage'),
+          callback: (html) => {
+            let roll = new Roll("2d6kh", this.actor.data.data);
+            let result = roll.roll();
+            let needed = this.actor.data.data.abilities[dataset.abilities].check
+            let flavor = (result.total <= this.actor.data.data.abilities[dataset.abilities].check ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
+            result.toMessage({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                flavor:  (dataset.label ? `${dataset.label} ` : '') + '<span class="objetive">(</span>' + needed + '<span class="objetive"> en 1d6)</span>'+ ": " + flavor
+            });
+          }
+        },
+        normal: {
+          icon: '<i class="fas fa-dice-d6"></i>',
+          label: game.i18n.localize('LM.roll.normal'),
+          callback: (html) => {
+            let roll = new Roll("1d6", this.actor.data.data);
+            let result = roll.roll();
+            let needed = this.actor.data.data.abilities[dataset.abilities].check
+            let flavor = (result.total <= this.actor.data.data.abilities[dataset.abilities].check ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
+            result.toMessage({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                flavor:  (dataset.label ? `${dataset.label} ` : '') + '<span class="objetive">(</span>' + needed + '<span class="objetive"> en 1d6)</span>'+ ": " + flavor
+            });
+          }
+        },
+        advantage: {
+          icon: '<i class="fas fa-dice"></i>',
+          label: game.i18n.localize('LM.roll.advantage'),
+          callback: (html) => {
+            let roll = new Roll("2d6kl", this.actor.data.data);
+            let result = roll.roll();
+            let needed = this.actor.data.data.abilities[dataset.abilities].check
+            let flavor = (result.total <= this.actor.data.data.abilities[dataset.abilities].check ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
+            result.toMessage({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                flavor:  (dataset.label ? `${dataset.label} ` : '') + '<span class="objetive">(</span>' + needed + '<span class="objetive"> en 1d6)</span>'+ ": " + flavor
+            });
+          }
+        },
+        },
+        default: "roll",
+        close: () => resolve(null)
+        }).render(true);
+   });
   }
 
   _onSkillsCheck(event) {
@@ -657,14 +702,74 @@ export class LmActorSheet extends ActorSheet {
     const dataset = element.dataset;
     let bonus = this.actor.data.data.skills[dataset.skills].mod;
     let skb = "+" + bonus;
-    let roll = new Roll("2d6" + skb, this.actor.data.data);
-    let result = roll.roll();
-    let needed = "9+"
-    let flavor = (result.total >= 9  ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
-    result.toMessage({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor:  (dataset.label ? `${dataset.label} ` : '') + '<span class="objetive">(</span>' + needed + '<span class="objetive">)</span>' + ": " + flavor
-    });
+    return new Promise(resolve => {
+      new Dialog({
+        title: game.i18n.localize('LM.skillCheck'),
+        content:`<form>
+        <div class="form-group">
+          <label>Escoge tipo de tirada en la habilidad</label>
+        </div>
+       </form>`,
+       buttons: {
+        disadvantage: {
+          icon: '<i class="fas fa-dice"></i>',
+          label: game.i18n.localize('LM.roll.disadvantage'),
+          callback: (html) => {
+            let roll = new Roll("3d6kl2" + skb, this.actor.data.data);
+            let result = roll.roll();
+            let needed = "9+"
+            let flavor = (result.total >= 9  ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
+            let rollMode = DICE_ROLL_MODES.PUBLIC;
+            if (dataset.skills == "sea"){
+              rollMode = DICE_ROLL_MODES.BLIND;
+            } 
+            result.toMessage({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                flavor:  (dataset.label ? `${dataset.label} ` : '') + '<span class="objetive">(</span>' + needed + '<span class="objetive">)</span>' + ": " + flavor
+            },{ rollMode : rollMode });
+          }
+        },
+        normal: {
+          icon: '<i class="fas fa-dice-d6"></i>',
+          label: game.i18n.localize('LM.roll.normal'),
+          callback: (html) => {
+            let roll = new Roll("2d6" + skb, this.actor.data.data);
+            let result = roll.roll();
+            let needed = "9+"
+            let flavor = (result.total >= 9  ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
+            let rollMode = DICE_ROLL_MODES.PUBLIC;
+            if (dataset.skills == "sea"){
+              rollMode = DICE_ROLL_MODES.BLIND;
+            } 
+            result.toMessage({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                flavor:  (dataset.label ? `${dataset.label} ` : '') + '<span class="objetive">(</span>' + needed + '<span class="objetive">)</span>' + ": " + flavor
+            },{ rollMode : rollMode });
+          }
+        },
+        advantage: {
+          icon: '<i class="fas fa-dice"></i>',
+          label: game.i18n.localize('LM.roll.advantage'),
+          callback: (html) => {
+            let roll = new Roll("3d6kh2" + skb, this.actor.data.data);
+            let result = roll.roll();
+            let needed = "9+"
+            let flavor = (result.total >= 9  ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
+            let rollMode = DICE_ROLL_MODES.PUBLIC;
+            if (dataset.skills == "sea"){
+              rollMode = DICE_ROLL_MODES.BLIND;
+            } 
+            result.toMessage({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                flavor:  (dataset.label ? `${dataset.label} ` : '') + '<span class="objetive">(</span>' + needed + '<span class="objetive">)</span>' + ": " + flavor
+            },{ rollMode : rollMode });
+          }
+        },
+        },
+        default: "roll",
+        close: () => resolve(null)
+        }).render(true);
+   });
   }
 
   _onHdRoll(event) {
@@ -674,7 +779,8 @@ export class LmActorSheet extends ActorSheet {
     let text = game.i18n.localize('LM.roll.hd');
     let data = this.actor.data.data;
     let hdb = "+" + data.abilities.con.mod;
-    let result = new Roll(data.hp.hd + hdb, data).roll();
+    let dado = data.hp.hd;
+    let result = new Roll(dado + hdb, data).roll();
     result.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       flavor: text
@@ -684,13 +790,17 @@ export class LmActorSheet extends ActorSheet {
   {
     let data = this.actor.data.data;
     let bdmg = "";
+    let bdmgm = data.abilities.str.dmg;
+    let bdmgp = data.abilities.dex.dmg;
     let text = game.i18n.localize('LM.items.damage2');
-    if (item.data.data.melee || item.data.data.throw) 
-    {
-      bdmg = "+" + data.abilities.str.mod;
+    if (item.data.data.melee || item.data.data.throw) {
+      if (item.data.data.melee){
+        bdmg = "+" + (data.abilities.str.mod + bdmgm);
+      }
+      bdmg = "+" + (data.abilities.str.mod + bdmgp);
     }
     else {
-      bdmg = "+" + 0;
+      bdmg = "+" + bdmgp;
     }
     if(eventTarget.title === text)
     {
@@ -711,9 +821,14 @@ export class LmActorSheet extends ActorSheet {
   {
     let data = this.actor.data.data;
     let type = item.data.data.rollType;
+    let blindroll = item.data.data.blindroll;
     let objetive = item.data.data.rollTarget
     let text = game.i18n.localize('LM.items.roll');
     let success = "";
+    let rollMode = DICE_ROLL_MODES.PUBLIC;
+    if (blindroll){
+      rollMode = DICE_ROLL_MODES.BLIND;
+    } 
     let r = new Roll(item.data.data.roll);
     r.roll();
     if ( type == "above"){
@@ -724,7 +839,8 @@ export class LmActorSheet extends ActorSheet {
       success = ( r.total  ==  objetive ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
     }
     let messageHeader = text + item.name +"(" + objetive + "):" + success;
-    r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
+    r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader},
+    { rollMode : rollMode });
   }
 
 
@@ -735,13 +851,62 @@ export class LmActorSheet extends ActorSheet {
     if (! dataset.save) return;
     let bonus = 0;
     let data = this.actor.data.data;
-    let result = new Roll(bonus ? `d20+${bonus}` : "d20", data).roll();
-    let success = (result.total >= data.saves[dataset.save].value ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
-    let saveName = game.i18n.localize(`${CONFIG.LM.savesCheck[dataset.save]}`);
-    result.toMessage({
-      speaker: ChatMessage.getSpeaker({actor: this.actor}),
-      flavor: `${saveName} >= ${data.saves[dataset.save].value} ${success} `
+    return new Promise(resolve => {
+      new Dialog({
+         title: game.i18n.localize('LM.saveCheck'),
+         content: `<form>
+         <div class="form-group">
+           <label>Escoge modificador a tirada de salvación</label>
+         </div>
+        </form>`,
+         buttons: {
+            normal: {
+              icon: '<i class="fas fa-dice-d20"></i>',
+              label: game.i18n.localize('LM.roll.normal'),
+              callback: (html) => {
+                let result = new Roll(bonus ? `d20+${bonus}` : "d20", data).roll();
+                let success = (result.total >= data.saves[dataset.save].value ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
+                let saveName = game.i18n.localize(`${CONFIG.LM.savesCheck[dataset.save]}`);
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: `${saveName} >= ${data.saves[dataset.save].value} ${success} `
+                });
+              }
+            },
+            venom: {
+              icon: '<i class="fas fa-tint"></i>',
+              label: game.i18n.localize('LM.roll.venom'),
+              callback: (html) => {
+                bonus = data.abilities.con.venom;
+                let result = new Roll(bonus ? `d20+${bonus}` : "d20", data).roll();
+                let success = (result.total >= data.saves[dataset.save].value ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
+                let saveName = game.i18n.localize(`${CONFIG.LM.savesCheck[dataset.save]}`);
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: `${saveName} >= ${data.saves[dataset.save].value} ${success} `
+                });
+              }
+            },
+            magic: {
+              icon: '<i class="fas fa-magic"></i>',
+              label: game.i18n.localize('LM.roll.magic'),
+              callback: (html) => {
+                bonus = data.abilities.wis.save;
+                let result = new Roll(bonus ? `d20+${bonus}` : "d20", data).roll();
+                let success = (result.total >= data.saves[dataset.save].value ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
+                let saveName = game.i18n.localize(`${CONFIG.LM.savesCheck[dataset.save]}`);
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: `${saveName} >= ${data.saves[dataset.save].value} ${success} `
+                });
+              }
+            }
+         },
+         default: "roll",
+         close: () => resolve(null)
+        }).render(true);
     });
+
   }
 
   _onThac0Roll(event) {
@@ -767,14 +932,28 @@ export class LmActorSheet extends ActorSheet {
               label: game.i18n.localize('LM.melee.attack'),
               callback: (html) => {
                 let attackmod = html.find('input[name=\'inputField\']');
-                let mod = "+" + attackmod.val();
-                let melee = "+" + meleemod;
-                let result = new Roll("d20" + mod + melee, data).roll();
-                let hitac = thac0 - result.total;
+                let mod = attackmod.val();
+                let melee = meleemod;
+                let result = new Roll("d20",data).roll();
+                if (result.total == 1) {
+                  let fumble = '<span class="failed"><a class="fumble">¡1! Posible pifia</a></span> ';
+                  result.toMessage({
+                    speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                    flavor: fumble,
+                  });
+                } else if (result.total == 20){
+                  let critical = '<span class="success"><a class="critical">¡20! Golpeas y posible crítico</a></span> ';
+                  result.toMessage({
+                    speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                    flavor: critical,
+                  });
+                } else {
+                let hitac = thac0 - result.total - mod - melee;
                 result.toMessage({
                   speaker: ChatMessage.getSpeaker({actor: this.actor}),
                   flavor: `Ataque de melé da a CA:` + hitac,
                 });
+              }
              }
             },
             missile: {
@@ -782,14 +961,28 @@ export class LmActorSheet extends ActorSheet {
               label: game.i18n.localize('LM.missile.attack'),
               callback: (html) => {
                 let attackmod = html.find('input[name=\'inputField\']');
-                let mod = "+" + attackmod.val();
-                let missile = "+" + missilemod
-                let result = new Roll("d20" + mod + missile, data).roll();
-                let hitac = thac0 - result.total;
+                let mod = attackmod.val();
+                let missile = missilemod
+                let result = new Roll("d20", data).roll();
+                if (result.total == 1) {
+                  let fumble = '<span class="failed fumble"><a>¡1! Posible pifia</a></span> ';
+                  result.toMessage({
+                    speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                    flavor: fumble,
+                  });
+                } else if (result.total == 20){
+                  let critical = '<span class="success critical"><a>¡20! Golpeas y posible crítico</a></span> ';
+                  result.toMessage({
+                    speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                    flavor: critical,
+                  });
+                } else {
+                let hitac = thac0 - result.total - mod - missile;
                 result.toMessage({
                   speaker: ChatMessage.getSpeaker({actor: this.actor}),
                   flavor: `Ataque de distancia da a CA:` + hitac,
                 });
+              }
               }
             }
          },
@@ -841,6 +1034,9 @@ export class LmActorSheet extends ActorSheet {
                 let missile = "+" + missilemod
                 let result = new Roll("d20" + mod + missile, data).roll();
                 let hitac = thac0 - result.total;
+                item.update({
+                  data: { range: { ammunition: {quantity : item.data.data.range.ammunition.quantity - 1 } }},
+                });
                 result.toMessage({
                   speaker: ChatMessage.getSpeaker({actor: this.actor}),
                   flavor: item.name + `Ataque de distancia da a CA:` + hitac,
