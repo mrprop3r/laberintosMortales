@@ -796,8 +796,9 @@ export class LmActorSheet extends ActorSheet {
     if (item.data.data.melee || item.data.data.throw) {
       if (item.data.data.melee){
         bdmg = "+" + (data.abilities.str.mod + bdmgm);
-      }
-      bdmg = "+" + (data.abilities.str.mod + bdmgp);
+      } else {
+        bdmg = "+" + (data.abilities.str.mod + bdmgp);
+        }
     }
     else {
       bdmg = "+" + bdmgp;
@@ -857,6 +858,7 @@ export class LmActorSheet extends ActorSheet {
          content: `<form>
          <div class="form-group">
            <label>Escoge modificador a tirada de salvación</label>
+           <input type='text' name='inputField'></input>
          </div>
         </form>`,
          buttons: {
@@ -864,6 +866,9 @@ export class LmActorSheet extends ActorSheet {
               icon: '<i class="fas fa-dice-d20"></i>',
               label: game.i18n.localize('LM.roll.normal'),
               callback: (html) => {
+                let mod = html.find('input[name=\'inputField\']');
+                let saveMod = mod.val();
+                bonus = bonus + saveMod;
                 let result = new Roll(bonus ? `d20+${bonus}` : "d20", data).roll();
                 let success = (result.total >= data.saves[dataset.save].value ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
                 let saveName = game.i18n.localize(`${CONFIG.LM.savesCheck[dataset.save]}`);
@@ -877,7 +882,9 @@ export class LmActorSheet extends ActorSheet {
               icon: '<i class="fas fa-tint"></i>',
               label: game.i18n.localize('LM.roll.venom'),
               callback: (html) => {
-                bonus = data.abilities.con.venom;
+                let mod = html.find('input[name=\'inputField\']');
+                let saveMod = "+" + mod.val();
+                bonus = data.abilities.con.venom + saveMod;
                 let result = new Roll(bonus ? `d20+${bonus}` : "d20", data).roll();
                 let success = (result.total >= data.saves[dataset.save].value ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
                 let saveName = game.i18n.localize(`${CONFIG.LM.savesCheck[dataset.save]}`);
@@ -891,7 +898,9 @@ export class LmActorSheet extends ActorSheet {
               icon: '<i class="fas fa-magic"></i>',
               label: game.i18n.localize('LM.roll.magic'),
               callback: (html) => {
-                bonus = data.abilities.wis.save;
+                let mod = html.find('input[name=\'inputField\']');
+                let saveMod =  "+" + mod.val();
+                bonus = data.abilities.wis.save + saveMod;
                 let result = new Roll(bonus ? `d20+${bonus}` : "d20", data).roll();
                 let success = (result.total >= data.saves[dataset.save].value ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
                 let saveName = game.i18n.localize(`${CONFIG.LM.savesCheck[dataset.save]}`);
@@ -1015,14 +1024,28 @@ export class LmActorSheet extends ActorSheet {
               label: game.i18n.localize('LM.melee.attack'),
               callback: (html) => {
                 let attackmod = html.find('input[name=\'inputField\']');
-                let mod = "+" + attackmod.val();
-                let melee = "+" + meleemod;
-                let result = new Roll("d20" + mod + melee, data).roll();
-                let hitac = thac0 - result.total;
+                let mod = attackmod.val();
+                let melee = meleemod;
+                let result = new Roll("d20", data).roll();
+                if (result.total == 1) {
+                  let fumble = '<span class="failed"><a class="fumble">¡1! Posible pifia</a></span> ';
+                  result.toMessage({
+                    speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                    flavor: fumble,
+                  });
+                } else if (result.total == 20){
+                  let critical = '<span class="success"><a class="critical">¡20! Golpeas y posible crítico</a></span> ';
+                  result.toMessage({
+                    speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                    flavor: critical,
+                  });
+                } else {
+                let hitac = thac0 - result.total - mod - melee;
                 result.toMessage({
                   speaker: ChatMessage.getSpeaker({actor: this.actor}),
                   flavor: item.name + `Ataque de melé da a CA:` + hitac,
                 });
+              }
              }
             },
             missile: {
@@ -1030,10 +1053,23 @@ export class LmActorSheet extends ActorSheet {
               label: game.i18n.localize('LM.missile.attack'),
               callback: (html) => {
                 let attackmod = html.find('input[name=\'inputField\']');
-                let mod = "+" + attackmod.val();
-                let missile = "+" + missilemod
-                let result = new Roll("d20" + mod + missile, data).roll();
-                let hitac = thac0 - result.total;
+                let mod = attackmod.val();
+                let missile = missilemod
+                let result = new Roll("d20", data).roll();
+                if (result.total == 1) {
+                  let fumble = '<span class="failed fumble"><a>¡1! Posible pifia</a></span> ';
+                  result.toMessage({
+                    speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                    flavor: fumble,
+                  });
+                } else if (result.total == 20){
+                  let critical = '<span class="success critical"><a>¡20! Golpeas y posible crítico</a></span> ';
+                  result.toMessage({
+                    speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                    flavor: critical,
+                  });
+                } else {
+                let hitac = thac0 - result.total - mod - missile;
                 item.update({
                   data: { range: { ammunition: {quantity : item.data.data.range.ammunition.quantity - 1 } }},
                 });
@@ -1043,6 +1079,7 @@ export class LmActorSheet extends ActorSheet {
                 });
               }
             }
+          }
          },
          default: "roll",
          close: () => resolve(null)

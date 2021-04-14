@@ -184,7 +184,8 @@ export const LM = {
                 yes: false
             },
             initBonus: {
-                yes: false
+                yes: true,
+                value: 1
             },
             searchBonus: {
                 yes: false
@@ -280,6 +281,14 @@ export const LM = {
             title: [ "Aspirante", "Acólito", "Adepto", "Sacerdote", "Curandero", "Vicario", "Rector", "Prelado", "Obispo", "Patriarca", "Patriarca 10º", "Patriarca 11º", "Patriarca 12º", "Patriarca 13º", "Teócrata" ],
             thac0: [ 20, 19, 19, 18, 18, 17, 17, 16, 16, 15, 15, 14, 14, 13, 13 ],
             hitbonusp: {
+                yes: false,
+            },
+            dmgBonusm: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+            dmgBonusp: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+            iniBonus: {
+                yes: false,
+            },
+            acBonus: {
                 yes: false,
             },
             xpn: [ 100, 1565, 3125, 6251, 12501, 25001, 50001, 100001, 200001, 300001, 400001, 500001, 600001, 700001, 700001 ],
@@ -698,6 +707,9 @@ export const LM = {
             luck: true,
             title: [ "Aspirante", "Veterano", "Luchador", "Héroe", "Bravucón", "Mirmidón", "Campeón", "Gran maestro", "Lord", "Lord", "Lord", "Lord", "Lord", "Lord", "Lord" ],
             thac0: [ 20, 19, 18, 18, 17, 16, 16, 15, 14, 14, 14, 14, 14, 14, 14 ],
+            hitbonusp: {
+                yes: false,
+            },
             dmgBonusm: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             dmgBonusp: [ 0, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3],
             xpn: [ 100, 2035, 4065, 8125, 16251, 32501, 65001, 130001, 130001, 1300001, 130001, 130001, 130001, 130001, 130001 ],
@@ -746,6 +758,9 @@ export const LM = {
             luck: true,
             title: [ "Aspirante", "Salteador", "Encapuchado", "Atracador", "Asaltante", "Cortabolsas", "Malandrín", "Ladronzuelo", "Ratero", "Maestro ladrón", "Maestro ladrón", "Maestro ladrón", "Maestro ladrón", "Maestro ladrón", "Príncipe ladrón" ],
             thac0: [ 20, 19, 19, 18, 18, 17, 17, 16, 16, 15, 15, 14, 14, 13, 13 ],
+            hitbonusp: {
+                yes: false,
+            },
             dmgBonusm: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
             dmgBonusp: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
             xpn: [ 100, 1251, 2501, 5001, 10001, 20001, 40001, 80001, 180001, 2800001, 380001, 480001, 580001, 680001, 680001 ],
@@ -792,6 +807,9 @@ export const LM = {
             luck: false,
             title: [ "Aspirante", "Arcaísta", "Vidente", "Teúrgo", "Prestidigitador", "Taumaturgo", "Encantador", "Brujo", "Mago", "Hechicero", "Hechicero", "Hechicero", "Hechicero", "Hechicero", "Archimago" ],
             thac0: [ 20, 19, 19, 19, 18, 18, 18, 17, 17, 17, 16, 16, 16, 15, 15 ],
+            hitbonusp: {
+                yes: false,
+            },
             dmgBonusm: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
             dmgBonusp: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
             xpn: [ 100, 2501, 5001, 10001, 20001, 40001, 80001, 160001, 310001, 4600001, 610001, 760001, 910001, 1060001, 1060001 ],

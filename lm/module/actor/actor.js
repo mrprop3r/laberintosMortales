@@ -473,7 +473,7 @@ export class LmActor extends Actor {
 
       });
       let weight = data.encumbrance.value;
-      if (weight > data.encumbrance.weight + 1) {
+      if (weight >= data.encumbrance.weight + 1) {
         data.movement.base = 0;
       } else if (weight > data.encumbrance.weight) {
         data.movement.base = 30;
@@ -491,7 +491,12 @@ export class LmActor extends Actor {
     data.movement.encounter = data.movement.base / 3;
 
     // Compute initiative value 
-    data.initiative.value += data.abilities.dex.init;
+    data.initiative.bonus = classInfo.initBonus.yes;
+    if (data.initiative.bonus) {
+      data.initiative.value += (classInfo.initBonus.value + data.abilities.dex.init);
+    } else {
+      data.initiative.value += data.abilities.dex.init;
+    }
 
     // Compute thac0 and modifiers
     data.thac0.value = classInfo.thac0[data.description.level.value];
@@ -540,13 +545,17 @@ export class LmActor extends Actor {
     /* Compute freeHands */    
     let total = 0;
     let hands = this.data.items.filter(
-      (i) => i.type == "weapon" && i.data.equipped
+      (i) => i.type == ("weapon" && i.data.equipped) || ("shield" && i.data.equipped),
     );
     hands.forEach((item) => {
       total += 1;
+      if (item.data.twoHanded) {
+        total += 1;
+      }
     });
-    data.hands = total;
-    if ( data.hands == 3) {
+
+    data.hands = total
+    if ( data.hands >= 3) {
       ui.notifications.error(game.i18n.localize("LM.toomuchhands"));
     }
 
