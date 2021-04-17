@@ -61,18 +61,10 @@ export class LmMonsterSheet extends ActorSheet {
     if (this.actor.data.type == 'monster') {
       this._prepareMonsterItems(data);
     }
-    data.data.treasure.link = TextEditor.enrichHTML(data.data.treasure.table);
 
     return data;
   }
 
-  activateEditor(target, editorOptions, initialContent) {
-    // remove some controls to the editor as the space is lacking
-    if (target == "data.treasure.table") {
-      editorOptions.toolbar = "save";
-    }
-    super.activateEditor(target, editorOptions, initialContent);
-  }
 
   /**
    * Organize and classify Items for Character sheets.
@@ -225,6 +217,7 @@ export class LmMonsterSheet extends ActorSheet {
     html.find('.reaction-check').click(this._onReactionRoll.bind(this));
     html.find(".appearing-check.W").click(this._appearingW.bind(this));
     html.find(".appearing-check.D").click(this._appearingD.bind(this));
+    html.find(".roll.treasure").click(this._onTreasureRoll.bind(this));
     html.find('.saving-throw').click(this._onSavingThrow.bind(this));
 
     // Add Inventory Item
@@ -616,6 +609,55 @@ export class LmMonsterSheet extends ActorSheet {
       title: game.i18n.format("LM.roll.appearing") + label,
     });
   }
+  async _onTreasureRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    const dice = '1d100';
+    const rollpc = new Roll(dice).roll();
+    let pc = rollpc.total;
+    const rollppt = new Roll(dice).roll();
+    let ppt = rollppt.total
+    const rollpe = new Roll(dice).roll();
+    let pe = rollpe.total
+    const rollpo = new Roll(dice).roll();
+    let po = rollpo.total
+    const rollpp = new Roll(dice).roll();
+    let pp = rollpp.total
+    const rollgems = new Roll(dice).roll();
+    let gems = rollgems.total
+    const rolljewels = new Roll(dice).roll();
+    let jewels = rolljewels.total
+    const rollmagic = new Roll(dice).roll();
+    let magic = rollmagic.total
+    const data = this.actor.data.data;
+    let treasurePc = (pc <= data.treasure.pcPercent ? data.treasure.pcQuantity : 0 );
+    let treasurePpt = (ppt <= data.treasure.pptPercent ? data.treasure.pptQuantity : 0 );
+    let treasurePe = (pe <= data.treasure.pePercent ? data.treasure.peQuantity : 0 );
+    let treasurePo = (po <= data.treasure.poPercent ? data.treasure.poQuantity : 0 );
+    let treasurePp = (pp <= data.treasure.ppPercent ? data.treasure.ppQuantity : 0 );
+    let treasureGems = (gems <= data.treasure.gemsPercent ? data.treasure.gemsQuantity : 0 );
+    let treasureJewels = (jewels <= data.treasure.jewelsPercent ? data.treasure.jewelsQuantity : 0 );
+    let treasureMagic = (magic <= data.treasure.magicPercent ? data.treasure.magicQuantity : 0 );
+    const treasure = {
+      actor: this.actor,
+      treasurePc,
+      treasurePpt,
+      treasurePe,
+      treasurePo,
+      treasurePp,
+      treasureGems,
+      treasureJewels,
+      treasureMagic
+    };
+    const chatContent = await renderTemplate("systems/lm/templates/chat/treasure-roll.html", treasure);
+    ChatMessage.create({
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: chatContent,
+        }, {rollMode: DICE_ROLL_MODES.BLIND});
+    return;
+
+  }
   _onSavingThrow(event) {
     event.preventDefault();
     const element = event.currentTarget;
@@ -638,6 +680,7 @@ export class LmMonsterSheet extends ActorSheet {
     let data = this.actor.data.data;
     const meleemod = data.thac0.mod.melee;
     const missilemod = data.thac0.mod.missile;
+    const itemBonus = item.data.data.bonus;
     const thac0 = data.thac0.value;
     item.update({
       data: { counter: { value: item.data.data.counter.value - 1 } },
@@ -657,14 +700,28 @@ export class LmMonsterSheet extends ActorSheet {
               label: game.i18n.localize('LM.melee.attack'),
               callback: (html) => {
                 let attackmod = html.find('input[name=\'inputField\']');
-                let mod = "+" + attackmod.val();
-                let melee = "+" + meleemod;
-                let result = new Roll("d20" + mod + melee, data).roll();
-                let hitac = thac0 - result.total;
+                let mod = attackmod.val();
+                let melee = meleemod + itemBonus;
+                let result = new Roll("d20", data).roll();
+                if (result.total == 1) {
+                  let fumble = '<span class="failed"><a class="fumble">¡1! Posible pifia</a></span> ';
+                  result.toMessage({
+                    speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                    flavor: fumble,
+                  });
+                } else if (result.total == 20){
+                  let critical = '<span class="success"><a class="critical">¡20! Golpeas y posible crítico</a></span> ';
+                  result.toMessage({
+                    speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                    flavor: critical,
+                  });
+                } else {
+                let hitac = thac0 - result.total - mod - melee;
                 result.toMessage({
                   speaker: ChatMessage.getSpeaker({actor: this.actor}),
-                  flavor: item.name + `Ataque de melé da a CA:` + hitac,
+                  flavor: "<b>"+ item.name + ":</b>" + ` Ataque de melé da a CA:` + `<b class="attack">` + hitac + "</b>",
                 });
+              }
              }
             },
             missile: {
@@ -672,14 +729,31 @@ export class LmMonsterSheet extends ActorSheet {
               label: game.i18n.localize('LM.missile.attack'),
               callback: (html) => {
                 let attackmod = html.find('input[name=\'inputField\']');
-                let mod = "+" + attackmod.val();
-                let missile = "+" + missilemod
-                let result = new Roll("d20" + mod + missile, data).roll();
-                let hitac = thac0 - result.total;
+                let mod = attackmod.val();
+                let missile = missilemod + itemBonus;
+                let result = new Roll("d20", data).roll();
+                if (result.total == 1) {
+                  let fumble = '<span class="failed fumble"><a>¡1! Posible pifia</a></span> ';
+                  result.toMessage({
+                    speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                    flavor: fumble,
+                  });
+                } else if (result.total == 20){
+                  let critical = '<span class="success critical"><a>¡20! Golpeas y posible crítico</a></span> ';
+                  result.toMessage({
+                    speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                    flavor: critical,
+                  });
+                } else {
+                let hitac = thac0 - result.total - mod - missile;
+                item.update({
+                  data: { range: { ammunition: {quantity : item.data.data.range.ammunition.quantity - 1 } }},
+                });
                 result.toMessage({
                   speaker: ChatMessage.getSpeaker({actor: this.actor}),
-                  flavor: item.name + `Ataque de distancia da a CA:` + hitac,
+                  flavor: "<b>"+ item.name + ":</b>" + ` Ataque de distancia da a CA:` + `<b class="attack">` + hitac + "</b>",
                 });
+              }
               }
             }
          },

@@ -74,6 +74,10 @@
                 <label>{{ localize "LM.items.wc"}}</label>
                 <input type="text" name="data.wc" value="{{data.wc}}" data-dtype="Number" />
               </div>
+              <div class="item-info">
+                <label>{{ localize "LM.items.crit"}}</label>
+                <input type="text" name="data.crit" value="{{data.crit}}" data-dtype="Number" />
+              </div>
               <div class="ranges-icons">
                 <a title="{{localize 'LM.items.melee'}}" class="melee-toggle 
                   {{#if data.melee}}active{{/if}}"><i class="fas fa-fist-raised"></i></a>
@@ -112,17 +116,6 @@
                 </div>
               </div>
               {{/if}}
-              <div class="item-info">
-                <label>{{localize 'LM.spell.save'}}</label>
-                  <select name="data.save">
-                    {{#select data.save}}
-                    <option value=""></option>
-                    {{#each config.savesShort as |save a|}}
-                    <option value="{{a}}">{{save}}</option>
-                    {{/each}}
-                    {{/select}}
-                  </select>
-              </div>
           </div>
               <div class="description">
                   {{editor content=data.description target="data.description" button=true

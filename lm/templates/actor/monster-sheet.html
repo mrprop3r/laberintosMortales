@@ -88,9 +88,9 @@
                     title='{{localize "LM.data.magicUser"}}'>
                   <i class="far {{#if data.magicUser}}fa-times-circle{{else}}fa-circle{{/if}}"></i>
                   </a>
-                <li class="treasure-table" title="{{localize 'LM.monster.treasureTable'}}">
-                   {{editor content=data.treasure.table target="data.treasure.table"
-                      button=true owner=owner editable=editable}}
+                <li class="treasure-table" title="{{localize 'LM.monster.treasure'}}">
+                    <label><a class="roll treasure">{{localize 'LM.monster.treasure'}}</a></label>
+                    <input class="header-input2" name="data.treasure.table" value="{{data.treasure.table}}">
                 </li>
                 </li>
               </ul>

@@ -40,11 +40,12 @@ export class LmItemSheet extends ItemSheet {
         if (it.type === 'container') {
           data.containers[it.name] = it.name;
         }
-        if (this.actor && this.item.data.carried !== 'encima') {
-          this.object.update({data: {conta: this.object.data.data.carried}});
-        }
+        this.object.update({data: {conta: this.object.data.data.carried,
+          }});
       }); 
     } 
+
+
     return data;
   }
 

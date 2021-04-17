@@ -470,6 +470,14 @@
             <div class="skills-head">
               <span class="title">{{localize "LM.skills.bonus"}}</span>
               <span class="data">{{data.skills.skillsPoints}}</span>
+              {{#if data.skills.luck.yes  }}
+              <div class="luck">
+                <a class="useTheLuck" title="{{localize 'LM.luckUses'}}"><i class="fas fa-dice-six"></i></a>
+                <span class="title">{{ localize "LM.luck"}}</span>
+                <span class="data">{{data.skills.luck.value}}</span>
+                <a class="resetLuck" title="{{localize 'LM.luckUsesReset'}}"><i class="fas fa-sync"></i></a>
+              </div>
+              {{/if}}
             </div>
             <div class="skills-list">
               <span>{{localize "LM.skills.acr"}}</span>

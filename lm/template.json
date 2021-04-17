@@ -42,7 +42,7 @@
             }
         },
         "hp": {
-          "hd": "1d4",
+          "hd": "d4",
           "value": 4,
           "max": 4
         },
@@ -167,6 +167,10 @@
           "yes": false,
           "righteous": false,
           "used": 0
+        },
+        "luck": {
+          "yes": false,
+          "value": 1
         }
       },
       "encumbrance": {
@@ -179,7 +183,7 @@
       "aligment": "",
       "xp": 5,
       "treasure": {
-        "table": "",
+        "table": "A",
         "type": ""
       },
       "appearing": {
@@ -228,7 +232,8 @@
             "identified": true,
             "carried": "encima",
             "conta": "0",
-            "hands": 0
+            "hands": 0,
+            "fastBonus": 0
         }
     },
     "item": {
@@ -241,6 +246,7 @@
         "damage2": "1d8",
         "wc": 0,
         "bonus": 0,
+        "crit": 20,
         "tags": [],
         "isDamage2": false,
         "slow": false,
@@ -268,14 +274,14 @@
         "type": "light",
         "damage": "1d3",
         "wc": 0,
+        "crit": 20,
         "splintered": false
     },
     "container": {
         "templates": ["common"],
         "capacity": {
           "max": 1,
-          "value": 0,
-          "fastBonus": 0
+          "value": 0
         },
         "drop": false
     },

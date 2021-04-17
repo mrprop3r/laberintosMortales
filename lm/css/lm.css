@@ -85,17 +85,25 @@
 .objetive {
   color: rgb(38, 59, 38);
   font-weight: bold;
-  font-weight: 16px;
 }
 .success {
   color: #0A0;
   font-weight: bold;
-  font-weight: 16px;
 }
 .failed {
   color: rgb(255, 0, 0);
   font-weight: bolder;
-  font-weight: 16px;
+}
+.attack {
+  color:white;
+  background: var(--color-foreground);
+  padding: 2px;
+  border-radius: 25%;
+  font-weight: bold;
+  margin: 2px;
+}
+.lm.chat-card .card-content {
+  background: #ffffff;
 }
 .lm.chat-card .card-content > * {
   -webkit-user-select: text;
@@ -110,9 +118,13 @@
   font-weight: bold;
   text-align: center;
 }
+.lm.chat-card header.card-header h3 {
+  font-weight: bolder;
+ }
 .lm.chat-card header.card-header img {
   flex: 0 0 30px;
   height: 30px;
+  border: none;
  }
  .lm.chat-card footer.card-footer {
   font-size: 10px;
@@ -790,6 +802,15 @@
   height: 26px;
   background: var(--color-foreground);
 }
+.lm.sheet.actor .sheet-body .tab.features .skills-box .skills-head .luck {
+  text-align: right;
+  position: relative;
+  bottom: 16px;
+  margin-right: 3px;
+}
+.lm.sheet.actor .sheet-body .tab.features .skills-box .skills-head a {
+  color: white;
+}
 .lm.sheet.actor .sheet-body .tab.features .skills-box .skills-head .title {
   color: white;
   text-align: center;
@@ -798,6 +819,7 @@
   background: var(--color-background);
   padding: 2px;
   border-radius: 25%;
+  font-weight: bold;
 }
 .lm.sheet.actor .sheet-body .tab.features .skills-box .skills-list {
   display: flex;
@@ -1705,27 +1727,20 @@
   font-size: 12px;
   font-weight: bold;
   text-align: center;
+  border: solid 1px;
+  color: white;
+  font-weight: bold;
+  background: var(--color-foreground);
 }
-.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.treasure-table .editor {
-  height: 24px;
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.treasure-table label {
+  width: 50px;
+  text-align: left;
 }
-.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.treasure-table .editor .editor-edit {
-  font-size: xx-small;
-}
-.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.treasure-table .editor .tox .tox-editor-header {
-  font-size: xx-small; 
-  position: relative;
-  left: 90px;
-  width: 40px;
-}
-.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.treasure-table .editor .tox .tox-sidebar-wrap {
-  font-size: xx-small;
-  position: relative; 
-  top: 5px;
-}
-
-.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.treasure-table .editor .tox .tox-tbtn {
-  height: 24px;
+.lm.sheet.monster .sheet-header .header-fields .monster-data ul li.treasure-table input {
+  margin: 2px;
+  width: 20px;
+  border: none;
+  font-weight: bold;
 }
 
 /*  monster tabs  */

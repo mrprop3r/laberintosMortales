@@ -2,7 +2,7 @@
   "name": "lm",
   "title": "Laberintos Mortales",
   "description": "El sistema de Laberintos Mortales para FoundryVTT!",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "minimumCoreVersion": "0.7.9",
   "compatibleCoreVersion": "0.7.9",
   "templateVersion": 2,
@@ -27,6 +27,6 @@
   "gridUnits": "ft",
   "url": "https://github.com/mrprop3r/laberintosMortales",
   "manifest": "",
-  "download": "",
+  "download": "https://github.com/mrprop3r/laberintosMortales/lm",
   "license": "LICENSE.txt"
 }

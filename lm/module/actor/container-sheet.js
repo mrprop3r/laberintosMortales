@@ -257,9 +257,9 @@ export class LmContainerSheet extends ActorSheet {
     const gmValue = this.actor.data.data.gm;
     this.actor.update({ 
       "data.gm": !gmValue,
-      "data.group": gmValue,
-      "data.object": gmValue,
-      "data.shop": gmValue,
+      "data.group": false,
+      "data.object": false,
+      "data.shop": false,
      });
     this._render();
     });
@@ -269,9 +269,9 @@ export class LmContainerSheet extends ActorSheet {
     const groupValue = this.actor.data.data.group;
     this.actor.update({ 
       "data.group": !groupValue,
-      "data.gm": groupValue,
-      "data.object": groupValue,
-      "data.shop": groupValue,
+      "data.gm": false,
+      "data.object": false,
+      "data.shop": false,
      });
     this._render();
     });
@@ -281,9 +281,9 @@ export class LmContainerSheet extends ActorSheet {
       const objectValue = this.actor.data.data.object;
       this.actor.update({ 
         "data.object": !objectValue,
-        "data.group": objectValue,
-        "data.gm": objectValue,
-        "data.shop": objectValue,
+        "data.group": false,
+        "data.gm": false,
+        "data.shop": false,
      });
       this._render();
       });
@@ -293,9 +293,9 @@ export class LmContainerSheet extends ActorSheet {
       const shopValue = this.actor.data.data.shop;
       this.actor.update({ 
         "data.shop": !shopValue,
-        "data.group": shopValue,
-        "data.gm": shopValue,
-        "data.object": shopValue,
+        "data.group": false,
+        "data.gm": false,
+        "data.object": false,
        });
       this._render();
       });

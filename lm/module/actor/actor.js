@@ -138,6 +138,7 @@ export class LmActor extends Actor {
     if (occupations.length>0) data.retainer.occupation = occupations[0].name;
     // Set Hit Die from class
     data.hp.hd = classInfo.hd;
+    data.hp.advantage = classInfo.hdAdvantage,
     // Set Title from level
     data.description.title = classInfo.title[data.description.level.value];
     // Set xp next level
@@ -302,13 +303,16 @@ export class LmActor extends Actor {
     );
     
     let totalFast = 0;
+    let fastBonus = 0;
     Object.values(this.data.items).forEach((item) => {
       if (item.data.fast) {
       totalFast += 1;
       }
+      fastBonus = item.data.fastBonus;
     });
       
     data.abilities.dex.fast = totalFast;
+    data.abilities.dex.itemFast += fastBonus;
 
     /*  Compute languages   */
     const literacy = {
@@ -359,11 +363,16 @@ export class LmActor extends Actor {
     );
     data.skills.arch.mod = data.skills.arch.mod1 + data.skills.arch.value;
     /* Search skill */
+    data.skills.sea.bonus = classInfo.searchBonus.yes;
     data.skills.sea.mod1 = LmActor._valueFromTable(
       capped,      
       data.abilities.wis.value
     );
     data.skills.sea.mod = data.skills.sea.mod1 + data.skills.sea.value;
+    if (data.skills.sea.bonus) {
+      data.skills.sea.mod += classInfo.searchBonus.value;
+    }
+
     /* Hear skill */
     data.skills.he.mod1 = LmActor._valueFromTable(
       capped,      
@@ -401,6 +410,7 @@ export class LmActor extends Actor {
     );
     data.skills.st.mod = data.skills.st.mod1 + data.skills.st.value;
     /* Survival skill */
+    data.skills.sur.bonus = classInfo.survivalBonus.yes;
     data.skills.sur.mod1 = LmActor._valueFromTable(
       capped,      
       data.abilities.int.value
@@ -415,7 +425,11 @@ export class LmActor extends Actor {
     if (data.skills.sur.mod2 > data.skills.sur.mod1) {
       data.skills.sur.mod = data.skills.sur.mod2 + data.skills.sur.value
     };
-
+    if (data.skills.sur.bonus) {
+      data.skills.sur.mod += classInfo.survivalBonus.value;
+    }
+    /*  Luck skill */ 
+    data.skills.luck.yes = classInfo.luck;
     /*  Backstab skill  */
     data.skills.back.yes = classInfo.backstab.value;
     if (data.skills.back.yes){
@@ -457,7 +471,6 @@ export class LmActor extends Actor {
       let totalWeight = 0;
 
       Object.values(this.data.items).forEach((item) => {
-        
         totalWeight += item.data.quantity * item.data.weight;
         data.encumbrance = {
           pct: Math.clamped(
@@ -496,6 +509,11 @@ export class LmActor extends Actor {
       data.initiative.value += (classInfo.initBonus.value + data.abilities.dex.init);
     } else {
       data.initiative.value += data.abilities.dex.init;
+    }
+    // Compute surprise modifier
+    data.surprise.bonus = classInfo.surpriseBonus.yes;
+    if (data.surprise.bonus){
+      data.surprise.mod += (classInfo.surpriseBonus.value);
     }
 
     // Compute thac0 and modifiers
@@ -564,13 +582,19 @@ export class LmActor extends Actor {
     let baseAc = 9;
     let AcShield = 0;
     let AcHelm = 0;
-    data.ac.naked = baseAc - data.abilities.dex.mod;
+    data.ac.bonus = classInfo.acBonus.yes
+    if (data.ac.bonus) {
+      data.ac.classBonus = classInfo.acBonus.value[data.description.level.value];
+    } else {
+      data.ac.classBonus = 0;
+    }
+    data.ac.naked = baseAc - data.ac.classBonus - data.abilities.dex.mod;
     const armors = this.data.items.filter((i) => i.type == "armor");
     armors.forEach((a) => {
       if (a.data.equipped && a.data.type == "unarmored") {
-        baseAc = a.data.ac;
+        baseAc = a.data.ac - data.ac.classBonus;
       } else if (a.data.equipped && a.data.type == "light") {
-        baseAc = a.data.ac;
+        baseAc = a.data.ac - data.ac.classBonus;
       } else if (a.data.equipped && a.data.type == "heavy") {
         baseAc = a.data.ac;
       } else if (a.data.equipped && a.data.type == "shield") {
@@ -593,8 +617,25 @@ export class LmActor extends Actor {
     // Compute combat movement
     data.movement.encounter = data.movement.base / 3;
 
-    
-
+    // Compute monster treasure
+    const treasureTable = CONFIG.LM.treasureTable[data.treasure.table];
+    console.log(treasureTable);
+    data.treasure.pcPercent = treasureTable.pc[0];
+    data.treasure.pcQuantity = treasureTable.pc[1];
+    data.treasure.pptPercent = treasureTable.ppt[0];
+    data.treasure.pptQuantity = treasureTable.ppt[1];
+    data.treasure.pePercent = treasureTable.pe[0];
+    data.treasure.peQuantity = treasureTable.pe[1];
+    data.treasure.poPercent = treasureTable.po[0];
+    data.treasure.poQuantity = treasureTable.po[1];
+    data.treasure.ppPercent = treasureTable.pp[0];
+    data.treasure.ppQuantity = treasureTable.pp[1];
+    data.treasure.gemsPercent = treasureTable.gems[0];
+    data.treasure.gemsQuantity = treasureTable.gems[1];
+    data.treasure.jewelsPercent = treasureTable.jewels[0];
+    data.treasure.jewelsQuantity = treasureTable.jewels[1];
+    data.treasure.magicPercent = treasureTable.magic[0];
+    data.treasure.magicQuantity = treasureTable.magic[1];
   }
 
   _prepareContainerData(actorData){

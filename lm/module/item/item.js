@@ -45,7 +45,7 @@ export class LmItem extends Item {
     const itemData = this.data;
     const actorData = this.actor ? this.actor.data : {};
     const data = itemData.data;
-    
+
   }
 
   pushTag(values) {

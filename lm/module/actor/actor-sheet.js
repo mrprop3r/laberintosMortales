@@ -321,6 +321,7 @@ export class LmActorSheet extends ActorSheet {
         _id: li.data("itemId"),
         data: {
           fast: !items.data.data.fast,
+          packed: true,
         },
       });
     });
@@ -444,7 +445,23 @@ export class LmActorSheet extends ActorSheet {
       })
       this._render();
     });
+    // Use the luck
+    html.find(".useTheLuck").click(this._onLuck.bind(this));
 
+    // Reset Luck
+    html.find(".resetLuck").click(async (ev) => {
+      const newValue = 1;
+      this.actor.update({ 
+        data: {
+          skills: {
+            luck: {
+              value: newValue,
+                } 
+              },
+            },
+        })
+        this._render();
+    });
     
     // inventory weapon rolls
     html.find('.dmg.roll').click(ev =>
@@ -772,6 +789,27 @@ export class LmActorSheet extends ActorSheet {
    });
   }
 
+  async _onLuck(event) {
+    event.preventDefault();
+        const luck = 0;
+        this.actor.update({ 
+          data: {
+            skills: {
+              luck: {
+                value: luck,
+                  } 
+                },
+              },
+        }),this._render();
+        const chatContent = game.i18n.localize('LM.useTheLuck');
+        ChatMessage.create({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                content: chatContent,
+            }, );
+    return;
+  }
+
+
   _onHdRoll(event) {
     event.preventDefault();
     const element = event.currentTarget;
@@ -780,6 +818,9 @@ export class LmActorSheet extends ActorSheet {
     let data = this.actor.data.data;
     let hdb = "+" + data.abilities.con.mod;
     let dado = data.hp.hd;
+    if (data.hp.advantage) {
+       dado = "2"+ dado +"kh";
+    }
     let result = new Roll(dado + hdb, data).roll();
     result.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -807,13 +848,13 @@ export class LmActorSheet extends ActorSheet {
     {
       let r = new Roll(item.data.data.damage2 + bdmg);
       r.roll();
-      let messageHeader = "<b>" + item.name + `</b><b class="failed"> daño</b>`;
+      let messageHeader = "<b>" + item.name + ` hace </b><b class="failed"> daño</b>`;
       r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
     }
     else {
       let r = new Roll(item.data.data.damage + bdmg);
       r.roll();
-      let messageHeader = "<b>" + item.name + `</b><b class="failed"> daño</b>`;
+      let messageHeader = "<b>" + item.name + ` hace </b><b class="failed"> daño</b>`;
       r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader});
     }
   }
@@ -839,7 +880,7 @@ export class LmActorSheet extends ActorSheet {
     } else {
       success = ( r.total  ==  objetive ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
     }
-    let messageHeader = text + item.name +"(" + objetive + "):" + success;
+    let messageHeader = text + " " + item.name +"(" + objetive + "):" + success;
     r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader},
     { rollMode : rollMode });
   }
@@ -960,7 +1001,7 @@ export class LmActorSheet extends ActorSheet {
                 let hitac = thac0 - result.total - mod - melee;
                 result.toMessage({
                   speaker: ChatMessage.getSpeaker({actor: this.actor}),
-                  flavor: `Ataque de melé da a CA:` + hitac,
+                  flavor: `Ataque de melé da a CA:` + `<b class="attack">` + hitac + "</b>",
                 });
               }
              }
@@ -989,7 +1030,7 @@ export class LmActorSheet extends ActorSheet {
                 let hitac = thac0 - result.total - mod - missile;
                 result.toMessage({
                   speaker: ChatMessage.getSpeaker({actor: this.actor}),
-                  flavor: `Ataque de distancia da a CA:` + hitac,
+                  flavor: `Ataque de distancia da a CA:` + `<b class="attack">` + hitac + "</b>",
                 });
               }
               }
@@ -1008,6 +1049,8 @@ export class LmActorSheet extends ActorSheet {
     let data = this.actor.data.data;
     const meleemod = data.thac0.mod.melee;
     const missilemod = data.thac0.mod.missile;
+    const itemBonus = item.data.data.bonus;
+    const crit = item.data.data.crit;
     const thac0 = data.thac0.value;
     return new Promise(resolve => {
       new Dialog({
@@ -1025,7 +1068,7 @@ export class LmActorSheet extends ActorSheet {
               callback: (html) => {
                 let attackmod = html.find('input[name=\'inputField\']');
                 let mod = attackmod.val();
-                let melee = meleemod;
+                let melee = meleemod + itemBonus;
                 let result = new Roll("d20", data).roll();
                 if (result.total == 1) {
                   let fumble = '<span class="failed"><a class="fumble">¡1! Posible pifia</a></span> ';
@@ -1033,8 +1076,8 @@ export class LmActorSheet extends ActorSheet {
                     speaker: ChatMessage.getSpeaker({actor: this.actor}),
                     flavor: fumble,
                   });
-                } else if (result.total == 20){
-                  let critical = '<span class="success"><a class="critical">¡20! Golpeas y posible crítico</a></span> ';
+                } else if (result.total >= crit){
+                  let critical = `<span class="success critical"><a> ¡${crit}! Golpeas y posible crítico</a></span> `;
                   result.toMessage({
                     speaker: ChatMessage.getSpeaker({actor: this.actor}),
                     flavor: critical,
@@ -1043,7 +1086,7 @@ export class LmActorSheet extends ActorSheet {
                 let hitac = thac0 - result.total - mod - melee;
                 result.toMessage({
                   speaker: ChatMessage.getSpeaker({actor: this.actor}),
-                  flavor: item.name + `Ataque de melé da a CA:` + hitac,
+                  flavor: "<b>"+ item.name + ":</b>" + ` Ataque de melé da a CA:` + `<b class="attack">` + hitac + "</b><br />Bono: " + "<b>" + melee + "</b>",
                 });
               }
              }
@@ -1054,7 +1097,7 @@ export class LmActorSheet extends ActorSheet {
               callback: (html) => {
                 let attackmod = html.find('input[name=\'inputField\']');
                 let mod = attackmod.val();
-                let missile = missilemod
+                let missile = missilemod + itemBonus;
                 let result = new Roll("d20", data).roll();
                 if (result.total == 1) {
                   let fumble = '<span class="failed fumble"><a>¡1! Posible pifia</a></span> ';
@@ -1062,8 +1105,8 @@ export class LmActorSheet extends ActorSheet {
                     speaker: ChatMessage.getSpeaker({actor: this.actor}),
                     flavor: fumble,
                   });
-                } else if (result.total == 20){
-                  let critical = '<span class="success critical"><a>¡20! Golpeas y posible crítico</a></span> ';
+                } else if (result.total >= crit){
+                  let critical = `<span class="success critical"><a> ¡${crit}! Golpeas y posible crítico</a></span> `;
                   result.toMessage({
                     speaker: ChatMessage.getSpeaker({actor: this.actor}),
                     flavor: critical,
@@ -1075,7 +1118,7 @@ export class LmActorSheet extends ActorSheet {
                 });
                 result.toMessage({
                   speaker: ChatMessage.getSpeaker({actor: this.actor}),
-                  flavor: item.name + `Ataque de distancia da a CA:` + hitac,
+                  flavor: "<b>"+ item.name + ":</b>" + ` Ataque de distancia da a CA:` + `<b class="attack">` + hitac + "</b><br />Bono: " + "<b>" + missile + "</b>",
                 });
               }
             }
