@@ -86,6 +86,18 @@ Hooks.once('init', async function() {
 
 });
 
+Hooks.once("setup", function () {
+  // Localize CONFIG objects once up-front
+  const toLocalize = ["saves_long", "magicUser"];
+  for (let o of toLocalize) {
+    CONFIG.LM[o] = Object.entries(CONFIG.LM[o]).reduce((obj, e) => {
+      obj[e[0]] = game.i18n.localize(e[1]);
+      return obj;
+    }, {});
+  }
+});
+
+
 Hooks.once("ready", async function() {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createLmMacro(data, slot));

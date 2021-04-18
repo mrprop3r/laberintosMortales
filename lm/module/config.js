@@ -875,7 +875,6 @@ export const LM = {
         con: "LM.abilities.con.long",
         cha: "LM.abilities.cha.long",
     },
-    maxhands : 2,
     savesCheck: {
         death: "LM.saves.death.check",
         wand: "LM.saves.wand.check",
@@ -911,10 +910,10 @@ export const LM = {
         helm: "Helm",
     },
     magicUser : {
-        magicUser: "LM.user.magicUser",
-        divineUser: "LM.user.divineUser",
-        bladeUser: "LM.user.bladeUser",
-        elfUser: "LM.user.elfUser",
+        arcano: "LM.user.magicUser",
+        divino: "LM.user.divineUser",
+        danzafilos: "LM.user.bladeUser",
+        elfo: "LM.user.elfUser",
     },
     languages: [
         "LM.lan.common",

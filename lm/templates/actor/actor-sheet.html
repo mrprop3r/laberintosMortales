@@ -807,7 +807,7 @@
             {{/each}}
             {{#each actor.consumables as |item id|}}
                <li class="item flexrow" data-item-id="{{item._id}}">
-                   <div class="item-image consumable"><a><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></a></div>
+                   <div class="item-image consumable use"><a><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></a></div>
                    <h4 class="item-name">{{item.name}}</h4>
                    <div class="field-short black">
                     <span>{{item.data.carried}}</span>

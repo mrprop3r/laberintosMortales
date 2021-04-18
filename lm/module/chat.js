@@ -37,9 +37,12 @@ export function addChatListeners(html) {
   html.on('click', '.fumble', onFumble);
   html.on('click', '.critical', onCritical);
   html.on('click', '.apply.abilities', onApplyAbilities);
+
 }
 
 /* -------------------------------------------- */
+
+
 function onApplyAbilities(event) {
   console.log('apply');
 }

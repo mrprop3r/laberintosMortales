@@ -248,6 +248,7 @@
     "LM.hd.short": "Dg",
     "LM.hd.Long": "Dados de Golpe",
 
+    "LM.rollCheck": "Tirada",
     "LM.roll.hd": "Tirada de DG ",
     "LM.roll.dmg": "Tirada de Daño",
     "LM.roll.normal": "Tirada normal",
@@ -261,6 +262,7 @@
 
     "LM.surprisename": "Sorpresa",
     "LM.initiative.value": "Iniciativa",
+    "LM.initiativeRoll": "Tirada de iniciativa",
     "LM.combat.movement": "Mov",
     "LM.movement.other": "otro mov",
     "LM.combat.thac0": "gac0",

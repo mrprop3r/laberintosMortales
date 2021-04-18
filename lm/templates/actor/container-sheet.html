@@ -147,9 +147,10 @@
             <li class="item-titles flexrow">
               <div class="item-caret"><i class="fas fa-caret-down"></i></div>
               <div class="item-name">{{localize "LM.weaponsname"}}</div>
-              <div class="item-data">{{localize "LM.items.carriedIn"}}</div>
               <div class="item-data long">{{localize "LM.items.qualities"}}</div>
+              <div class="item-data"><i class="fas fa-hashtag" title="{{localize 'LM.items.quantity'}}"></i></div>
               <div class="item-data"><i class="fas fa-weight-hanging" title="{{localize 'LM.items.weight'}}"></i></div>
+              <div class="item-data"><i class="fas fa-circle" title="{{localize 'LM.items.value'}}"></i></div>
               <div class="item-controls">
                 <a class="item-control item-create" data-type="weapon" title="{{localize 'LM.Add'}}"><i
                     class="fa fa-plus"></i></a>
@@ -160,9 +161,6 @@
               <li class="item flexrow" data-item-id="{{item._id}}">
                   <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
                   <h4 class="item-name">{{item.name}}</h4>
-                  <div class="field-short black">
-                    <span>{{item.data.carried}}</span>
-                  </div>
                   <div class="icon-row flexrow">
                     {{#each item.data.tags as |tag|}}
                       {{#if (getTagIcon tag.value)}}
@@ -175,9 +173,17 @@
                     {{/unless}}
                     {{/each}}
                   </div>
+                  <div class="field-short flexrow">
+                    <label class="quantity minus" title="{{localize 'LM.items.sub'}}"><a class="fas
+                      fa-minus-circle"></a></label>
+                    <span>{{data.quantity}}</span>
+                    <label class="quantity plus" title="{{localize 'LM.items.sum'}}" value="{{data.quantity}}"><a class="fas
+                        fa-plus-circle"></a></label>
+                  </div>
                   <div class="field-short">
                     <span>{{item.data.weight}}</span>
                   </div>
+                  <div class="field-short">{{multround item.data.quantity item.data.cost}}</div>
                   <div class="item-controls">
                       <a class="item-control item-edit" title="{{localize 'LM.edit'}}"><i class="fas fa-edit"></i></a>
                       <a class="item-control item-delete" title="{{localize 'LM.Del'}}"><i class="fas fa-trash"></i></a>
@@ -190,11 +196,12 @@
           <li class="item-titles flexrow">
             <div class="item-caret"><i class="fas fa-caret-down"></i></div>
             <div class="item-name">{{localize "LM.armorsname"}}</div>
-            <div class="item-data">{{localize "LM.items.carriedIn"}}</div>
             <div class="item-data"></div>
             <div class="item-data">{{localize "LM.items.ac"}}</div>
             <div class="item-data"></div>
+            <div class="item-data"><i class="fas fa-hashtag" title="{{localize 'LM.items.quantity'}}"></i></div>
             <div class="item-data"><i class="fas fa-weight-hanging" title="{{localize 'LM.items.weight'}}"></i></div>
+            <div class="item-data"><i class="fas fa-circle" title="{{localize 'LM.items.value'}}"></i></div>
             <div class="item-controls">
               <a class="item-control item-create" data-type="armor" title="{{localize 'LM.Add'}}"><i
                   class="fa fa-plus"></i></a>
@@ -205,9 +212,6 @@
               <li class="item flexrow" data-item-id="{{item._id}}">
                   <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
                   <h4 class="item-name">{{item.name}}</h4>
-                  <div class="field-short black">
-                    <span>{{item.data.carried}}</span>
-                  </div>
                   <div class="field-short">
                   </div>
                   <div class="field-short">
@@ -215,9 +219,17 @@
                   </div>
                   <div class="field-short">
                   </div>
+                  <div class="field-short flexrow">
+                    <label class="quantity minus" title="{{localize 'LM.items.sub'}}"><a class="fas
+                      fa-minus-circle"></a></label>
+                    <span>{{data.quantity}}</span>
+                    <label class="quantity plus" title="{{localize 'LM.items.sum'}}" value="{{data.quantity}}"><a class="fas
+                        fa-plus-circle"></a></label>
+                  </div>
                   <div class="field-short">
                     <span>{{item.data.weight}}</span>
                   </div>
+                  <div class="field-short">{{multround item.data.quantity item.data.cost}}</div>
                   <div class="item-controls">
                       <a class="item-control item-edit" title="{{localize 'LM.edit'}}"><i class="fas fa-edit"></i></a>
                       <a class="item-control item-delete" title="{{localize 'LM.Del'}}"><i class="fas fa-trash"></i></a>
@@ -230,11 +242,12 @@
            <li class="item-titles flexrow">
             <div class="item-caret"><i class="fas fa-caret-down"></i></div>
             <div class="item-name">{{localize "LM.gearsname"}}</div>
-            <div class="item-data">{{localize "LM.items.carriedIn"}}</div>
+            <div class="item-data"></div>
+            <div class="item-data"></div>
             <div class="item-data"></div>
             <div class="item-data"><i class="fas fa-hashtag" title="{{localize 'LM.items.quantity'}}"></i></div>
-            <div class="item-data"></div>
             <div class="item-data"><i class="fas fa-weight-hanging" title="{{localize 'LM.items.weight'}}"></i></div>
+            <div class="item-data"><i class="fas fa-circle" title="{{localize 'LM.items.value'}}"></i></div>
             <div class="item-controls">
               <a class="item-control item-create" data-type="item" title="{{localize 'LM.Add'}}"><i
                   class="fa fa-plus"></i></a>
@@ -246,8 +259,9 @@
               <li class="item flexrow" data-item-id="{{item._id}}">
                   <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
                   <h4 class="item-name">{{item.name}}</h4>
-                  <div class="field-short black">
-                    <span>{{item.data.carried}}</span>
+                  <div class="field-short">
+                  </div>
+                  <div class="field-short">
                   </div>
                   <div class="field-short">
                   </div>
@@ -259,10 +273,9 @@
                         fa-plus-circle"></a></label>
                   </div>
                   <div class="field-short">
-                  </div>
-                  <div class="field-short">
                     <span>{{item.data.weight}}</span>
                   </div>
+                  <div class="field-short">{{multround item.data.quantity item.data.cost}}</div>
                   <div class="item-controls">
                     <a class="item-control item-edit" title="{{localize 'LM.edit'}}"><i class="fas fa-edit"></i></a>
                     <a class="item-control item-delete" title="{{localize 'LM.Del'}}"><i class="fas fa-trash"></i></a>
@@ -274,8 +287,9 @@
                <li class="item flexrow" data-item-id="{{item._id}}">
                    <div class="item-image consumable"><a><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></a></div>
                    <h4 class="item-name">{{item.name}}</h4>
-                   <div class="field-short black">
-                    <span>{{item.data.carried}}</span>
+                  <div class="field-short">
+                  </div>
+                  <div class="field-short">
                   </div>
                   <div class="field-short">
                   </div>
@@ -287,10 +301,9 @@
                          fa-plus-circle"></a></label>
                    </div>
                    <div class="field-short">
-                  </div>
-                   <div class="field-short">
                      <span>{{item.data.weight}}</span>
                    </div>
+                   <div class="field-short">{{multround item.data.quantity item.data.cost}}</div>
                    <div class="item-controls">
                      <a class="item-control item-edit" title="{{localize 'LM.edit'}}"><i class="fas fa-edit"></i></a>
                      <a class="item-control item-delete" title="{{localize 'LM.Del'}}"><i class="fas fa-trash"></i></a>
@@ -303,11 +316,12 @@
             <li class="item-titles flexrow">
              <div class="item-caret"><i class="fas fa-caret-down"></i></div>
              <div class="item-name">{{localize "LM.treasurename"}}</div>
-             <div class="item-data">{{localize "LM.items.carriedIn"}}</div>
              <div class="item-data"></div>
-             <div class="item-data"><i class="fas fa-circle" title="{{localize 'LM.items.value'}}"></i></div>
+             <div class="item-data"></div>
+             <div class="item-data"></div>
              <div class="item-data"><i class="fas fa-hashtag" title="{{localize 'LM.items.quantity'}}"></i></div>
              <div class="item-data"><i class="fas fa-weight-hanging" title="{{localize 'LM.items.weight'}}"></i></div>
+             <div class="item-data"><i class="fas fa-circle" title="{{localize 'LM.items.value'}}"></i></div>
              <div class="item-controls">
                <a class="item-control item-create" data-type="item" data-treasure= "true" title="{{localize 'LM.Add'}}"><i
                    class="fa fa-plus"></i></a>
@@ -319,12 +333,12 @@
                <li class="item flexrow" data-item-id="{{item._id}}">
                    <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
                    <h4 class="item-name">{{item.name}}</h4>
-                   <div class="field-short black">
-                    <span>{{item.data.carried}}</span>
+                  <div class="field-short">
                   </div>
                   <div class="field-short">
                   </div>
-                   <div class="field-short">{{multround item.data.quantity item.data.cost}}</div>
+                  <div class="field-short">
+                  </div>
                    <div class="field-short flexrow">
                     <label class="quantity minus" title="{{localize 'LM.items.sub'}}"><a class="fas
                       fa-minus-circle"></a></label>
@@ -335,6 +349,7 @@
                   <div class="field-short">
                     <span>{{item.data.weight}}</span>
                   </div>
+                  <div class="field-short">{{multround item.data.quantity item.data.cost}}</div>
                    <div class="item-controls">
                        <a class="item-control item-edit" title="{{localize 'LM.edit'}}"><i class="fas fa-edit"></i></a>
                        <a class="item-control item-delete" title="{{localize 'LM.Del'}}"><i class="fas fa-trash"></i></a>

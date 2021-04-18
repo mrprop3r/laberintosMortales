@@ -45,7 +45,10 @@
   max-width: 460px;
   min-height: 580px;
 }
-
+/*  Journal */
+.journal-sheet .window-content {
+  background: var(--color-background);
+}
 
 /* Chat message */
 
@@ -105,6 +108,14 @@
 .lm.chat-card .card-content {
   background: #ffffff;
 }
+.lm.chat-card .card-buttons {
+  background: var(--color-background);
+  color: black;
+  font-weight: bold;
+  height: 22px;
+  margin-left: 3px;
+}
+
 .lm.chat-card .card-content > * {
   -webkit-user-select: text;
   -moz-user-select: text;

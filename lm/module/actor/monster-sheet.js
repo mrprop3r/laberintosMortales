@@ -670,7 +670,7 @@ export class LmMonsterSheet extends ActorSheet {
     let saveName = game.i18n.localize(`${CONFIG.LM.savesCheck[dataset.save]}`);
     result.toMessage({
       speaker: ChatMessage.getSpeaker({actor: this.actor}),
-      flavor: `${saveName} >= ${data.saves[dataset.save].value} ${success} `
+      flavor: `${saveName} <b class="attack">${data.saves[dataset.save].value}+</b> ${success} `
     });
   }
   _onWeaponRoll(item) {

@@ -22,14 +22,8 @@
         </button>
         {{/if}}
 
-        {{#if data.save}}
-        <button data-action="save" data-save="{{data.save}}" disabled>
-            {{lookup config.saves_long data.save}} - {{localize "LM.spell.save"}}
-        </button>
-        {{/if}}
-
         {{#if data.roll}}
-        <button data-action="formula">{{ localize "LM.items.roll"}} {{data.roll}} {{#if data.blindroll}}({{localize 'LM.items.blindRoll'}}){{/if}}</button>
+        <span><a title='{{ localize "LM.rollCheck"}}'>{{ localize "LM.rollCheck"}} : [[/r {{data.roll}}]] {{#if data.blindroll}}({{localize 'LM.items.blindRoll'}}){{/if}}</span>
         {{/if}}
     </div>
 

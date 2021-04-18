@@ -300,7 +300,7 @@
     "spell": {
         "templates": ["common"],
         "lvl": 1,
-        "user": "magicUser",
+        "user": "arcano",
         "duration": "",
         "range": "",
         "roll": "",

@@ -469,6 +469,7 @@ export class LmActor extends Actor {
     // Compute encumbrance
 
       let totalWeight = 0;
+      let tempWeight = 0;
 
       Object.values(this.data.items).forEach((item) => {
         totalWeight += item.data.quantity * item.data.weight;
@@ -594,6 +595,8 @@ export class LmActor extends Actor {
       if (a.data.equipped && a.data.type == "unarmored") {
         baseAc = a.data.ac - data.ac.classBonus;
       } else if (a.data.equipped && a.data.type == "light") {
+        baseAc = a.data.ac - data.ac.classBonus;
+      } else if (a.data.equipped && a.data.type == "medium") {
         baseAc = a.data.ac - data.ac.classBonus;
       } else if (a.data.equipped && a.data.type == "heavy") {
         baseAc = a.data.ac;

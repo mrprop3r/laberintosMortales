@@ -427,6 +427,8 @@ export class LmActorSheet extends ActorSheet {
     html.find('.turn.roll').click(this._onTurnRoll.bind(this));
     html.find('.surprise.roll').click(this._onSurpriseRoll.bind(this));
     html.find('.reaction.roll').click(this._onReactionRoll.bind(this));
+    html.find('.initiative.roll').click(this._onInitiativeRoll.bind(this));
+
     // Generate character abilities
     html.find('.generate-abilities').click(this._onStatsRoll.bind(this));
 
@@ -488,6 +490,12 @@ export class LmActorSheet extends ActorSheet {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.getOwnedItem(li.data("itemId"));
       item.spendSpell();
+    });
+    // Consumable use
+    html.find(".item-image.consumable.use").click(async (ev) => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.getOwnedItem(li.data("itemId"));
+      item.spendConsumable();
     });
     
 
@@ -734,15 +742,18 @@ export class LmActorSheet extends ActorSheet {
           callback: (html) => {
             let roll = new Roll("3d6kl2" + skb, this.actor.data.data);
             let result = roll.roll();
-            let needed = "9+"
+            let needed = `<b class="attack"> 9+ </b>`;
             let flavor = (result.total >= 9  ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
             let rollMode = DICE_ROLL_MODES.PUBLIC;
             if (dataset.skills == "sea"){
               rollMode = DICE_ROLL_MODES.BLIND;
             } 
+            if (dataset.skills == "he"){
+              rollMode = DICE_ROLL_MODES.BLIND;
+            }
             result.toMessage({
                 speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                flavor:  (dataset.label ? `${dataset.label} ` : '') + '<span class="objetive">(</span>' + needed + '<span class="objetive">)</span>' + ": " + flavor
+                flavor:  (dataset.label ? `${dataset.label} ` : '') + needed + flavor
             },{ rollMode : rollMode });
           }
         },
@@ -752,15 +763,18 @@ export class LmActorSheet extends ActorSheet {
           callback: (html) => {
             let roll = new Roll("2d6" + skb, this.actor.data.data);
             let result = roll.roll();
-            let needed = "9+"
+            let needed = `<b class="attack"> 9+ </b>`;
             let flavor = (result.total >= 9  ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
             let rollMode = DICE_ROLL_MODES.PUBLIC;
             if (dataset.skills == "sea"){
               rollMode = DICE_ROLL_MODES.BLIND;
             } 
+            if (dataset.skills == "he"){
+              rollMode = DICE_ROLL_MODES.BLIND;
+            }
             result.toMessage({
                 speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                flavor:  (dataset.label ? `${dataset.label} ` : '') + '<span class="objetive">(</span>' + needed + '<span class="objetive">)</span>' + ": " + flavor
+                flavor:  (dataset.label ? `${dataset.label} ` : '') + needed + flavor
             },{ rollMode : rollMode });
           }
         },
@@ -770,15 +784,18 @@ export class LmActorSheet extends ActorSheet {
           callback: (html) => {
             let roll = new Roll("3d6kh2" + skb, this.actor.data.data);
             let result = roll.roll();
-            let needed = "9+"
+            let needed = `<b class="attack"> 9+ </b>`;
             let flavor = (result.total >= 9  ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
             let rollMode = DICE_ROLL_MODES.PUBLIC;
             if (dataset.skills == "sea"){
               rollMode = DICE_ROLL_MODES.BLIND;
-            } 
+            }
+            if (dataset.skills == "he"){
+              rollMode = DICE_ROLL_MODES.BLIND;
+            }
             result.toMessage({
                 speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                flavor:  (dataset.label ? `${dataset.label} ` : '') + '<span class="objetive">(</span>' + needed + '<span class="objetive">)</span>' + ": " + flavor
+                flavor:  (dataset.label ? `${dataset.label} ` : '') + needed + flavor
             },{ rollMode : rollMode });
           }
         },
@@ -880,7 +897,7 @@ export class LmActorSheet extends ActorSheet {
     } else {
       success = ( r.total  ==  objetive ? '<span class="success">Pasado</span> ' : '<span class="failed">Fallado</span> ');
     }
-    let messageHeader = text + " " + item.name +"(" + objetive + "):" + success;
+    let messageHeader = text + " " + item.name + `<b class="attack">` + objetive + `</b>:` + success;
     r.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: messageHeader},
     { rollMode : rollMode });
   }
@@ -915,7 +932,7 @@ export class LmActorSheet extends ActorSheet {
                 let saveName = game.i18n.localize(`${CONFIG.LM.savesCheck[dataset.save]}`);
                 result.toMessage({
                   speaker: ChatMessage.getSpeaker({actor: this.actor}),
-                  flavor: `${saveName} >= ${data.saves[dataset.save].value} ${success} `
+                  flavor: `${saveName} <b class="attack">${data.saves[dataset.save].value}+</b> ${success} `
                 });
               }
             },
@@ -931,7 +948,7 @@ export class LmActorSheet extends ActorSheet {
                 let saveName = game.i18n.localize(`${CONFIG.LM.savesCheck[dataset.save]}`);
                 result.toMessage({
                   speaker: ChatMessage.getSpeaker({actor: this.actor}),
-                  flavor: `${saveName} >= ${data.saves[dataset.save].value} ${success} `
+                  flavor: `${saveName} <b class="attack">${data.saves[dataset.save].value}+</b> ${success} `
                 });
               }
             },
@@ -947,7 +964,7 @@ export class LmActorSheet extends ActorSheet {
                 let saveName = game.i18n.localize(`${CONFIG.LM.savesCheck[dataset.save]}`);
                 result.toMessage({
                   speaker: ChatMessage.getSpeaker({actor: this.actor}),
-                  flavor: `${saveName} >= ${data.saves[dataset.save].value} ${success} `
+                  flavor: `${saveName} <b class="attack">${data.saves[dataset.save].value}+</b> ${success} `
                 });
               }
             }
@@ -1324,5 +1341,74 @@ export class LmActorSheet extends ActorSheet {
         }).render(true);
     });
   }
+
+  _onInitiativeRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let data = this.actor.data.data;
+    const iniMod = data.abilities.dex.init;
+    return new Promise(resolve => {
+      new Dialog({
+         title: game.i18n.localize('LM.initiative.value'),
+         content: `<form>
+         <div class="form-group">
+           <label>Modificador iniciativa</label>
+           <input type='text' name='inputField'></input>
+         </div>
+        </form>`,
+         buttons: {
+            normal: {
+              icon: '<i class="fas fa-dice-d6"></i>',
+              label: game.i18n.localize('LM.roll.normal'),
+              callback: (html) => {
+                let iniMod2 = html.find('input[name=\'inputField\']');
+                let mod2 = "+" + iniMod2.val();
+                let mod = "+" + iniMod;
+                let result = new Roll("d6" + mod + mod2, data).roll();
+                let initiativeRoll = game.i18n.localize('LM.initiativeRoll');
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: initiativeRoll,
+                });
+             }
+            },
+            disadvantage: {
+              icon: '<i class="fas fa-dice"></i>',
+              label: game.i18n.localize('LM.roll.disadvantage'),
+              callback: (html) => {
+                let iniMod2 = html.find('input[name=\'inputField\']');
+                let mod2 = "+" + iniMod2.val();
+                let mod = "+" + iniMod;
+                let result = new Roll("2d6dh" + mod + mod2, data).roll();
+                let initiativeRoll = game.i18n.localize('LM.initiativeRoll');
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: initiativeRoll,
+                });
+              }
+            },
+            advantage: {
+              icon: '<i class="fas fa-dice"></i>',
+              label: game.i18n.localize('LM.roll.advantage'),
+              callback: (html) => {
+                let iniMod2 = html.find('input[name=\'inputField\']');
+                let mod2 = "+" + iniMod2.val();
+                let mod = "+" + iniMod;
+                let result = new Roll("2d6dl" + mod + mod2, data).roll();
+                let initiativeRoll = game.i18n.localize('LM.initiativeRoll');
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({actor: this.actor}),
+                  flavor: initiativeRoll,
+                });
+              }
+            }
+         },
+         default: "roll",
+         close: () => resolve(null)
+        }).render(true);
+    });
+  }
+
 
 }

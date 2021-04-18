@@ -118,15 +118,11 @@ export class LmItem extends Item {
       data.tags.forEach(t => props.push(t.value));
     }
     if (this.data.type == "spell") {
-      props.push(`${data.user} ${data.lvl}`, data.range, data.duration);
+      props.push(`${data.user}, nivel:${data.lvl}, alcance:${data.range}, duración:${data.duration}`);
     }
-    if (data.hasOwnProperty("equipped")) {
-      props.push(data.equipped ? "Equipped" : "Not Equipped");
+    if (this.data.type == "consumable") {
+      props.push(data.fast ? "En hueco rápido" : "No en hueco rápido ");
     }
-    if (data.hasOwnProperty("fast")) {
-      props.push(data.fast ? "Fast" : "Not Fast");
-    }
-
     // Filter properties and return
     data.properties = props.filter((p) => !!p);
     return data;
@@ -141,6 +137,17 @@ export class LmItem extends Item {
       this.show({ skipDialog: true });
     });
   }
+
+  spendConsumable() {
+    this.update({
+      data: {
+        quantity: this.data.data.quantity - 1,
+      },
+    }).then(() => {
+      this.show({ skipDialog: true });
+    });
+  }
+
 
   /**
    * Handle clickable rolls.
