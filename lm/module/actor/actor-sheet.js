@@ -25,6 +25,8 @@ export class LmActorSheet extends ActorSheet {
     /*for (let attr of Object.values(data.data.attributes)) {
       attr.isCheckbox = attr.dtype === "Boolean";
     } */
+    data.isGM = game.user.isGM;
+    console.log(data.isGM);
 
 
     // Setup the fake container entry for "On Person" container
@@ -39,6 +41,7 @@ export class LmActorSheet extends ActorSheet {
           }
       }
     };
+
 
     this.actor.items.forEach(it => {
       if (it.type === 'container') {
@@ -746,10 +749,10 @@ export class LmActorSheet extends ActorSheet {
             let flavor = (result.total >= 9  ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
             let rollMode = DICE_ROLL_MODES.PUBLIC;
             if (dataset.skills == "sea"){
-              rollMode = DICE_ROLL_MODES.BLIND;
+              rollMode = `blindroll`;
             } 
             if (dataset.skills == "he"){
-              rollMode = DICE_ROLL_MODES.BLIND;
+              rollMode = `gmroll`;
             }
             result.toMessage({
                 speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -767,10 +770,10 @@ export class LmActorSheet extends ActorSheet {
             let flavor = (result.total >= 9  ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
             let rollMode = DICE_ROLL_MODES.PUBLIC;
             if (dataset.skills == "sea"){
-              rollMode = DICE_ROLL_MODES.BLIND;
+              rollMode = `blindroll`;
             } 
             if (dataset.skills == "he"){
-              rollMode = DICE_ROLL_MODES.BLIND;
+              rollMode = `gmroll`;
             }
             result.toMessage({
                 speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -788,10 +791,10 @@ export class LmActorSheet extends ActorSheet {
             let flavor = (result.total >= 9  ? '<span class="success">Éxito</span> ' : '<span class="failed">Fallo</span> ');
             let rollMode = DICE_ROLL_MODES.PUBLIC;
             if (dataset.skills == "sea"){
-              rollMode = DICE_ROLL_MODES.BLIND;
+              rollMode = `blindroll`;
             }
             if (dataset.skills == "he"){
-              rollMode = DICE_ROLL_MODES.BLIND;
+              rollMode = `gmroll`;
             }
             result.toMessage({
                 speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -1251,6 +1254,14 @@ export class LmActorSheet extends ActorSheet {
            <label>Modificador reacción</label>
            <input type='text' name='inputField'></input>
          </div>
+         <div class="form-group">
+        <label for="rollSelect">Tipo de tirada</label>
+        <select name="rollSelect">
+          <option value="normal">Normal</option>
+          <option value="disadvantage">Desventaja</option>
+          <option value="advantage">Ventaja</option>
+        </select>
+        </div>
         </form>`,
          buttons: {
             contract: {
@@ -1258,9 +1269,21 @@ export class LmActorSheet extends ActorSheet {
               label: game.i18n.localize('LM.contract'),
               callback: (html) => {
                 let reactionMod2 = html.find('input[name=\'inputField\']');
+                let select = html.find('[name="rollSelect"]').val();
                 let mod2 = "+" + reactionMod2.val();
                 let mod = "+" + reactionMod;
-                let result = new Roll("2d6" + mod + mod2, data).roll();
+                let dice = "";
+                switch (select) {
+                  case "advantage":
+                    dice = "3d6kh2";
+                  break;
+                  case "disadvantage":
+                    dice = "3d6kl2";
+                  break;
+                  default:
+                    dice = "2d6";
+                }
+                let result = new Roll( dice + mod + mod2, data).roll();
                 let reaction = "";
                 let control = result.total;
                 if (control <= 2) {
@@ -1299,9 +1322,21 @@ export class LmActorSheet extends ActorSheet {
               label: game.i18n.localize('LM.reaction'),
               callback: (html) => {
                 let reactionMod2 = html.find('input[name=\'inputField\']');
+                let select = html.find('[name="rollSelect"]').val();
                 let mod2 = "+" + reactionMod2.val();
                 let mod = "+" + reactionMod;
-                let result = new Roll("2d6" + mod + mod2, data).roll();
+                let dice = "";
+                switch (select) {
+                  case "advantage":
+                    dice = "3d6kh2";
+                  break;
+                  case "disadvantage":
+                    dice = "3d6kl2";
+                  break;
+                  default:
+                    dice = "2d6";
+                }
+                let result = new Roll(dice + mod + mod2, data).roll();
                 let reaction = "";
                 let control = result.total;
                 if (control <= 2) {

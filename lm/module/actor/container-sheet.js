@@ -22,7 +22,6 @@ export class LmContainerSheet extends ActorSheet {
     const data = super.getData();
     data.dtypes = ["String", "Number", "Boolean"];
 
-
     // Prepare items.
     if (this.actor.data.type == 'container') {
       this._prepareContainerItems(data);
@@ -255,6 +254,7 @@ export class LmContainerSheet extends ActorSheet {
     // Toggle gm
     html.find(".gm-toggle").click(async (ev) => {
     const gmValue = this.actor.data.data.gm;
+    if (game.user.isGM) {
     this.actor.update({ 
       "data.gm": !gmValue,
       "data.group": false,
@@ -262,11 +262,13 @@ export class LmContainerSheet extends ActorSheet {
       "data.shop": false,
      });
     this._render();
+    }
     });
 
     // Toggle group
     html.find(".group-toggle").click(async (ev) => {
     const groupValue = this.actor.data.data.group;
+    if (game.user.isGM) {
     this.actor.update({ 
       "data.group": !groupValue,
       "data.gm": false,
@@ -274,31 +276,36 @@ export class LmContainerSheet extends ActorSheet {
       "data.shop": false,
      });
     this._render();
+    }
     });
 
     // Toggle object
     html.find(".object-toggle").click(async (ev) => {
-      const objectValue = this.actor.data.data.object;
-      this.actor.update({ 
+    const objectValue = this.actor.data.data.object;
+    if (game.user.isGM) {
+    this.actor.update({ 
         "data.object": !objectValue,
         "data.group": false,
         "data.gm": false,
         "data.shop": false,
-     });
-      this._render();
-      });
+    });
+    this._render();
+    }
+    });
 
     // Toggle shop
     html.find(".shop-toggle").click(async (ev) => {
-      const shopValue = this.actor.data.data.shop;
-      this.actor.update({ 
+    const shopValue = this.actor.data.data.shop;
+    if (game.user.isGM) {
+    this.actor.update({ 
         "data.shop": !shopValue,
         "data.group": false,
         "data.gm": false,
         "data.object": false,
-       });
-      this._render();
-      });
+    });
+    this._render();
+    }
+    });
 
     // Toggle magicUser
     html.find(".magic-toggle").click(async (ev) => {

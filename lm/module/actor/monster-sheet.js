@@ -61,7 +61,7 @@ export class LmMonsterSheet extends ActorSheet {
     if (this.actor.data.type == 'monster') {
       this._prepareMonsterItems(data);
     }
-
+    
     return data;
   }
 
