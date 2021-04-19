@@ -161,12 +161,22 @@ export class LmItem extends Item {
     const actorData = this.actor ? this.actor.data.data : {};
     const itemData = item.data;
 
+    if ( this.data.type == "weapon") {
     let roll = new Roll('d20+@abilities.str.mod', actorData);
-    let label = `Rolling ${item.name}`;
+    let label = `Ataque ${item.name}`;
     roll.roll().toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       flavor: label
     });
+    }
+    if ( this.data.type == "feature") {
+      let roll = new Roll('2d6', actorData);
+      let label = `Tirando habilidad ${item.name}`;
+      roll.roll().toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: label
+      });
+      }
   }
 
     /**

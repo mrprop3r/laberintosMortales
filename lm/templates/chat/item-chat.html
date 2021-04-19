@@ -10,18 +10,6 @@
     </div>
 
     <div class="card-buttons">
-        {{#if hasAttack}}<button data-action="attack">{{ localize "LM.Attack" }}</button>{{/if}}
-
-        {{#if hasDamage}}
-        <button data-action="damage">
-            {{#if isHealing}}
-            {{ localize "LM.healing" }}
-            {{else}}
-            {{localize "LM.attack.dmg" }}
-            {{/if}}
-        </button>
-        {{/if}}
-
         {{#if data.roll}}
         <span><a title='{{ localize "LM.rollCheck"}}'>{{ localize "LM.rollCheck"}} : [[/r {{data.roll}}]] {{#if data.blindroll}}({{localize 'LM.items.blindRoll'}}){{/if}}</span>
         {{/if}}

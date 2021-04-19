@@ -105,14 +105,17 @@
   font-weight: bold;
   margin: 2px;
 }
+.chat-message div.message-content {
+  background: var(--color-background);
+  font-weight: bolder;
+}
 .lm.chat-card .card-content {
-  background: #ffffff;
+  background: var(--color-background);
 }
 .lm.chat-card .card-buttons {
   background: var(--color-background);
   color: black;
   font-weight: bold;
-  height: 22px;
   margin-left: 3px;
 }
 
