@@ -123,10 +123,14 @@ export class LmItem extends Item {
     if (this.data.type == "consumable") {
       props.push(data.fast ? "En hueco rápido" : "No en hueco rápido ");
     }
+    if (this.data.type == "feature") {
+      let rollSave = game.i18n.localize(`LM.saves.${data.save}.check`);
+      props.push(data.save ? `${rollSave}` : "No tiene tirada de salvación");
+    }
     // Filter properties and return
     data.properties = props.filter((p) => !!p);
     return data;
-  }
+  } 
 
   spendSpell() {
     this.update({
@@ -162,7 +166,7 @@ export class LmItem extends Item {
     const itemData = item.data;
 
     if ( this.data.type == "weapon") {
-    let roll = new Roll('d20+@abilities.str.mod', actorData);
+    let roll = new Roll('d20', actorData);
     let label = `Ataque ${item.name}`;
     roll.roll().toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),

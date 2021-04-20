@@ -71,9 +71,13 @@
               <div class="item-info">
                 <label>{{ localize "LM.items.bonus"}}</label>
                 <input type="text" name="data.bonus" value="{{data.bonus}}" data-dtype="Number" />
+              </div>
+              {{#unless data.missile }}
+              <div class="item-info">
                 <label>{{ localize "LM.items.wc"}}</label>
                 <input type="text" name="data.wc" value="{{data.wc}}" data-dtype="Number" />
               </div>
+              {{/unless}}
               <div class="item-info">
                 <label>{{ localize "LM.items.crit"}}</label>
                 <input type="text" name="data.crit" value="{{data.crit}}" data-dtype="Number" />
