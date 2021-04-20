@@ -330,12 +330,12 @@ export class LmActorSheet extends ActorSheet {
     html.find(".item-dmg").click(async (ev) => {
       const li = $(ev.currentTarget).parents(".item");
       const weapons = this.actor.getOwnedItem(li.data("itemId"));
-      await this.actor.updateOwnedItem({
+        await this.actor.updateOwnedItem({
         _id: li.data("itemId"),
         data: {
           isDamage2: !weapons.data.data.isDamage2,
         },
-      });
+        });
     });
     // Reset spells
     html.find(".spells .item-reset").click((ev) => {

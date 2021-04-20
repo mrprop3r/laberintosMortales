@@ -107,7 +107,6 @@
 }
 .chat-message div.message-content {
   background: var(--color-background);
-  font-weight: bolder;
 }
 .lm.chat-card .card-content {
   background: var(--color-background);

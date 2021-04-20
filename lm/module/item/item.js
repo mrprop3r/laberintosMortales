@@ -26,10 +26,10 @@ export class LmItem extends Item {
             img = "/systems/lm/assets/default/item.png";
                 break;
         case "consumable":
-            img = "/systems/lm/assets/default/spiral-bottle.png";
+            img = "/systems/lm/assets/default/spiral-bottle.svg";
                 break;
         case "occupation":
-            img = "/systems/lm/assets/default/3d-meeple.png";
+            img = "/systems/lm/assets/default/3d-meeple.svg";
                 break;
         case "container":
             img = "/systems/lm/assets/default/item.png";
@@ -84,6 +84,10 @@ export class LmItem extends Item {
             break;
           case CONFIG.LM.tags.twoHanded:
             newData.twoHanded = true;
+            newData.oneTwoHands = true;
+            break;
+          case CONFIG.LM.tags.oneTwoHanded:
+            newData.oneTwoHands = true;
             break;
         }
         update.push({ title: title, value: val });
