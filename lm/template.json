@@ -275,6 +275,7 @@
         "type": "light",
         "damage": "1d3",
         "wc": 0,
+        "bonus": 0,
         "crit": 20,
         "splintered": false
     },
