@@ -39,6 +39,9 @@ export const LM = {
             searchBonus: {
                 yes: false
             },
+            stealthBonus: {
+                yes: false
+            },
             survivalBonus: {
                 yes: false
             },
@@ -93,6 +96,9 @@ export const LM = {
             searchBonus: {
                 yes: false
             },
+            stealthBonus: {
+                yes: false
+            },
             survivalBonus: {
                 yes: false
             },
@@ -143,6 +149,9 @@ export const LM = {
                 yes: false
             },
             searchBonus: {
+                yes: false
+            },
+            stealthBonus: {
                 yes: false
             },
             survivalBonus: {
@@ -196,6 +205,12 @@ export const LM = {
                 value: 1
             },
             searchBonus: {
+                yes: false
+            },
+            stealthBonus: {
+                yes: false
+            },
+            stealthBonus: {
                 yes: false
             },
             survivalBonus: {
@@ -278,6 +293,9 @@ export const LM = {
             searchBonus: {
                 yes: false
             },
+            stealthBonus: {
+                yes: false
+            },
             survivalBonus: {
                 yes: false
             },
@@ -357,6 +375,9 @@ export const LM = {
                 yes: true,
                 value: 1
             },
+            stealthBonus: {
+                yes: false
+            },
             survivalBonus: {
                 yes: false
             },
@@ -422,6 +443,9 @@ export const LM = {
                 yes: true,
                 value: 1
             },
+            stealthBonus: {
+                yes: false
+            },
             survivalBonus: {
                 yes: false
             },
@@ -485,6 +509,9 @@ export const LM = {
             searchBonus: {
                 yes: false
             },
+            stealthBonus: {
+                yes: false
+            },
             survivalBonus: {
                 yes: false
             },
@@ -535,6 +562,9 @@ export const LM = {
                 yes: false
             },
             searchBonus: {
+                yes: false
+            },
+            stealthBonus: {
                 yes: false
             },
             survivalBonus: {
@@ -614,6 +644,9 @@ export const LM = {
             searchBonus: {
                 yes: false
             },
+            stealthBonus: {
+                yes: false
+            },
             survivalBonus: {
                 yes: false
             },
@@ -665,6 +698,9 @@ export const LM = {
                 yes: false
             },
             searchBonus: {
+                yes: false
+            },
+            stealthBonus: {
                 yes: false
             },
             survivalBonus: {
@@ -719,9 +755,12 @@ export const LM = {
             searchBonus: {
                 yes: false,
             },
-            survivalBonus: {
+            stealthBonus: {
                 yes: true,
                 value: 2
+            },
+            survivalBonus: {
+                yes: false,
             },
             luck: true,
             title: [ "Aspirante", "Veterano", "Luchador", "Héroe", "Bravucón", "Mirmidón", "Campeón", "Gran maestro", "Lord", "Lord", "Lord", "Lord", "Lord", "Lord", "Lord" ],
@@ -774,6 +813,9 @@ export const LM = {
             searchBonus: {
                 yes: false
             },
+            stealthBonus: {
+                yes: false
+            },
             survivalBonus: {
                 yes: false
             },
@@ -824,6 +866,9 @@ export const LM = {
                 yes: false
             },
             searchBonus: {
+                yes: false
+            },
+            stealthBonus: {
                 yes: false
             },
             survivalBonus: {
@@ -908,6 +953,7 @@ export const LM = {
         heavy: "Heavy",
         shield: "Shield",
         helm: "Helm",
+        magic: "Magic"
     },
     magicUser : {
         arcano: "LM.user.magicUser",
@@ -957,6 +1003,7 @@ export const LM = {
     tag_images: {
         melee: "/systems/lm/assets/tags/melee.png",
         missile: "/systems/lm/assets/tags/missile.png",
+        throw: "/systems/lm/assets/tags/missile.png",
         slow: "/systems/lm/assets/tags/slow.png",
         twoHanded: "/systems/lm/assets/tags/twohanded.png",
         blunt: "/systems/lm/assets/tags/blunt.png",

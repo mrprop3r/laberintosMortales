@@ -164,8 +164,15 @@
                 </div>
               </li>
             </ul>
-            <h3 class="headskill">{{ localize "LM.skillsname" }}</h3>
+            <ul class="hd-rest flexrow">
+              <li>
+                <span class="rest-roll" title="{{localize 'LM.hd.rest'}}"><a><i class="fas fa-user-plus"></i></a></span>
+                <input title="{{localize 'LM.hd.restValue'}}" name="data.hp.rest.value" type="text" value="{{data.hp.rest.value}}" data-dtype="Number"/>
+                <span class="rest max" title="{{localize 'LM.hd.restMax'}}">{{data.hp.rest.max}}</span>
+              </li>
+            </ul>
             <div class="box">
+              <h3 class="headskill">{{ localize "LM.skillsname" }}</h3>
              <ul class="skills flexrow">
               <li class="skills-pack" data-skills="acr" data-label="{{ localize 'LM.roll.acr' }}" mod="{{data.skills.acr.mod}}">
                 <div class="skills-check" title="{{localize 'LM.roll.acr'}}"><a><i class="fas fa-dice"></i></a>{{ localize "LM.skills.acr" }}</div>

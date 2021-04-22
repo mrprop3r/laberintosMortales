@@ -424,6 +424,7 @@ export class LmActorSheet extends ActorSheet {
     html.find('.attribute-name').click(this._onAbilityCheck.bind(this));
     html.find('.skills-pack').click(this._onSkillsCheck.bind(this));
     html.find('.hd-roll').click(this._onHdRoll.bind(this));
+    html.find('.rest-roll').click(this._onRestRoll.bind(this));
     html.find('.saving-throw').click(this._onSavingThrow.bind(this));
     html.find('.thac0-roll').click(this._onThac0Roll.bind(this));
     html.find('.turn.roll').click(this._onTurnRoll.bind(this));
@@ -846,6 +847,121 @@ export class LmActorSheet extends ActorSheet {
       flavor: text
     });
   }
+  _onRestRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let data = this.actor.data.data;
+    return new Promise(resolve => {
+      new Dialog({
+         title: game.i18n.localize('LM.hd.restRoll'),
+         content: `<form>
+         <div class="form-group">
+         <label for="rollSelect">Tipo de tirada</label>
+         <select name="rollSelect">
+           <option value="normal">Normal</option>
+           <option value="disadvantage">Desventaja</option>
+           <option value="advantage">Ventaja</option>
+         </select>
+          </div>
+        </form>`,
+         buttons: {
+            short: {
+              icon: '<i class="fas fa-plus-circle"></i>',
+              label: game.i18n.localize('LM.hd.restShort'),
+              callback: (html) => {
+                let select = html.find('[name="rollSelect"]').val();
+                let hdb = "+" + data.abilities.con.mod;
+                let dice = data.hp.hd;
+                switch (select) {
+                  case "advantage":
+                    dice = "2"+ dice +"kh";
+                  break;
+                  case "disadvantage":
+                    dice = "2"+ dice +"kl";
+                  break;
+                  default:
+                    dice = dice;
+                }
+                let result = new Roll(dice + hdb, data).roll();
+                let newRest = this.actor.data.data.hp.rest.value + 1;
+                let hpRoll = result.total;
+                let hpNow =  parseInt(this.actor.data.data.hp.value);
+                let hpMax =  parseInt(this.actor.data.data.hp.max);
+                let hpHeal = hpRoll + hpNow;
+                if (hpHeal > hpMax) {
+                  hpHeal = hpMax;
+                }
+                this.actor.update({ 
+                  data: {
+                    hp: {
+                      rest: {
+                        value: newRest,
+                      },
+                    value: hpHeal,
+                    },
+                  },
+                })
+                let text = game.i18n.localize('LM.hd.restRoll');
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                  flavor: text,
+                });
+              }
+            },
+            long: {
+              icon: '<i class="fas fa-plus-square"></i>',
+              label: game.i18n.localize('LM.hd.restLong'),
+              callback: (html) => {
+                let select = html.find('[name="rollSelect"]').val();
+                let dice = data.hp.hd;
+                let levelDice = data.description.level.value;
+                let hdlb = levelDice * (data.abilities.con.mod);
+                let hdb = "+" + hdlb;
+                switch (select) {
+                  case "advantage":
+                    dice = `${levelDice*2}`+ dice +"kh"+`${levelDice}`;
+                  break;
+                  case "disadvantage":
+                    dice = `${levelDice*2}`+ dice +"kl"+`${levelDice}`;
+                  break;
+                  default:
+                    dice = `${levelDice}`+ dice;
+                }
+                let result = new Roll(dice + hdb, data).roll();
+                let newRest0 = Math.round(this.actor.data.data.hp.rest.value / 2);
+                let newRest = this.actor.data.data.hp.rest.value - newRest0;
+                let hpRoll = result.total;
+                let hpNow =  parseInt(this.actor.data.data.hp.value);
+                let hpMax =  parseInt(this.actor.data.data.hp.max);
+                let hpHeal = hpRoll + hpNow;
+                if (hpHeal > hpMax) {
+                  hpHeal = hpMax;
+                }
+                this.actor.update({ 
+                  data: {
+                    hp: {
+                      rest: {
+                        value: newRest,
+                      },
+                    value: hpHeal,
+                    },
+                  },
+                })
+                let text = game.i18n.localize('LM.hd.restRoll');
+                result.toMessage({
+                  speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                  flavor: text,
+                });
+              }
+            },
+         },
+         default: "roll",
+         close: () => resolve(null)
+        }).render(true);
+    });
+  }
+
   _onDmgRoll(item, eventTarget)
   {
     let data = this.actor.data.data;

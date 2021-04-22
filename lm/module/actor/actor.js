@@ -138,7 +138,12 @@ export class LmActor extends Actor {
     if (occupations.length>0) data.retainer.occupation = occupations[0].name;
     // Set Hit Die from class
     data.hp.hd = classInfo.hd;
-    data.hp.advantage = classInfo.hdAdvantage,
+    data.hp.advantage = classInfo.hdAdvantage;
+    if (data.description.level.value == 0 ) {
+      data.hp.rest.max = 1;
+    } else {
+      data.hp.rest.max = data.description.level.value;
+    }
     // Set Title from level
     data.description.title = classInfo.title[data.description.level.value];
     // Set xp next level
@@ -350,6 +355,9 @@ export class LmActor extends Actor {
       capped,      
       data.abilities.dex.value
     );
+    if (data.class.value ==="hal") {
+      data.skills.acr.mod2 += 1;
+    }
     if (data.skills.acr.mod1 >= data.skills.acr.mod2) {
       data.skills.acr.mod = data.skills.acr.mod1 + data.skills.acr.value
     };
@@ -390,6 +398,9 @@ export class LmActor extends Actor {
       capped,      
       data.abilities.dex.value
     );
+    if (data.class.value ==="hal") {
+      data.skills.gh.mod1 += 1;
+    }
     data.skills.gh.mod = data.skills.gh.mod1 + data.skills.gh.value;
     /* Languages skill */
     data.skills.lan.mod1 = LmActor._valueFromTable(
@@ -402,13 +413,23 @@ export class LmActor extends Actor {
       capped,      
       data.abilities.dex.value
     );
+    if (data.class.value ==="hal") {
+      data.skills.man.mod1 += 1;
+    }
     data.skills.man.mod = data.skills.man.mod1 + data.skills.man.value;
     /* Stealth skill */
+    data.skills.st.bonus = classInfo.stealthBonus.yes;
     data.skills.st.mod1 = LmActor._valueFromTable(
       capped,      
       data.abilities.dex.value
     );
+    if (data.class.value ==="hal") {
+      data.skills.st.mod1 += 1;
+    }
     data.skills.st.mod = data.skills.st.mod1 + data.skills.st.value;
+    if (data.skills.st.bonus) {
+      data.skills.st.mod += classInfo.stealthBonus.value;
+    }
     /* Survival skill */
     data.skills.sur.bonus = classInfo.survivalBonus.yes;
     data.skills.sur.mod1 = LmActor._valueFromTable(
@@ -564,15 +585,41 @@ export class LmActor extends Actor {
     /* Compute freeHands */    
     let total = 0;
     let hands = this.data.items.filter(
-      (i) => i.type == ("weapon" && i.data.equipped) || ("shield" && i.data.equipped),
+      (i) => i.type == "weapon" && i.data.equipped || "armor" && i.data.equipped,
     );
     hands.forEach((item) => {
       total += 1;
+      if (item.data.type !== "shield") {
+        switch (item.data.type) {
+          case "unarmored":
+            total -= 1;
+            break;
+          case "light":
+            total -= 1;
+            break;
+          case "medium":
+            total -= 1;
+            break;
+          case "heavy":
+            total -= 1;
+          break;
+          case "helm":
+            total -= 1;
+            break;
+          case "magic":
+            total -= 1;
+            break;
+          default:
+            total = total;
+        }
+        if (item.data.oneTwoHands && item.data.isDamage2) {
+          total += 1;
+        }
+      }
       if (item.data.twoHanded) {
         total += 1;
       }
     });
-
     data.hands = total
     if ( data.hands >= 3) {
       ui.notifications.error(game.i18n.localize("LM.toomuchhands"));
@@ -583,6 +630,7 @@ export class LmActor extends Actor {
     let baseAc = 9;
     let AcShield = 0;
     let AcHelm = 0;
+    let AcMagic = 0;
     data.ac.bonus = classInfo.acBonus.yes
     if (data.ac.bonus) {
       data.ac.classBonus = classInfo.acBonus.value[data.description.level.value];
@@ -604,14 +652,14 @@ export class LmActor extends Actor {
         AcShield = a.data.ac;
       } else if (a.data.equipped && a.data.type == "helm") {
         AcHelm = a.data.ac;
+      } else if (a.data.equipped && a.data.type == "magic") {
+        AcMagic = a.data.ac;
       }
     });
-    data.ac.value = baseAc - data.abilities.dex.mod - AcShield - AcHelm;
+    data.ac.value = baseAc - data.abilities.dex.mod - AcShield - AcHelm - AcMagic;
     data.ac.shield = AcShield;
     data.ac.helm = AcHelm;
-
-
-
+    data.ac.magic = AcMagic;
   }
   
   _prepareMonsterData(actorData){
@@ -622,7 +670,6 @@ export class LmActor extends Actor {
 
     // Compute monster treasure
     const treasureTable = CONFIG.LM.treasureTable[data.treasure.table];
-    console.log(treasureTable);
     data.treasure.pcPercent = treasureTable.pc[0];
     data.treasure.pcQuantity = treasureTable.pc[1];
     data.treasure.pptPercent = treasureTable.ppt[0];
