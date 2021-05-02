@@ -178,7 +178,8 @@
         }
       },
       "encumbrance": {
-        "max": 2300
+        "max": 2300,
+        "containersCapacity": 0
       }
     },
     "monster": {

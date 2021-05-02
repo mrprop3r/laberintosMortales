@@ -319,6 +319,7 @@
     "LM.items.carried": "Encima",
     "LM.items.carriedIn": "Llevado",
     "LM.items.capacity": "Capacidad",
+    "LM.items.capacityMax": "Capacidad total en contenedores",
     "LM.items.fastBonus": "Bono huecos",
     "LM.items.fast": "Hueco rápido",
     "LM.items.slotsFast": "Huecos rápidos",
@@ -424,8 +425,8 @@
 
     "LM.ChatContextHealing": "Aplicar curación",
     "LM.ChatContextDamage": "Aplicar daño",
-    "LM.healDamage": "Curar daño",
-    "LM.takeDamage": "Sufre pupita",
+    "LM.healDamage": "Cura daño",
+    "LM.takeDamage": "Sufre daño",
 
     "LM.fumble2": "Golpeas al aliado más cercano o si no lo hay, te golpeas a ti mismo.<br />Haz prueba de <b>DES</b> para mitad de daño.",
     "LM.fumble3": "Te expones al enemigo en tu ataque.<br />Su siguiente ataque tiene un <strong>+4</strong> y pierdes el bono de <b>escudo</b> si lo llevas.",

@@ -634,6 +634,8 @@
         </div>
         <div class="fast-bar">
           <span class="fast-label"><i class="fas fa-bolt" title="{{localize 'LM.items.slotsFast'}}"></i>{{data.abilities.dex.fast}}/{{data.abilities.dex.itemFast}}</span>
+          <span class="fast-label"><i class="fas fa-suitcase" title="{{localize 'LM.items.capacityMax'}}"></i>{{data.abilities.str.containerWeight}}/{{data.abilities.str.containersCapacity}}</span>
+          
         </div>
         <div class="inventory">
           {{#each actor.containers as |item id|}}

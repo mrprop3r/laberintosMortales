@@ -488,7 +488,29 @@ export class LmActor extends Actor {
       let tempWeight = 0;
 
       Object.values(this.data.items).forEach((item) => {
-        totalWeight += item.data.quantity * item.data.weight;
+        if (item.data.carried !== "encima") {
+          tempWeight += item.data.quantity * item.data.weight;
+          item.data.packed = true;
+          totalWeight += item.data.quantity * item.data.weight;
+        } else {
+          totalWeight += item.data.quantity * item.data.weight;
+        }
+        //  Compute containers capacity
+        let totalContainers = 0;
+        let contWeight = 0;
+        let counter = 0
+        const containers = this.data.items.filter((i) => i.type == "container");
+        containers.forEach((a) => {
+          if (!a.data.drop) {
+            totalContainers += a.data.capacity.max;
+            if (counter == 0 ) {
+              contWeight += tempWeight;
+              counter += 1
+            }
+          }
+          data.abilities.str.containersCapacity = totalContainers;
+          data.abilities.str.containerWeight = contWeight;
+      });
         data.encumbrance = {
           pct: Math.clamped(
             (100 * parseFloat(totalWeight)) / data.encumbrance.weight,
@@ -499,7 +521,8 @@ export class LmActor extends Actor {
           encumbered: totalWeight > data.encumbrance.weight,
           value: totalWeight,
         }
-       
+
+
 
       });
       let weight = data.encumbrance.value;
@@ -514,9 +537,6 @@ export class LmActor extends Actor {
       } else {
         data.movement.base = 120;
       }
-
-
-
     // Compute combat movement
     data.movement.encounter = data.movement.base / 3;
 
@@ -615,7 +635,7 @@ export class LmActor extends Actor {
         total += 1;
       }
     });
-    data.hands = total
+    data.hands = total;
     if ( data.hands >= 3) {
       ui.notifications.error(game.i18n.localize("LM.toomuchhands"));
     }
