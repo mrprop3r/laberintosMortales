@@ -250,11 +250,9 @@ export class LmActor extends Actor {
     const test = {
       0: 1,
       3: 1,
-      4: 1,
-      6: 1,
-      7: 2,
+      6: 2,
       13: 3,
-      17: 4,
+      16: 4,
       18: 5,
     }
     data.abilities.str.check = LmActor._valueFromTable(
@@ -308,16 +306,15 @@ export class LmActor extends Actor {
     );
     
     let totalFast = 0;
-    let fastBonus = 0;
     Object.values(this.data.items).forEach((item) => {
+      let fastBonus = item.data.fastBonus;
       if (item.data.fast) {
       totalFast += 1;
       }
-      fastBonus = item.data.fastBonus;
+      data.abilities.dex.itemFast += fastBonus;
     });
       
     data.abilities.dex.fast = totalFast;
-    data.abilities.dex.itemFast += fastBonus;
 
     /*  Compute languages   */
     const literacy = {
@@ -380,7 +377,6 @@ export class LmActor extends Actor {
     if (data.skills.sea.bonus) {
       data.skills.sea.mod += classInfo.searchBonus.value;
     }
-
     /* Hear skill */
     data.skills.he.mod1 = LmActor._valueFromTable(
       capped,      
@@ -485,8 +481,7 @@ export class LmActor extends Actor {
     if (data.class.value ==="dw") {
       data.encumbrance.weight = data.encumbrance.weight + 500;
     }
-
-
+    
     // Compute encumbrance
 
       let totalWeight = 0;

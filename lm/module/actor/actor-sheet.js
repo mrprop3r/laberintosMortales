@@ -302,7 +302,7 @@ export class LmActorSheet extends ActorSheet {
       await this.actor.updateOwnedItem({
         _id: li.data("itemId"),
         data: {
-          equipped: !containers.data.data.equipped,
+          drop: !containers.data.data.drop,
         },
       });
     });
@@ -976,7 +976,9 @@ export class LmActorSheet extends ActorSheet {
         bdmg = "+" + (data.abilities.str.mod + bdmgp);
         }
     }
-    else {
+    else if (item.data.data.type == "shield") {
+      bdmg = "+" + (data.abilities.str.mod + bdmgm);
+    } else {
       bdmg = "+" + bdmgp;
     }
     if(eventTarget.title === text)
@@ -1497,7 +1499,7 @@ export class LmActorSheet extends ActorSheet {
     const element = event.currentTarget;
     const dataset = element.dataset;
     let data = this.actor.data.data;
-    const iniMod = data.abilities.dex.init;
+    const iniMod = data.initiative.value;
     return new Promise(resolve => {
       new Dialog({
          title: game.i18n.localize('LM.initiative.value'),

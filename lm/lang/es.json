@@ -369,7 +369,8 @@
     "LM.monster.appearing": "NºA",
     "LM.monster.appearingLong": "Número que aparecen",
     "LM.monster.xp": "Px",
-    "LM.monsterSaves": "Salvación monstruo",
+    "LM.monsterSaves": "Salvación monstruo:",
+    "LM.monsterSavesClass": "2-ladrón 3-clérigo 4-mago 5-elfo 6-enano",
     "LM.generateSaves": "Generar salvación",
     "LM.monster.treasure": "Tabla de tesoro",
     "LM.monster.treasureRoll": "Tesoro del monstruo",
@@ -424,7 +425,7 @@
     "LM.ChatContextHealing": "Aplicar curación",
     "LM.ChatContextDamage": "Aplicar daño",
     "LM.healDamage": "Curar daño",
-    "LM.takeDamage": "Sufrir daño",
+    "LM.takeDamage": "Sufre pupita",
 
     "LM.fumble2": "Golpeas al aliado más cercano o si no lo hay, te golpeas a ti mismo.<br />Haz prueba de <b>DES</b> para mitad de daño.",
     "LM.fumble3": "Te expones al enemigo en tu ataque.<br />Su siguiente ataque tiene un <strong>+4</strong> y pierdes el bono de <b>escudo</b> si lo llevas.",

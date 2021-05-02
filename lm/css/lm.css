@@ -160,6 +160,11 @@
   background: var(--color-background);
   font-weight: bold;
 }
+.dialog .small {
+  font-weight: lighter;
+  font-size: 8px;
+  width: 100px;
+}
 /* Character sheet header */
 
 .lm.sheet.actor .sheet-header {
@@ -1572,12 +1577,12 @@
   padding: 3px;
 }
 .lm.sheet.monster .header-fields .summary .container .center {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   position: relative;
   bottom: 34px;
   right: 18px;
-  width: 20px;
+  width: 29px;
 }
 .lm.sheet.monster .header-fields .summary .container .center2 {
   font-size: 12px;
@@ -1660,7 +1665,8 @@
   border-radius: none;
   text-align: center;
   position: relative;
-  bottom: 8px;
+  font-size: 24px;
+  padding-top: 4px;
 }
 .lm.sheet.monster .sheet-header .header-fields img.profile-img {
   border: 5px;

@@ -551,7 +551,7 @@ export const LM = {
             weaponStyle: "LM.weaponStyle.dwarfpriest",
             armorUse: "LM.armorUse.level0",
             skillsPoints : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-            languagesKnow: [ "LM.lan.common", "LM.lan.dwarf", "LM.lan.goblin", "LM.lan.gnome", "LM.lan.kobold" ],           languagesKnow: [ "LM.lan.common" ],
+            languagesKnow: [ "LM.lan.common", "LM.lan.dwarf", "LM.lan.goblin", "LM.lan.gnome", "LM.lan.kobold" ],   
             backstab: {
                 value: false
             },
@@ -1109,9 +1109,59 @@ export const LM = {
             p: 6,
             b: 7,
             s: 8
-        }
+        },
+        21: {
+            label: "Ladrón",
+            d: 13,
+            w: 14,
+            p: 13,
+            b: 16,
+            s: 15
+        },
+        31: {
+            label: "Clérigo",
+            d: 10,
+            w: 13,
+            p: 13,
+            b: 16,
+            s: 15
+        },
+        41: {
+            label: "Mago",
+            d: 13,
+            w: 10,
+            p: 11,
+            b: 12,
+            s: 13
+        },
+        51: {
+            label: "Elfo",
+            d: 14,
+            w: 16,
+            p: 14,
+            b: 16,
+            s: 16
+        },
+        61: {
+            label: "Enano",
+            d: 10,
+            w: 12,
+            p: 11,
+            b: 13,
+            s: 13
+        },
     },
     treasureTable: {
+        No: {
+            pc: [ 0, "[[1d6*1000]]"],
+            ppt: [ 0, "[[1d6*1000]]"],
+            pe: [ 0, "[[1d4*1000]]"],
+            po: [ 0, "[[2d6*1000]]"],
+            pp: [ 0, "[[1d2*1000]]"],
+            gems: [ 0,"[[6d6]]"],
+            jewels: [ 0, "[[6d6]]"],
+            magic: [ 0, "3 objetos mágicos"],
+        },
         A: {
             pc: [ 25, "[[1d6*1000]]"],
             ppt: [ 30, "[[1d6*1000]]"],

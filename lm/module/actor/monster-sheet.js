@@ -654,7 +654,8 @@ export class LmMonsterSheet extends ActorSheet {
     ChatMessage.create({
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
             content: chatContent,
-        }, {rollMode: DICE_ROLL_MODES.BLIND});
+            whisper: game.users.entities.filter(u => u.isGM).map(u => u._id)
+        },);
     return;
 
   }

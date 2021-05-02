@@ -130,7 +130,7 @@
           {{#each actor.containers as |item id|}}
               <li class="item-titles con flexrow" data-item-id="{{item._id}}" >
                   <div class="item-conta">
-                    <a class="item-control container-toggle {{#unless item.data.equipped}}item-unequipped{{/unless}}"
+                    <a class="item-control container-toggle {{#unless item.data.drop}}item-unequipped{{/unless}}"
                     title='{{localize "LM.items.drop"}}'>
                     <i class="fas fa-suitcase"></i>
                     </a>
