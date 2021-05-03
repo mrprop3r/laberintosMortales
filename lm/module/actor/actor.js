@@ -103,14 +103,15 @@ export class LmActor extends Actor {
 
   rollHP(options = {}) {
     let roll = new Roll(this.data.data.hp.hd).roll();
-    if (roll.total < 1) {
-      roll.total = 1;
+    let hpTotal = roll.total;
+    if (hpTotal < 1) {
+      hpTotal = 1;
     }
     return this.update({
       data: {
         hp: {
-          max: roll.total,
-          value: roll.total,
+          max: hpTotal,
+          value: hpTotal,
         },
       },
     });
