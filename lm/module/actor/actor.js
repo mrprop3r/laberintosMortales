@@ -103,6 +103,9 @@ export class LmActor extends Actor {
 
   rollHP(options = {}) {
     let roll = new Roll(this.data.data.hp.hd).roll();
+    if (roll.total < 1) {
+      roll.total = 1;
+    }
     return this.update({
       data: {
         hp: {
@@ -517,7 +520,7 @@ export class LmActor extends Actor {
       });
         data.encumbrance = {
           pct: Math.clamped(
-            (100 * parseFloat(totalWeight)) / data.encumbrance.weight,
+            (100 * parseFloat(totalWeight + contWeight)) / data.encumbrance.weight,
             0,
             100
           ),

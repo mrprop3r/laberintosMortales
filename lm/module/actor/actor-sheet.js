@@ -886,6 +886,9 @@ export class LmActorSheet extends ActorSheet {
                 let result = new Roll(dice + hdb, data).roll();
                 let newRest = this.actor.data.data.hp.rest.value + 1;
                 let hpRoll = result.total;
+                if (hpRoll < 1) {
+                  hpRoll = 1;
+                }
                 let hpNow =  parseInt(this.actor.data.data.hp.value);
                 let hpMax =  parseInt(this.actor.data.data.hp.max);
                 let hpHeal = hpRoll + hpNow;
@@ -1123,13 +1126,13 @@ export class LmActorSheet extends ActorSheet {
                 let melee = meleemod;
                 let result = new Roll("d20",data).roll();
                 if (result.total == 1) {
-                  let fumble = '<span class="failed"><a class="fumble">¡1! Posible pifia</a></span> ';
+                  let fumble = '<span class="failed"><a class="fumble">¡1! Posible pifia <i class="fas fa-dice"></i></a></span> ';
                   result.toMessage({
                     speaker: ChatMessage.getSpeaker({actor: this.actor}),
                     flavor: fumble,
                   });
                 } else if (result.total == 20){
-                  let critical = '<span class="success"><a class="critical">¡20! Golpeas y posible crítico</a></span> ';
+                  let critical = '<span class="success"><a class="critical">¡20! Golpeas y posible crítico <i class="fas fa-dice"></i></a></span> ';
                   result.toMessage({
                     speaker: ChatMessage.getSpeaker({actor: this.actor}),
                     flavor: critical,
@@ -1152,13 +1155,13 @@ export class LmActorSheet extends ActorSheet {
                 let missile = missilemod
                 let result = new Roll("d20", data).roll();
                 if (result.total == 1) {
-                  let fumble = '<span class="failed fumble"><a>¡1! Posible pifia</a></span> ';
+                  let fumble = '<span class="failed fumble"><a>¡1! Posible pifia <i class="fas fa-dice"></i></a></span> ';
                   result.toMessage({
                     speaker: ChatMessage.getSpeaker({actor: this.actor}),
                     flavor: fumble,
                   });
                 } else if (result.total == 20){
-                  let critical = '<span class="success critical"><a>¡20! Golpeas y posible crítico</a></span> ';
+                  let critical = '<span class="success critical"><a>¡20! Golpeas y posible crítico <i class="fas fa-dice"></i></a></span> ';
                   result.toMessage({
                     speaker: ChatMessage.getSpeaker({actor: this.actor}),
                     flavor: critical,
@@ -1208,13 +1211,13 @@ export class LmActorSheet extends ActorSheet {
                 let melee = meleemod + itemBonus;
                 let result = new Roll("d20", data).roll();
                 if (result.total == 1) {
-                  let fumble = '<span class="failed"><a class="fumble">¡1! Posible pifia</a></span> ';
+                  let fumble = '<span class="failed"><a class="fumble">¡1! Posible pifia <i class="fas fa-dice"></i></a></span> ';
                   result.toMessage({
                     speaker: ChatMessage.getSpeaker({actor: this.actor}),
                     flavor: fumble,
                   });
                 } else if (result.total >= crit){
-                  let critical = `<span class="success critical"><a> ¡${crit}! Golpeas y posible crítico</a></span> `;
+                  let critical = `<span class="success critical"><a> ¡${crit}! Golpeas y posible crítico <i class="fas fa-dice"></i></a></span> `;
                   result.toMessage({
                     speaker: ChatMessage.getSpeaker({actor: this.actor}),
                     flavor: critical,
@@ -1237,13 +1240,13 @@ export class LmActorSheet extends ActorSheet {
                 let missile = missilemod + itemBonus;
                 let result = new Roll("d20", data).roll();
                 if (result.total == 1) {
-                  let fumble = '<span class="failed fumble"><a>¡1! Posible pifia</a></span> ';
+                  let fumble = '<span class="failed fumble"><a>¡1! Posible pifia <i class="fas fa-dice"></i></a></span> ';
                   result.toMessage({
                     speaker: ChatMessage.getSpeaker({actor: this.actor}),
                     flavor: fumble,
                   });
                 } else if (result.total >= crit){
-                  let critical = `<span class="success critical"><a> ¡${crit}! Golpeas y posible crítico</a></span> `;
+                  let critical = `<span class="success critical"><a> ¡${crit}! Golpeas y posible crítico <i class="fas fa-dice"></i></a></span> `;
                   result.toMessage({
                     speaker: ChatMessage.getSpeaker({actor: this.actor}),
                     flavor: critical,
@@ -1295,7 +1298,7 @@ export class LmActorSheet extends ActorSheet {
     })
     let flavor2 = game.i18n.localize('LM.monsterHd.turn');
     let flavor = game.i18n.localize('LM.skills.turn');
-    let finalText = flavor + text1 + "," + flavor2 + text2;
+    let finalText = flavor + ": " + `<b class="attack">` + text1 + "</b>, " + flavor2 + ": "+ `<b class="attack">` + text2 + "</b>";
 
     result.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
