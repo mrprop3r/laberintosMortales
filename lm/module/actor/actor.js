@@ -491,7 +491,6 @@ export class LmActor extends Actor {
         if (item.data.carried !== "encima") {
           tempWeight += item.data.quantity * item.data.weight;
           item.data.packed = true;
-          totalWeight += item.data.quantity * item.data.weight;
         } else {
           totalWeight += item.data.quantity * item.data.weight;
         }
@@ -507,6 +506,11 @@ export class LmActor extends Actor {
               contWeight += tempWeight;
               counter += 1
             }
+          } else {
+            if (counter == 0 ) {
+              totalWeight -= contWeight;
+              counter += 1
+            }
           }
           data.abilities.str.containersCapacity = totalContainers;
           data.abilities.str.containerWeight = contWeight;
@@ -519,7 +523,7 @@ export class LmActor extends Actor {
           ),
           weight: data.encumbrance.weight,
           encumbered: totalWeight > data.encumbrance.weight,
-          value: totalWeight,
+          value: totalWeight + contWeight,
         }
 
 

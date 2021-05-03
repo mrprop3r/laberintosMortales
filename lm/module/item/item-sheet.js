@@ -35,16 +35,19 @@ export class LmItemSheet extends ItemSheet {
     data.containers = { 'Encima': 'encima' };
     // Containers are not allowed in other containers.  So if this item is a container,
     // don't show any other containers.
+    let containerValue = 0
     if (this.actor && this.item.data.type !== 'container') {
+      if (data.data.carried !== 'encima') {
+        containerValue = data.data.weight * data.data.quantity;
+      }
       this.actor.items.forEach(it => {
         if (it.type === 'container') {
           data.containers[it.name] = it.name;
         }
-        this.object.update({data: {conta: this.object.data.data.carried,
-          }});
+        this.object.update({data: {capacity: {value: containerValue}}}
+          );
       }); 
     } 
-
 
     return data;
   }
