@@ -73,6 +73,7 @@
   font-size: 14px;
   background: var(--color-background);
   color: #000000;
+  border: dashed 1px;
 }
 #chat-log .chat-message .message-content .dice-roll .dice-result .dice-formula {
   background: var(--color-highlight);
@@ -83,7 +84,7 @@
   background: var(--color-foreground);
   border: solid none none none;
   font-weight: bolder;
-  color: white
+  color: white;
 }
 .objetive {
   color: rgb(38, 59, 38);

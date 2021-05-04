@@ -32,7 +32,7 @@ export class LmItemSheet extends ItemSheet {
     const data = super.getData();
     data.config = CONFIG.LM;
 
-    data.containers = { 'Encima': 'encima' };
+    data.containers = { 'Encima': 'encima'};
     // Containers are not allowed in other containers.  So if this item is a container,
     // don't show any other containers.
     let containerValue = 0

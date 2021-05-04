@@ -36,11 +36,15 @@ export class LmActorSheet extends ActorSheet {
               "type": "container",
               "data": {
                   "container": "encima",
+                  "capacity": {
+                    "max": 1,
+                    "value": 0,
+                  }
               }
           }
       }
     };
-
+  
 
     this.actor.items.forEach(it => {
       if (it.type === 'container') {
