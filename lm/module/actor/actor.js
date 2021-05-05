@@ -488,16 +488,15 @@ export class LmActor extends Actor {
 
     /* Compute Max containers */    
     let numberContainers = 0;
-    let weightContainer = []
+    
     let slots = this.data.items.filter(
           (i) => i.type == "container" && !i.data.drop,
         );
         slots.forEach((item) => {
-          weightContainer[numberContainers] = item.capacity.value
           numberContainers += 1;
         });
         if ( numberContainers > 4) {
-          ui.notifications.error(game.i18n.localize("LM.toomuchcontainers"));
+          ui.notifications.error(`${this.data.name} ` +  game.i18n.localize("LM.toomuchcontainers"));
         }
     
     
@@ -505,11 +504,11 @@ export class LmActor extends Actor {
 
       let totalWeight = 0;
       let tempWeight = 0;
-
+      let weightContainer = []
       Object.values(this.data.items).forEach((item) => {
         if (item.data.carried !== "encima") {
-          tempWeight += item.data.quantity * item.data.weight;
-          item.data.packed = true;
+            tempWeight += item.data.quantity * item.data.weight;
+            item.data.packed = true;
         } else {
           totalWeight += item.data.quantity * item.data.weight;
         }
@@ -544,9 +543,6 @@ export class LmActor extends Actor {
           encumbered: totalWeight > data.encumbrance.weight,
           value: totalWeight + contWeight,
         }
-
-
-
       });
       let weight = data.encumbrance.value;
       if (weight >= data.encumbrance.weight + 1) {
@@ -660,7 +656,7 @@ export class LmActor extends Actor {
     });
     data.hands = total;
     if ( data.hands >= 3) {
-      ui.notifications.error(game.i18n.localize("LM.toomuchhands"));
+      ui.notifications.error(`${this.data.name} ` + game.i18n.localize("LM.toomuchhands"));
     }
 
     // Compute AC

@@ -44,11 +44,11 @@ export class LmItemSheet extends ItemSheet {
         if (it.type === 'container') {
           data.containers[it.name] = it.name;
         }
-        this.object.update({data: {capacity: {value: containerValue}}}
+        this.object.update({data: {capacity: {value: containerValue},
+        }}
           );
       }); 
     } 
-
     return data;
   }
 
