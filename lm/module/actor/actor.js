@@ -485,6 +485,21 @@ export class LmActor extends Actor {
     if (data.class.value ==="dw") {
       data.encumbrance.weight = data.encumbrance.weight + 500;
     }
+
+    /* Compute Max containers */    
+    let numberContainers = 0;
+    let weightContainer = []
+    let slots = this.data.items.filter(
+          (i) => i.type == "container" && !i.data.drop,
+        );
+        slots.forEach((item) => {
+          weightContainer[numberContainers] = item.capacity.value
+          numberContainers += 1;
+        });
+        if ( numberContainers > 4) {
+          ui.notifications.error(game.i18n.localize("LM.toomuchcontainers"));
+        }
+    
     
     // Compute encumbrance
 

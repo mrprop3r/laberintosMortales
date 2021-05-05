@@ -303,6 +303,7 @@
     "LM.treasurename": "Tesoro",
     "LM.items.equip": "Equipado",
     "LM.toomuchhands": "¡Tienes las dos manos ocupadas!",
+    "LM.toomuchcontainers": "¡No puedes llevar más contenedores!",
     "LM.items.qualities": "Cualidades",
     "LM.items.isDamage2": "Daño Alternativo",
     "LM.items.damage": "Daño principal",
