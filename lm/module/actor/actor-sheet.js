@@ -153,8 +153,6 @@ export class LmActorSheet extends ActorSheet {
       }
    });
 
-
-
   }
 
   async _chooseLang() {

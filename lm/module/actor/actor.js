@@ -249,7 +249,6 @@ export class LmActor extends Actor {
       data.abilities.dex.init = data.abilities.dex.init + 1;
     }
 
-
     // Compute Ability test
     const test = {
       0: 1,
@@ -319,6 +318,62 @@ export class LmActor extends Actor {
     });
       
     data.abilities.dex.fast = totalFast;
+
+    // Compute modifiers two hands attacks
+    const twoAttacksP = {
+      0: -5,
+      3: -4,
+      9: -3,
+      12: -2,
+      16: -1,
+      18: 0,
+    };
+    const twoAttacksS = {
+      0: -6,
+      3: -5,
+      9: -4,
+      12: -3,
+      16: -2,
+      18: -1,
+    };
+
+    if (data.class.value ==="hal") {
+      if (data.abilities.dex.value < 16){
+        data.abilities.dex.twoAttacksP = LmActor._valueFromTable(
+          twoAttacksP,
+          16
+        );
+      } else {
+        data.abilities.dex.twoAttacksP = LmActor._valueFromTable(
+          twoAttacksP,
+          data.abilities.dex.value
+        );
+      }
+    } else {
+      data.abilities.dex.twoAttacksP = LmActor._valueFromTable(
+        twoAttacksP,
+        data.abilities.dex.value
+      );
+    }
+
+    if (data.class.value ==="hal") {
+      if (data.abilities.dex.value < 16){
+        data.abilities.dex.twoAttacksS = LmActor._valueFromTable(
+          twoAttacksS,
+          16
+        );
+      } else {
+        data.abilities.dex.twoAttacksS = LmActor._valueFromTable(
+          twoAttacksS,
+          data.abilities.dex.value
+        );
+      }
+    } else {
+      data.abilities.dex.twoAttacksS = LmActor._valueFromTable(
+        twoAttacksS,
+        data.abilities.dex.value
+      );
+    }
 
     /*  Compute languages   */
     const literacy = {

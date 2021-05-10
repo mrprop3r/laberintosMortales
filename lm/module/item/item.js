@@ -122,7 +122,9 @@ export class LmItem extends Item {
       data.tags.forEach(t => props.push(t.value));
     }
     if (this.data.type == "spell") {
-      props.push(`${data.user}, nivel:${data.lvl}, alcance:${data.range}, duración:${data.duration}`);
+      let rollSave = game.i18n.localize(`LM.saves.${data.save}.check`);
+      props.push(`${data.user}, nivel:${data.lvl}, alcance:${data.range}, duración:${data.duration}, `);
+      props.push(data.save ? `${rollSave}` : "No tiene tirada de salvación");
     }
     if (this.data.type == "consumable") {
       props.push(data.fast ? "En hueco rápido" : "No en hueco rápido ");
